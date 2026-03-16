@@ -919,7 +919,12 @@ function Game:save_stats()
 	Stats:add("deaths", self.deaths)
 	Stats:add("kills", self.kills)	
 	Stats:set("max_combo", max(Stats:get("max_combo"), self.level.max_fury_combo))	
-	Stats:set("best_run", max(Stats:get("best_run"), self.level.floor))	
+	Stats:set("best_run", max(Stats:get("best_run"), self.level.floor))
+	
+	-- Achievements
+	if Stats:get("deaths") >= 50 then
+		Achievements:grant("ach_death")
+	end
 end
 
 function Game:game_over()
