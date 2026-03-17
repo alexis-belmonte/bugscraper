@@ -421,7 +421,6 @@ function Game:update(dt)
 	self.stat_total_time = self.stat_total_time + dt
 	Stats:set("total_time", self.stat_total_time, true)
 	if (old_total_time % STATS_AUTOSAVE_INTERVAL) > STATS_AUTOSAVE_INTERVAL/2 and (self.stat_total_time % STATS_AUTOSAVE_INTERVAL) < STATS_AUTOSAVE_INTERVAL/2 then
-		print_debug("SAVING")
 		Stats:save_progress()
 	end
 

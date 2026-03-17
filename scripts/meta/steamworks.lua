@@ -4,6 +4,7 @@ local Class = require "scripts.meta.class"
 local LuaSteam
 local import_success
 if pcall(function()
+	error("Todo; fix this")
 	LuaSteam = require "luasteam"
 end) then
 	print("Steamworks: successfully loaded")
@@ -63,8 +64,8 @@ function Steamworks:set_achievement(achievement_id)
 		return
 	end
 
-	LuaSteam.UserStats.SetAchievement(achievement_id)
-    LuaSteam.UserStats.StoreStats()
+	-- LuaSteam.UserStats.SetAchievement(achievement_id)
+    -- LuaSteam.UserStats.StoreStats()
 end
 
 function Steamworks:clear_achievement(achievement_id)
@@ -72,8 +73,8 @@ function Steamworks:clear_achievement(achievement_id)
 		return
 	end
 
-	LuaSteam.UserStats.ClearAchievement(achievement_id)
-	LuaSteam.UserStats.StoreStats()
+	-- LuaSteam.UserStats.ClearAchievement(achievement_id)
+	-- LuaSteam.UserStats.StoreStats()
 end
 
 function Steamworks:reset_all_stats(achievements_too)
@@ -81,7 +82,7 @@ function Steamworks:reset_all_stats(achievements_too)
 		return
 	end
 
-	LuaSteam.UserStats.ResetAllStats(achievements_too)
+	-- LuaSteam.UserStats.ResetAllStats(achievements_too)
 end
 
 return Steamworks:new()

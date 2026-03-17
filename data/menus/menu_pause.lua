@@ -10,7 +10,6 @@ local PROMPTS_NORMAL        = menu_util.PROMPTS_NORMAL
 
 local pause_items           = {
     { "" },
-    { "" },
     { "▶ {menu.pause.resume}", function() game.menu_manager:unpause() end },
     { "🔄 {menu.pause.return_to_ground_floor}", func_set_menu('confirm_retry') },
     -- { "🔄 {menu.game_over.quick_restart}", function()
@@ -26,10 +25,13 @@ if OPERATING_SYSTEM ~= "Web" then
     -- Disable quitting on web
     table.insert(pause_items, { "🔚 {menu.pause.quit}", func_set_menu('quit') })
 end
+
 table.insert(pause_items, { "" })
+
 if BUILD_TYPE == "demo" then
     -- Disable wishlist if not demo
     table.insert(pause_items, { "❤ {menu.win.wishlist} 🔗", func_url("steam://advertise/2957130/") })
+    table.insert(pause_items, { "🌐 {menu.pause.website} 🔗", func_url("https://bugscraper.net/") })
 end
 table.insert(pause_items, { "😈 {menu.pause.discord} 🔗", func_url("https://bugscraper.net/discord") })
 
