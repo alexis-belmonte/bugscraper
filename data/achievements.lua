@@ -55,11 +55,11 @@ return {
         image = "ach_no_damage_full",
         steam_id = "ACH_NO_DAMAGE_FULL",
     },
-    {
-        name = "ach_no_floor",
-        image = "ach_no_floor",
-        steam_id = "ACH_NO_FLOOR",
-    },
+    -- {
+    --     name = "ach_no_floor",
+    --     image = "ach_no_floor",
+    --     steam_id = "ACH_NO_FLOOR",
+    -- },
     {
         name = "ach_big_combo",
         image = "ach_big_combo",
