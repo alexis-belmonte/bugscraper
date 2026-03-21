@@ -319,8 +319,6 @@ return Cutscene:new("final_boss_death", {
     CutsceneScene:new({ 
         duration = 0.0,
         enter = function(cutscene, data)
-            Achievements:grant("ach_complete_end")
-
             for _, player in pairs(game.players) do
                 player:set_input_mode(PLAYER_INPUT_MODE_USER)
                 player:reset_virtual_controller()
