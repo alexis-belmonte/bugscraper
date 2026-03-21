@@ -17,7 +17,7 @@ return Menu:new(game, "{menu.options.language.title}", {
     { "{language.en}", func_language_menu("en") },
     { "{language.fr}", func_language_menu("fr") },
     { "{language.es}", func_language_menu("es") },
-    { "{language.zh_Hans}", func_language_menu("zh_Hans") },
+    -- { "{language.zh_Hans}", func_language_menu("zh_Hans") },
     { "{language.ja}", func_language_menu("ja") },
     { "{language.pl}", func_language_menu("pl") },
     { "{language.pt_BR}", func_language_menu("pt_BR") },
