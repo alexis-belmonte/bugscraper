@@ -11,9 +11,6 @@ local func_set_menu     = menu_util.func_set_menu
 local PROMPTS_NORMAL    = menu_util.PROMPTS_NORMAL
 
 return Menu:new(game, "{menu.options.title}", {
-    { "<<< {menu.options.input.title} >>>" },
-    { "🔘 {menu.options.input.input}", func_set_menu("options_input") },
-    { "" },
     { "<<< {menu.options.audio.title} >>>" },
     { BoolOptionMenuItem, "🔊 {menu.options.audio.sound}", "sound_on" },
     { RangeOptionMenuItem, "🔉 {menu.options.audio.volume}", "volume", { 0.0, 1.0 }, 0.05, "%",
@@ -62,6 +59,9 @@ return Menu:new(game, "{menu.options.title}", {
     { BoolOptionMenuItem, "💧 {menu.options.visuals.menu_blur}", "menu_blur" },
     { RangeOptionMenuItem, "🌄 {menu.options.visuals.background_speed}", "background_speed", { 0.0, 1.0 }, 0.05, "%" },
     { RangeOptionMenuItem, "🥚 {menu.options.visuals.bullet_lightness}", "bullet_lightness", { 0.1, 1.0 }, 0.1, "%" },
+    { "" },
+    { "<<< {menu.options.input.title} >>>" },
+    { "🔘 {menu.options.input.input}", func_set_menu("options_input") },
     { "" },
     { "<<< {menu.options.game.title} >>>" },
     { "🌐 {menu.options.game.language}", func_set_menu("options_language") },
