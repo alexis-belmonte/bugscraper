@@ -304,6 +304,8 @@ function Game:new_game(params)
 		self:start_game(true)
 	end
 
+	self.check_achievements_timer = 1.0
+
 	_G_t_test = love.timer.getTime()
 end
 
@@ -855,6 +857,7 @@ function Game:on_kill(actor)
 
 		self.kills = self.kills + 1
 		self.score = self.score + (actor.score or 0)
+		Stats:add("kills", 1)
 		-- Particles:word(actor.x, actor.y, tostring(actor.score or 0))
 		self.level:on_enemy_death(actor)
 	end
@@ -872,6 +875,7 @@ end
 
 function Game:on_player_death(player)
 	self.deaths = self.deaths + 1
+	Stats:add("deaths", 1)
 
 	self:unregister_alive_player(player.n)
 	self.waves_until_respawn[player.n] = { player.waves_until_respawn, player }
@@ -914,16 +918,8 @@ function Game:save_stats()
 	self.stats.max_combo = self.level.max_fury_combo
 	self.stats.score = self.score
 	self.stats.deaths = self.deaths
-
-	Stats:add("deaths", self.deaths)
-	Stats:add("kills", self.kills)	
-	Stats:set("max_combo", max(Stats:get("max_combo"), self.level.max_fury_combo))	
-	Stats:set("best_run", max(Stats:get("best_run"), self.level.floor))
 	
-	-- Achievements
-	if Stats:get("deaths") >= 50 then
-		Achievements:grant("ach_death")
-	end
+	Stats:check_achievements()
 end
 
 function Game:game_over()
@@ -1334,6 +1330,11 @@ function Game:set_actor_draw_color(col)
 	self.layers[LAYER_OBJECTS].draw_color = col
 	self.layers[LAYER_OBJECT_SHADOWLESS].draw_color = col
 	self.layers[LAYER_FRONT].draw_color = col
+end
+
+function Game:check_achievements()
+	Stats:check_achievements()
+	Metaprogression:check_achievements()
 end
 
 return Game

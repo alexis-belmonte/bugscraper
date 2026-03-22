@@ -424,6 +424,7 @@ function Player:update(dt)
 	self:update_sprite(dt)
 	self:do_particles(dt)
 	self:update_visuals()
+	self:update_achievements(dt)
 
 	if self.life <= 0 and not (self.is_killed or self.is_ghost) then
 		self:start_ghost()
@@ -1688,6 +1689,12 @@ function Player:update_debug_god_mode(dt)
 		
 		self.friction_x = self.default_friction
 		self.friction_y = 1
+	end
+end
+
+function Player:update_achievements(dt)
+	if self:get_total_life() >= 7 then
+		Achievements:grant("ach_max_hearts")
 	end
 end
 

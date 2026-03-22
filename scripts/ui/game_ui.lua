@@ -597,25 +597,24 @@ function GameUI:update_iris_transition(dt)
 end
 
 function GameUI:draw_iris_transition()
-	if not self.iris_transition_on then 
-		return
-	end
-	
-	exec_on_canvas({self.iris_transition_canvas, stencil=true}, function()
-		love.graphics.clear()
+    if not self.iris_transition_on then 
+        return
+    end
+    
+    exec_on_canvas({self.iris_transition_canvas, stencil=true}, function()
+        love.graphics.clear()
 
-        love.graphics.setStencilState("replace", "always", 1)
-        love.graphics.setColorMask(false)
-		love.graphics.circle("fill", self.iris_transition_x, self.iris_transition_y, self.iris_transition_radius)
+        love.graphics.stencil(function()
+            love.graphics.circle("fill", self.iris_transition_x, self.iris_transition_y, self.iris_transition_radius)
+        end, "replace", 1, false)
 
-        love.graphics.setStencilState("keep", "less", 1)
-        love.graphics.setColorMask(true)
-		
-		rect_color(COL_BLACK_BLUE, "fill", 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
-		love.graphics.setStencilState()
-	end)
+        love.graphics.setStencilTest("less", 1)
+        
+        rect_color(COL_BLACK_BLUE, "fill", 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
+        love.graphics.setStencilTest()
+    end)
 
-	love.graphics.draw(self.iris_transition_canvas, 0, 0)
+    love.graphics.draw(self.iris_transition_canvas, 0, 0)
 end
 
 --- SPLASH

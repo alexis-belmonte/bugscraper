@@ -15,6 +15,8 @@ return Cutscene:new("final_boss_enter", {
         enter = function(cutscene, data)
             game.level.slowdown_timer_override = 9.5
             game.level.opened_door_timer_override = 1.0
+
+            game.menu_manager:set_can_pause(false)
         end
     }),
 
@@ -136,6 +138,8 @@ return Cutscene:new("final_boss_enter", {
 
         duration = 1.0,
         enter = function(cutscene, data)
+            game.menu_manager:set_can_pause(true)
+
             -- Init players
             for _, player in pairs(game.players) do
                 player:set_input_mode(PLAYER_INPUT_MODE_USER)

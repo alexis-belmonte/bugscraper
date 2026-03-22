@@ -130,6 +130,8 @@ function Level:init(game, backroom)
 	self.max_fury_combo = 0
 	self.fury_combo = 0
 	self.has_energy_drink = false
+
+	self.last_damage_wave = 0
 end
 
 function Level:ready()
@@ -156,6 +158,8 @@ function Level:update(dt)
 	if self.backroom then
 		self.backroom:update(dt)
 	end
+
+	self:update_stats_achievements(dt)
 
 	self.flash_alpha = max(self.flash_alpha - dt, 0)
 	
@@ -683,21 +687,18 @@ function Level:draw_with_hole(draw_func, stencil_test)
 		love.graphics.clear()
 		
 		if self.hole_stencil_mode ~= "off" then
-			love.graphics.setStencilState("replace", "always", 1)
-			love.graphics.setColorMask(false)
-			love.graphics.clear()
-			if self.hole_stencil_mode == "hole" then
-				love.graphics.circle("fill", (self.door_rect.ax + self.door_rect.bx)/2, (self.door_rect.ay + self.door_rect.by)/2, self.hole_stencil_radius)
-			end
+			love.graphics.stencil(function()
+				if self.hole_stencil_mode == "hole" then
+					love.graphics.circle("fill", (self.door_rect.ax + self.door_rect.bx)/2, (self.door_rect.ay + self.door_rect.by)/2, self.hole_stencil_radius)
+				end
+			end, "replace", 1, false)
 			
-			love.graphics.setStencilState("keep", stencil_test, 1)
-			love.graphics.setColorMask(true)
-			
+			love.graphics.setStencilTest(stencil_test, 1)
 		end
 		
 		love.graphics.draw(self.buffer_canvas)
-		
-		love.graphics.setStencilState()
+
+		love.graphics.setStencilTest()
 		game.camera:push()
 	end)
 	love.graphics.draw(self.canvas, 0, 0)
@@ -837,6 +838,8 @@ function Level:on_player_damage(player, amount, source)
 	if player then
 		self:add_fury(-amount * self.fury_damage_malus)
 	end
+
+	self.last_damage_wave = self.floor
 end
 
 function Level:on_enemy_damage(enemy, amount, source)
@@ -893,6 +896,21 @@ function Level:add_fury_max(val)
 end
 function Level:multiply_fury_speed(val)
 	self.fury_speed = self.fury_speed * val
+end
+
+------------------------------------------------------
+
+function Level:update_stats_achievements(dt)
+	Stats:set("max_combo", max(Stats:get("max_combo"), self.max_fury_combo), true)	
+	Stats:set("max_combo", max(Stats:get("max_combo"), self.fury_combo), true)	
+
+	Stats:set("best_run", max(Stats:get("best_run"), self.floor), true)
+		
+	if self.floor - self.last_damage_wave >= 20 then
+		Achievements:grant("ach_no_damage_easy")
+	end 
+
+	Stats:check_achievements()
 end
 
 return Level

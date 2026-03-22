@@ -894,6 +894,7 @@ function Debug:draw_info_view()
             concat("achievements: ", achievementsinfo),
             concat("unlocked_upgrades: ", upgradeinfo),
             concat("background_transition: on ", game.level.background_transition_on, " / y ", game.level.background_transition_y, " / speed_mult ", game.level.background_transition_speed_mult),
+            concat("last_damage_wave: ", game.level.last_damage_wave),
             "",
         }
 
@@ -923,24 +924,6 @@ function Debug:draw_info_view()
     -- love.graphics.draw(images.removeme_bands, 0, 0)
 
     linedottedoffset = linedottedoffset - 0.2
-
-    local selfx, selfy = CANVAS_CENTER[1], CANVAS_CENTER[2]+20
-    local a1 = pi/6 + math.cos(self.t*4 ) * pi/12
-    local a2 = -pi/6 + math.cos(self.t*6 ) * pi/15
-    local rx = 10
-    local ry = 4
-    rotated_color_ellipse(COL_WHITE, "line", selfx, selfy, rx, ry, a1)
-    rotated_color_ellipse(COL_WHITE, "line", selfx, selfy, rx*1.2, ry, a2)
-
-    local n = 5
-    for i = 0, n-1 do
-        local a3 = pi2 * (i/n) + self.t
-        local sx = math.cos(a3) * 13
-        local sy = math.sin(a3*2) * 7
-
-        draw_centered(images.star_small_2, selfx + sx, selfy + sy)
-    end
-    love.graphics.draw(images.dung_beetle_dead, selfx - images.dung_beetle_dead:getWidth()/2, selfy + 28)
 end
 
 function Debug:draw_extra_info_view()
@@ -975,7 +958,7 @@ function Debug:draw_extra_info_view()
             h = h - 16
         end 
 
-        rect_color(COL_WHITE, "line", 0, 0, total_w, 16)        
+        rect_color(COL_WHITE, "line", 0, 0, total_w, 16)
     end
     love.graphics.setFont(FONT_REGULAR)
 end

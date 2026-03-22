@@ -100,6 +100,8 @@ local skins = {
 		text_color = COL_BLACK_BLUE,
 		icon = "🐰",
 		text_key = "rico",
+
+		guest_source = "The Bullet Hopper",
 	},
 	{
 		anim_idle = {images.yv_idle, 0.2, 4},
@@ -113,6 +115,8 @@ local skins = {
 		text_color = COL_BLACK_BLUE,
 		icon = "🔺",
 		text_key = "yv",
+
+		guest_source = "Nuclear Throne",
 	},
 	{
 		anim_idle = {images.leo, 0.2, 1},

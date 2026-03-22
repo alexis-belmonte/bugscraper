@@ -2,7 +2,6 @@ require "scripts.util"
 local Class = require "scripts.meta.class"
 local upgrades = require "data.upgrades"
 local skins = require "data.skins"
-local skin_name_to_id = require "data.skin_name_to_id"
 
 local MetaprogressionManager = Class:inherit()
 
@@ -40,20 +39,24 @@ function MetaprogressionManager:init()
         has_seen_w5_transition_cutscene = false,
     }
 
-    local t = skin_name_to_id
-    self.levels = {
-        { threshold = 5000, rewards = { { type = "upgrade", upgrade = "UpgradeEnergyDrink" } } },
-        { threshold = 5000, rewards = { { type = "skin", skin = t.nel } } },
-        { threshold = 5000, rewards = { { type = "skin", skin = t.rico } } },
-        { threshold = 5000, rewards = { { type = "skin", skin = t.nob } } },
-        { threshold = 5000, rewards = { { type = "skin", skin = t.amb } } },
-        { threshold = 5000, rewards = { { type = "upgrade", upgrade = "UpgradePomegranateJuice" } } },
-        { threshold = 5000, rewards = { { type = "skin", skin = t.dodu } } },
-        { threshold = 5000, rewards = { { type = "skin", skin = t.leo } } },
-        { threshold = 5000, rewards = { { type = "skin", skin = t.yv } } },
-    }
+    self.levels = require "data.metaprogression_levels"
 
+    self.data = {}
     self:read_progress()
+    self:remove_duplicates({"skins", "upgrades", "achievements"})
+
+    -- Count the number of skins / upgrades
+    self.max_upgrades = #self.default_data["upgrades"]
+    self.max_skins = #self.default_data["skins"]
+    for _, level in pairs(self.levels) do
+        for __, reward in pairs(level.rewards) do
+            if reward.type == "skin" then
+                self.max_skins = self.max_skins + 1
+            elseif reward.type == "upgrade" then
+                self.max_upgrades = self.max_upgrades + 1
+            end
+        end
+    end
 
     self.old_xp = self:get_xp()
     self.old_total_xp = self:get_total_xp()
@@ -134,7 +137,9 @@ end
 function MetaprogressionManager:unlock_skin(skin_id)
     local s = self:get("skins")
     table.insert(s, skin_id)
+    self:remove_duplicates({"skins"})
     self:save_progress()
+    self:check_achievements()
 end
 
 function MetaprogressionManager:unlock_upgrade(upgrade_name)
@@ -142,7 +147,18 @@ function MetaprogressionManager:unlock_upgrade(upgrade_name)
     local u = upgrades[upgrade_name]
     if u then
         table.insert(tab, upgrade_name)
+        self:remove_duplicates({"upgrades"})
         self:save_progress()
+        self:check_achievements()
+    end
+end
+
+function MetaprogressionManager:check_achievements()
+    if #self:get("upgrades") >= self.max_upgrades then
+        Achievements:grant("ach_all_upgrades")
+    end
+    if #self:get("skins") >= self.max_skins then
+        Achievements:grant("ach_all_skins")
     end
 end
 
@@ -166,6 +182,12 @@ end
 
 function MetaprogressionManager:read_progress()
     self.data = Files:read_config_file("progress.txt", self.default_data)
+end
+
+function MetaprogressionManager:remove_duplicates(fields)
+    for _, field_name in pairs(fields) do
+        self.data[field_name] = remove_table_duplicates(self.data[field_name])
+    end
 end
 
 function MetaprogressionManager:save_progress()

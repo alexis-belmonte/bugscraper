@@ -356,6 +356,18 @@ function DebugCommandManager:init()
         end,
     }
 
+    self.commands["resetstats"] = DebugCommand:new {
+        name = "resetstats",
+        description = "Resets stats",
+        args = {
+        },
+        run = function()
+            Stats:reset()
+            self:add_message(concat("Reset stats"))
+            return true
+        end,
+    }
+
     self.commands["_credits"] = DebugCommand:new {
         name = "_credits",
         description = "Starts credits",

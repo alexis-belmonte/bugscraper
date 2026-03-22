@@ -39,10 +39,12 @@ end
 
 -- scotch: gigantic hack for love.js canvas compatibility
 -- https://github.com/Davidobot/love.js/issues/92
+-- LOVE - Warning: scripts/util.lua:38: Using deprecated function love.graphics.getCanvasFormats (replaced by love.graphics.getTextureFormats)
+-- 
 -- local old_newCanvas = love.graphics.newCanvas
 -- function love.graphics.newCanvas(width, height, settings)
 -- 	settings = settings or {}
-
+-- 
 -- 	if not settings.format then
 -- 		-- Fallback chain for supported image formats
 -- 		love.graphics.getTextureFormats({canvas = true})
@@ -246,6 +248,20 @@ function shuffle_table(t, min, max, rng)
 		end
 		t[j], t[i] = t[i], t[j]
 	end
+end
+
+function remove_table_duplicates(tab)
+    local hash = {}
+    local result = {}
+
+    for _, value in ipairs(tab) do
+        if not hash[value] then
+            table.insert(result, value)
+            hash[value] = true
+        end
+    end
+
+    return result
 end
 
 function is_between(v, a, b)
@@ -1071,12 +1087,12 @@ function arrow_color(col, ax, ay, bx, by)
 end
 
 function noise(...)
-	local v = love.math.simplexNoise(...)
+	local v = love.math.noise(...)
 	return v * 2 - 1
 end
 
 function noise01(...)
-	local v = love.math.simplexNoise(...)
+	local v = love.math.noise(...)
 	return v
 end
 

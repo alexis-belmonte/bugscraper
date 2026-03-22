@@ -347,7 +347,7 @@ return {
             time_total = "Time played (total)",
             time_ingame = "Time played (in game)",
             runs = "Runs",
-            best_run = "Best floor reached", -- The biggest floor reached on any run
+            best_run = "Best wave reached", -- The biggest wave number reached on any run
         },
         new_reward = {
             new_skin = "New character!",
@@ -366,8 +366,8 @@ return {
         },
         credits = {
             title = "CREDITS",
-            ninesliced_presents = "Ninesliced presents", -- Written EXCATLY "Ninesliced"
-            game_by = "A game by", -- As in, "A game by [newline] John". If it is not possible to have the name *after* this, one idea could be to translate as "Creator" (as in, "Creator [newline] John")
+            ninesliced_presents = "Ninesliced presents",
+            game_by = "A game by", 
             leo_bernard = "Léo Bernard", -- Please do not touch this
             music = "Music",
             sound_design = "Sound design",
@@ -415,8 +415,16 @@ return {
             description = "Die 50 times",
         },
         ach_all_upgrades = {
-            name = "A furious cocktail",
+            name = "A Furious Cocktail",
             description = "Unlock all upgrades",
+        },
+        ach_all_skins = {
+            name = "Team Leader",
+            description = "Unlock all characters",
+        },
+        ach_max_hearts = {
+            name = "Lover",
+            description = "Obtain 7 ❤",
         },
         ach_no_damage_easy = {
             name = "Iron Bug",

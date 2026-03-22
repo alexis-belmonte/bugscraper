@@ -227,7 +227,7 @@ local thorns_arc_params = {
     }
 }
 
-local waves = parse_waves_table {
+local waves_defs = {
     -- {
     --     min = 1,
     --     max = 1,
@@ -1422,6 +1422,7 @@ local waves = parse_waves_table {
         },
 
         run = function(self, level)
+            game.actor_manager:kill_actors_with_name("progressing_arc")
         end,
 
         background = backgrounds.BackgroundGreenhouse:new(),
@@ -1456,7 +1457,7 @@ local waves = parse_waves_table {
         bounds = RECT_CEO_OFFICE,
         backroom = BackroomCEOOffice,
 
-        achievements = {"ach_complete_w2"},
+        achievements = {"ach_complete_w4"},
     },
 
     ----------------------------------------------------------------------------------------------------------
@@ -1855,6 +1856,15 @@ local waves = parse_waves_table {
     },
 }
 
+if BUILD_TYPE == "demo" then
+    local demo_waves = {}
+    for i=1, 40 do
+        table.insert(demo_waves, waves_defs[i])
+    end
+    waves_defs = demo_waves
+end
+
+local waves = parse_waves_table(waves_defs)
 
 -----------------------------------------------------------------------
 -----------------------------------------------------------------------
@@ -1876,226 +1886,6 @@ local waves = parse_waves_table {
 -----------------------------------------------------------------------
 -----------------------------------------------------------------------
 
-
-local demo_waves = parse_waves_table {
-    {
-        min = 5,
-        max = 5,
-        enemies = {
-            { E.Larva, 3 },
-            { E.Fly,   3 },
-        },
-        music = "w1",
-
-        title = get_world_name("1"),
-        title_color = COL_MID_BLUE,
-        title_outline_color = COL_BLACK_BLUE,
-    },
-
-
-    {
-        -- Woodlouse intro
-        min = 4,
-        max = 6,
-        enemies = {
-            { E.Woodlouse, 2 },
-        },
-    },
-
-    {
-        min = 4,
-        max = 6,
-        enemies = {
-            { E.Larva,     2 },
-            { E.Fly,       3 },
-            { E.Woodlouse, 2 },
-        },
-    },
-
-    {
-        -- Slug intro
-        min = 4,
-        max = 6,
-        enemies = {
-            { E.Larva, 2 },
-            { E.Fly,   2 },
-            { E.Slug,  4 },
-        },
-    },
-
-
-    {
-        min = 3,
-        max = 5,
-        enemies = {
-            -- Shelled Snail intro
-            { E.SnailShelled, 3 },
-        },
-    },
-
-    {
-        min = 6,
-        max = 8,
-        enemies = {
-            --
-            { E.Larva,        4 },
-            { E.Fly,          4 },
-            { E.Woodlouse,    2 },
-            { E.SnailShelled, 3 },
-            { E.Slug,         2 },
-        },
-    },
-
-    {
-        min = 7,
-        max = 9,
-        enemies = {
-            { E.SnailShelled, 4 },
-            { E.SpikedFly,    3 },
-            { E.Fly,          3 },
-        },
-    },
-
-    {
-        -- Mushroom ant intro
-        roll_type = WAVE_ROLL_TYPE_FIXED,
-        enemies = {
-            { E.Fly,        2 },
-            { E.Boomshroom, 4 },
-        },
-    },
-
-    {
-        min = 8,
-        max = 10,
-        enemies = {
-            { E.Fly,          5 },
-            { E.Slug,         2 },
-            { E.SpikedFly,    4 },
-            { E.Woodlouse,    4 },
-            { E.SnailShelled, 4 },
-        },
-    },
-
-    new_cafeteria(),
-
-    {
-        -- Spiked Fly intro
-        min = 6,
-        max = 8,
-        music = "w1",
-
-        enemies = {
-            { E.Larva,     1 },
-            { E.Fly,       2 },
-            { E.SpikedFly, 4 },
-        },
-    },
-
-    {
-        min = 6,
-        max = 8,
-        enemies = {
-            { E.Larva,        1 },
-            { E.Fly,          2 },
-            { E.SpikedFly,    2 },
-            { E.Boomshroom,   4 },
-            { E.Slug,         2 },
-            { E.SnailShelled, 2 },
-        },
-    },
-
-    {
-        -- Spider intro
-        min = 6,
-        max = 8,
-        enemies = {
-            { E.Larva,  1 },
-            { E.Slug,   2 },
-            { E.Spider, 4 },
-        },
-    },
-
-    {
-        min = 6,
-        max = 8,
-        enemies = {
-            { E.Fly,          2 },
-            { E.SnailShelled, 2 },
-            { E.Spider,       4 },
-        },
-    },
-
-    {
-        min = 8,
-        max = 9,
-        enemies = {
-            { E.Fly,          2 },
-            { E.SpikedFly,    2 },
-            { E.SnailShelled, 2 },
-            { E.Slug,         2 },
-            { E.Spider,       4 },
-        },
-    },
-
-    {
-        -- Stink bug intro
-        min = 5,
-        max = 6,
-        enemies = {
-            { E.StinkBug, 3 },
-        },
-    },
-
-    {
-        min = 7,
-        max = 9,
-        enemies = {
-            { E.Larva,        1 },
-            { E.SpikedFly,    2 },
-            { E.Boomshroom,   2 },
-            { E.SnailShelled, 2 },
-            { E.Spider,       2 },
-            { E.StinkBug,     4 },
-        },
-    },
-
-    {
-        min = 8,
-        max = 10,
-        enemies = {
-            { E.Fly,          2 },
-            { E.Slug,         2 },
-            { E.Woodlouse,    2 },
-            { E.SpikedFly,    2 },
-            { E.Boomshroom,   2 },
-            { E.SnailShelled, 2 },
-            { E.Spider,       2 },
-            { E.StinkBug,     2 },
-        },
-    },
-
-    {
-        -- roll_type = WAVE_ROLL_TYPE_FIXED,
-        min = 1,
-        max = 1,
-        enemies = {
-            { E.Dung, 1, position = { CANVAS_WIDTH / 2 - 24 / 2, 200 } },
-        },
-        music = "boss_w1",
-    },
-
-
-    -- Last wave
-    {
-        min = 1,
-        max = 1,
-        enemies = {
-            { E.ButtonBigGlass, 1, position = { 211, 194 } }
-        },
-        music = "off",
-    }
-}
 
 local function sanity_check_waves()
     for i, wave in ipairs(waves) do
@@ -2119,4 +1909,4 @@ for i, wave in pairs(waves) do
     table.sort(wave.enemies, function(a, b) return a[2] > b[2] end)
 end
 
-return ternary(BUILD_TYPE == "demo", demo_waves, waves)
+return waves

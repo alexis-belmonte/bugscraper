@@ -12,6 +12,7 @@ return Cutscene:new("basement_zoom_into_rocket", {
         description = "",
         duration = 1.5,
         enter = function(cutscene, data)
+            game.menu_manager:set_can_pause(false)
         end,
         update = function(cutscene, data, dt)
         end
@@ -126,6 +127,8 @@ return Cutscene:new("basement_zoom_into_rocket", {
         description = "",
         duration = 1.0,
         enter = function(cutscene, data)
+            game.menu_manager:set_can_pause(true)
+
             game.level.slowdown_timer_override = 2.0
             game.level.backroom.can_exit_basement = true
 

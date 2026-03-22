@@ -202,6 +202,8 @@ function ExitSign:update_smash_effect_end(dt)
             game.camera:set_target_position(x, y)
 
             game.menu_manager:set_can_pause(true)
+
+            Achievements:grant("ach_smash_easter_egg")
         end
     end
 end

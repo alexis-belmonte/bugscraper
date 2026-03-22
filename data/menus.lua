@@ -230,6 +230,8 @@ local function generate_menus()
 
     menus.game_over = require "data.menus.menu_game_over"
 
+    menus.win = require "data.menus.menu_win"
+
     menus.stats = require "data.menus.menu_stats"
 
     menus.credits = require "data.menus.menu_credits"
@@ -308,9 +310,6 @@ local function generate_menus()
     if BUILD_TYPE ~= "demo" then
         table.remove(items, 5) -- Remove whishlist if not demo
     end
-
-    menus.win = Menu:new(game, "{game.congratulations}", items, { 0, 0, 0, 0.85 }, PROMPTS_GAME_OVER, nil,
-        { is_backable = false })
 
     ------------------------------------------------------------
 

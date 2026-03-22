@@ -103,49 +103,52 @@ function TvPresentation:init(x, y, params)
         },
         { -- growing circle
             draw = function(trans, old_slide, old_frame, new_slide, new_frame, alpha)
-                love.graphics.setStencilMode()
+                love.graphics.setStencilTest()
                 self:draw_frame(old_slide, old_frame, 0, 0)
 
-                love.graphics.setStencilState("replace", "always", 1)
-    			love.graphics.setColorMask(false)
-                love.graphics.circle("fill", self.canvas_w / 2, self.canvas_h / 2, alpha * self.canvas_w * 1.2)
+                love.graphics.stencil(function()
+                    love.graphics.circle("fill", self.canvas_w / 2, self.canvas_h / 2, alpha * self.canvas_w * 1.2)
+                end, "replace", 1, false)
                 
-                love.graphics.setStencilState("keep", "greater", 0)
-			    love.graphics.setColorMask(true)
+                love.graphics.setStencilTest("greater", 0)
                 self:draw_frame(new_slide, new_frame, 0, 0)
                 
-                love.graphics.setStencilMode()
+                love.graphics.setStencilTest()
             end,
         },
         { -- bunch of growing circles
             draw = function(trans, old_slide, old_frame, new_slide, new_frame, alpha)
+                love.graphics.setStencilTest()
                 self:draw_frame(old_slide, old_frame, 0, 0)
 
-                love.graphics.setStencilState("replace", "always", 1)
-                for ix = 0, self.canvas_w, 10 do
-                    for iy = 0, self.canvas_h, 10 do
-                        love.graphics.circle("fill", ix, iy, alpha * 15)
+                love.graphics.stencil(function()
+                    for ix = 0, self.canvas_w, 10 do
+                        for iy = 0, self.canvas_h, 10 do
+                            love.graphics.circle("fill", ix, iy, alpha * 15)
+                        end
                     end
-                end
+                end, "replace", 1, false)
                 
-                love.graphics.setStencilState("keep", "greater", 0)
+                love.graphics.setStencilTest("greater", 0)
                 self:draw_frame(new_slide, new_frame, 0, 0)
 
-                love.graphics.setStencilMode()
+                love.graphics.setStencilTest()
             end,
         },
         { -- "curtains" (idk how to call it)
             draw = function(trans, old_slide, old_frame, new_slide, new_frame, alpha)
+                love.graphics.setStencilTest()
                 self:draw_frame(old_slide, old_frame, 0, 0)
                 
-                love.graphics.setStencilState("replace", "always", 1)
-                love.graphics.rectangle("fill", 0, 0, self.canvas_w / 2 * alpha, self.canvas_h)
-                love.graphics.rectangle("fill", self.canvas_w - self.canvas_w / 2 * alpha, 0, self.canvas_w, self.canvas_h)
+                love.graphics.stencil(function()
+                    love.graphics.rectangle("fill", 0, 0, self.canvas_w / 2 * alpha, self.canvas_h)
+                    love.graphics.rectangle("fill", self.canvas_w - self.canvas_w / 2 * alpha, 0, self.canvas_w, self.canvas_h)
+                end, "replace", 1, false)
                 
-                love.graphics.setStencilState("keep", "greater", 0)
+                love.graphics.setStencilTest("greater", 0)
                 self:draw_frame(new_slide, new_frame, 0, 0)
 
-                love.graphics.setStencilMode()
+                love.graphics.setStencilTest()
             end,
         },
     }

@@ -32,22 +32,21 @@ function LightLayer:paint(paint_function, params)
             love.graphics.origin()
             love.graphics.scale(1)
         end
-		love.graphics.clear()
+        love.graphics.clear()
         
-        love.graphics.setStencilState("replace", "always", 1)
-        love.graphics.setColorMask(false)
-        self.light_world:paint()
+        love.graphics.stencil(function()
+            self.light_world:paint()
+        end, "replace", 1, false)
 
-        love.graphics.setStencilState("keep", "less", 1)
-        love.graphics.setColorMask(true)
-		
+        love.graphics.setStencilTest("less", 1)
+        
         paint_function()
-		love.graphics.setStencilState()
+        love.graphics.setStencilTest()
 
         if apply_camera then
             camera:pop()
         end
-	end)
+    end)
 end
 
 function LightLayer:draw(x, y)

@@ -8,10 +8,14 @@ local function init()
     print("Build type: "..tostring(BUILD_TYPE))
     print("")
 
-    if PROFILE_INIT then
+    if PROFILER_INIT then
         love.profiler = require "lib.profiler.profile"
         love.profiler.start()
     end
+
+    -- Courtesy of https://github.com/MarvellousSoft/MarvInc/blob/e914dcd15d7b538793c7dcac27d3350d716d47db/marv/main.lua#L10-L13
+    local windows = package.config:sub(1, 1) == '\\'
+    package.cpath = string.format("%s;%s/?.%s", package.cpath, love.filesystem.getSourceBaseDirectory(), (windows and "dll" or "so"))
 
     local FileManager = require "scripts.file.files"
     Files = FileManager:new()
@@ -62,7 +66,7 @@ local function init()
     love.graphics.present()
     love.graphics.origin()
 
-    if PROFILE_INIT then
+    if PROFILER_INIT then
         print("")
         print("---[[ LOAD PROFILER REPORT ]]---")
         print(love.profiler.report(20))

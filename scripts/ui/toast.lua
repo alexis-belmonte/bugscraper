@@ -17,7 +17,7 @@ function Toast:init(i, image, title, description, params)
     self.title = title
     self.description = description
 
-    self.stay_duration = params.stay_duration or 5.0
+    self.stay_duration = params.stay_duration or 8.0
 
 	self.padding = 2
 	self.text_x_padding = 10

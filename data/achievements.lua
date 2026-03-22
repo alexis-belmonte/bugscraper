@@ -41,6 +41,16 @@ return {
         steam_id = "ACH_ALL_UPGRADES",
     },
     {
+        name = "ach_all_skins",
+        image = "ach_all_skins",
+        steam_id = "ACH_ALL_SKINS",
+    },
+    {
+        name = "ach_max_hearts",
+        image = "ach_max_hearts",
+        steam_id = "ACH_MAX_HEARTS",
+    },
+    {
         name = "ach_no_damage_easy",
         image = "ach_no_damage_easy",
         steam_id = "ACH_NO_DAMAGE_EASY",
@@ -50,11 +60,11 @@ return {
         image = "ach_no_damage_full",
         steam_id = "ACH_NO_DAMAGE_FULL",
     },
-    {
-        name = "ach_no_floor",
-        image = "ach_no_floor",
-        steam_id = "ACH_NO_FLOOR",
-    },
+    -- {
+    --     name = "ach_no_floor",
+    --     image = "ach_no_floor",
+    --     steam_id = "ACH_NO_FLOOR",
+    -- },
     {
         name = "ach_big_combo",
         image = "ach_big_combo",

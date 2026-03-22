@@ -45,6 +45,9 @@ return Cutscene:new("ceo_escape_w5", {
                 if player.gun.name == "resignation_letter" then
                     data.resigning_player = player
                 end
+                
+                player:set_input_mode(PLAYER_INPUT_MODE_CODE)
+                player:reset_virtual_controller()
             end
             assert(data.resigning_player ~= nil)
 
@@ -272,7 +275,7 @@ return Cutscene:new("ceo_escape_w5", {
                 images.star_big, 
                 (data.resigning_player.mid_x + data.ceo.mid_x)/2, 
                 data.resigning_player.mid_y, 
-                0, 1.0, 0.8, {
+                0, 0.3, 0.8, {
                 color = COL_WHITE
             })
             Particles:pop_layer()
@@ -480,10 +483,13 @@ return Cutscene:new("ceo_escape_w5", {
 
         duration = 0,
         enter = function(cutscene, data)
-            game:new_game({ 
-                backroom = BackroomCredits:new(),
-                iris_params = {0, 0, 0, 0, 0}
-            })
+            Achievements:grant("ach_complete_end")
+            if game.level.last_damage_wave == 0 then
+                Achievements:grant("ach_no_damage_full")
+            end
+
+            game:save_stats()
+        	game.menu_manager:set_menu("win")
         end,
     }),
 })

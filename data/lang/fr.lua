@@ -44,7 +44,7 @@ return {
         },
     },
     game = {
-        demo = "DÉMO", -- Chip added to the game logo to indicate that this version is a demo
+        demo = "DEMO", -- Chip added to the game logo to indicate that this version is a demo
         fps = "%d FPS",
         congratulations = "FÉLICITATIONS !",
         win_thanks = "Merci d'avoir joué à la démo",

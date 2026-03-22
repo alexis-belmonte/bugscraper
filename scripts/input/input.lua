@@ -151,7 +151,7 @@ function InputManager:assign_joystick(user_n, joystick)
         self.joystick_to_user_map[joystick] = input_user
     end
 
-    joystick:setPlayerIndex(user_n)
+    -- joystick:setPlayerIndex(user_n) -- Use only in LÖVE 12
 end
 
 function InputManager:joystickadded(joystick)
@@ -662,7 +662,8 @@ function InputManager:load_control_file(profile_id, profile)
         return
     end
 
-    local file = love.filesystem.openFile(filename, "r")
+    local file = love.filesystem.newFile(filename)
+    file:open("r")
 
     local new_mappings = copy_table_deep(profile:get_mappings())
 
@@ -764,7 +765,8 @@ function InputManager:update_controls_file(profile_id)
     self:update_global_controls(profile_id)
 
     local filename = concat("inputprofile_",profile_id,".txt")
-    local controlsfile = love.filesystem.openFile(filename, "w")
+    local controlsfile = love.filesystem.newFile(filename)
+    controlsfile:open("w")
     print(concat("Creating or updating ", filename, " file"))
 
     controlsfile:write(string.format("$version:%s\n", INPUT_FILE_FORMAT_VERSION))

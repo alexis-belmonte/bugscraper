@@ -20,7 +20,7 @@ function BackgroundFactory:init(level)
 		pattern_x_offsets = {0, 7},
 		pattern_y_offsets = {-2, -2},
 		determinant_function = function(_self, x, y)
-			return love.math.simplexNoise(x/100, y/100 + 10000) > 0.5
+			return love.math.noise(x/100, y/100 + 10000) > 0.5
 		end
 	}))
 	
@@ -29,7 +29,7 @@ function BackgroundFactory:init(level)
 		pattern_x_offsets = {0, 15},
 		pattern_y_offsets = {-7, -7},
 		determinant_function = function(_self, x, y)
-			return love.math.simplexNoise(x/100, y/100) > 0.5
+			return love.math.noise(x/100, y/100) > 0.5
 		end
 	}))
 end

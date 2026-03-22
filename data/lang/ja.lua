@@ -26,7 +26,7 @@ return {
         ja = "日本語",
     },
     game = {
-        demo = "デモ版", -- Chip added to the game logo to indicate that this version is a demo
+        demo = "体験版", -- Chip added to the game logo to indicate that this version is a demo
         fps = "%d FPS",
         congratulations = "CONGRATULATIONS!",
         win_thanks = "デモで遊んでくれてありがとう",
@@ -184,7 +184,7 @@ return {
             collect = "図鑑",   -- As in, "collect item", "collect gun", etc
 
             -- UI Actions
-            ui_left =  "左 (メニュー)",
+            ui_left = "左 (メニュー)",
             ui_right = "右 (メニュー)",
             ui_up = "上 (メニュー)",
             ui_down = "下 (メニュー)",
@@ -321,6 +321,9 @@ return {
                 description = "ゲームを再起動して言語を適用しますか?",
             },
         },
+        achievements = {
+            title = "[[ADDED / 'ACHIEVEMENTS']]",
+        },
         feedback = {
             title = "フィードバック",
             bugs = "バグ報告",
@@ -328,14 +331,23 @@ return {
         },
         game_over = {
             title = "GAME OVER!",
-            kills = "倒した敵の数", -- The amount of enemies the player has killed
-            time = "タイム",            -- The time that the player took to complete the level
-            floor = "フロア",          -- Which storey the player was on when they died
+            kills = "倒した敵の数",  -- The amount of enemies the player has killed
+            deaths = "[[ADDED / 'Deaths']]",
+            time = "タイム",             -- The time that the player took to complete the level
+            floor = "フロア",           -- Which storey the player was on when they died
             score = "スコア",
             max_combo = "最大コンボ数",
 
             continue = "コンティニュー",
             quick_restart = "クイックリスタート",
+        },
+        stats = {
+            title = "[[ADDED / 'STATS']]",
+
+            time_total = "[[ADDED / 'Time played (total)']]",
+            time_ingame = "[[ADDED / 'Time played (in game)']]",
+            runs = "[[ADDED / 'Runs']]",
+            best_run = "[[ADDED / 'Best wave reached']]",  -- The biggest wave number reached on any run
         },
         new_reward = {
             new_skin = "新キャラ追加!",
@@ -354,9 +366,9 @@ return {
         },
         credits = {
             title = "クレジット",
-            ninesliced_presents = "Ninesliced presents", -- Written EXCATLY "Ninesliced"
-            game_by = "A game by", -- As in, "A game by [newline] John". If it is not possible to have the name *after* this, one idea could be to translate as "Creator" (as in, "Creator [newline] John")
-            leo_bernard = "Léo Bernard", -- Please do not touch this
+            ninesliced_presents = "Ninesliced presents",
+            game_by = "A game by", 
+            leo_bernard = "Léo Bernard",  -- Please do not touch this
             music = "ミュージック",
             sound_design = "サウンドデザイン",
             localization = "ローカライズ",
@@ -375,6 +387,64 @@ return {
         },
         open_source = {
             title = "ソースライブラリーを開く",
+        },
+    },
+    achievements = {
+        ach_complete_w1 = {
+            name = "バグ資料室", 
+            description = "[[ADDED / 'Complete department 1']]",
+        },
+        ach_complete_w2 = {
+            name = "工場",
+            description = "[[ADDED / 'Complete department 2']]",
+        },
+        ach_complete_w3 = {
+            name = "サーバールーム",
+            description = "[[ADDED / 'Complete department 3']]",
+        },
+        ach_complete_w4 = {
+            name = "ガーデン",
+            description = "[[ADDED / 'Complete department 4']]",
+        },
+        ach_complete_end = {
+            name = "[[ADDED / 'Vacations']]",
+            description = "[[ADDED / 'Complete the game']]",
+        },
+        ach_death = {
+            name = "[[ADDED / 'Perseverance']]",
+            description = "[[ADDED / 'Die 50 times']]",
+        },
+        ach_all_upgrades = {
+            name = "[[ADDED / 'A Furious Cocktail']]",
+            description = "[[ADDED / 'Unlock all upgrades']]",
+        },
+        ach_all_skins = {
+            name = "[[ADDED / 'Team Leader']]",
+            description = "[[ADDED / 'Unlock all characters']]",
+        },
+        ach_max_hearts = {
+            name = "[[ADDED / 'Lover']]",
+            description = "[[ADDED / 'Obtain 7 ❤']]",
+        },
+        ach_no_damage_easy = {
+            name = "[[ADDED / 'Iron Bug']]",
+            description = "[[ADDED / 'Do not take damage for 20 floors']]",
+        },
+        ach_no_damage_full = {
+            name = "[[ADDED / 'Golden Bug']]",
+            description = "[[ADDED / 'Do not take damage for a full game']]",
+        },
+        ach_no_floor = {
+            name = "[[ADDED / 'The Floor Is Lava']]",
+            description = "[[ADDED / 'Do not touch the ground for 10 floors']]",
+        },
+        ach_big_combo = {
+            name = "[[ADDED / 'Furious']]",
+            description = "[[ADDED / 'Get a 100 combo']]",
+        },
+        ach_smash_easter_egg = {
+            name = "[[ADDED / 'GAME!']]",  -- This is a reference to what the announcer says at the end of a match in Smash Bros.
+            description = "[[ADDED / 'Obtain the secret exit animation']]", 
         },
     },
     discord = { -- Text used for Discord rich presence

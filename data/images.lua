@@ -722,20 +722,26 @@ local img_names = {
 
 	-----------------------------------------------------
 	-- Achievements
-	ach_all_upgrades =       "achievements/ach_all_upgrades",
-	ach_big_combo =          "achievements/ach_big_combo",
-	ach_complete_end =       "achievements/ach_complete_end",
 	ach_complete_w1 =        "achievements/ach_complete_w1",
 	ach_complete_w2 =        "achievements/ach_complete_w2",
 	ach_complete_w3 =        "achievements/ach_complete_w3",
 	ach_complete_w4 =        "achievements/ach_complete_w4",
+	ach_complete_end =       "achievements/ach_complete_end",
+	
 	ach_death =              "achievements/ach_death",
+	ach_all_upgrades =       "achievements/ach_all_upgrades",
+	ach_all_skins =          "achievements/ach_all_skins",
+
+	ach_max_hearts =         "achievements/ach_max_hearts",
 	ach_no_damage_easy =     "achievements/ach_no_damage_easy",
 	ach_no_damage_full =     "achievements/ach_no_damage_full",
 	ach_no_floor =           "achievements/ach_no_floor",
-	ach_no_upgrades =        "achievements/ach_no_upgrades",
+	ach_big_combo =          "achievements/ach_big_combo",
 	ach_smash_easter_egg =   "achievements/ach_smash_easter_egg",
+
 	ach_secret =             "achievements/ach_secret",
+
+	ach_no_upgrades =        "achievements/ach_no_upgrades",
 
 	achievement_lock =       "achievements/achievement_lock",
 	

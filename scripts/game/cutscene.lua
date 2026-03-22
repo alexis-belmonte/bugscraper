@@ -5,7 +5,9 @@ local Class = require "scripts.meta.class"
 
 local Cutscene = Class:inherit()
 
-function Cutscene:init(name, scenes)
+function Cutscene:init(name, scenes, params)
+    params = params or {}
+
     self.name = name
     self.scenes = scenes
     self.current_scene = nil
@@ -13,6 +15,8 @@ function Cutscene:init(name, scenes)
     self.total_duration = 0
 
     self.data = {} -- Table that can be freely written to by scenes for storing data
+
+    self.unpausable = param(params.unpausable, false)
 
     for _, scene in pairs(self.scenes) do
         self.total_duration = self.total_duration + scene.duration
@@ -38,6 +42,10 @@ function Cutscene:play()
     self:set_current_scene(1)
     self.is_playing = true
     self.total_time = 0
+
+    if self.unpausable then
+        game.menu_manager:set_can_pause(false)
+    end
 end
 
 function Cutscene:stop()
@@ -45,6 +53,10 @@ function Cutscene:stop()
     self.current_scene = nil
     self.current_scene_i = -1
     self.timer:stop()
+
+    if self.unpausable then
+        game.menu_manager:set_can_pause(true)
+    end
 end
 
 function Cutscene:update(dt)

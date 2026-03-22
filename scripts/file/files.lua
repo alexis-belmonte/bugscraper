@@ -57,7 +57,8 @@ function Files:read_config_file(path, reference, create_if_missing)
     end
 
     -- Read file
-    local file = love.filesystem.openFile(path, "r")
+    local file = love.filesystem.newFile(path)
+    file:open("r")
 
     local text, size = file:read()
     if not text then    print("Files:read_config_file - Error reading '"..tostring(path).."' file: "..size)    end
@@ -105,7 +106,8 @@ function Files:get_write_file(path)
     if self.files[path] then
         return self.files[path]
     end
-    local file = love.filesystem.openFile(path, "w")
+    local file = love.filesystem.newFile(path)
+    file:open("w")
     return file
     
 end

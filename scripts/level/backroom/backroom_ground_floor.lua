@@ -239,6 +239,16 @@ end
 function BackroomGroundFloor:draw_items()
 	self.door:draw()
 	love.graphics.draw(images.ground_floor, -16, -16)
+
+	if BUILD_TYPE == "demo" then
+		local oy = 0
+		if is_in_table({"ja", "zh", "zh_Hans", "zh_Hant"}, Text.language) then 
+			oy = 2
+		end
+		print_outline(COL_MID_GRAY, COL_BLACK_BLUE, Text:text("game.demo"), 566, 102+oy)
+		print_outline(COL_WHITE, COL_BLACK_BLUE, Text:text("game.demo"), 564, 102+oy)
+	end
+	
 	game.level.elevator:draw_counter()
 
 	self.tv_presentation:draw()

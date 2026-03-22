@@ -50,9 +50,17 @@ function StatsMenu:init(game)
                         item.value = Metaprogression:get("xp")
                         item.overlay_value = nil
                         local threshold = Metaprogression:get_xp_level_threshold(Metaprogression:get("xp_level"))
-                        item.max_value = threshold
+                        if threshold ~= math.huge then
+                            item.max_value = threshold
+                        else
+                            item.max_value = 1
+                        end
 
-                        item.text = concat(Metaprogression:get("xp"), "/", threshold)
+                        if threshold ~= math.huge then
+                            item.text = concat(Metaprogression:get("xp"), "/", threshold)
+                        else
+                            item.text = concat(Metaprogression:get("xp"))
+                        end
                     end
                 }
             },

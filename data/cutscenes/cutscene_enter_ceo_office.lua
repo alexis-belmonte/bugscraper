@@ -14,6 +14,8 @@ return Cutscene:new("enter_ceo_office", {
         description = "Setup scene",
         duration = 0.0,
         enter = function(cutscene, data)
+            game.menu_manager:set_can_pause(false)
+
             -- Init players
             for _, player in pairs(game.players) do
                 player:set_input_mode(PLAYER_INPUT_MODE_CODE)
@@ -680,6 +682,7 @@ return Cutscene:new("enter_ceo_office", {
 
                 local x = px + (player.n-1)*16
                 player:set_position(x, data.py)
+                player.spr:update_offset(0, 0)
                 avg = avg + player.mid_x
                 nbplayer = nbplayer + 1
                 
@@ -715,6 +718,8 @@ return Cutscene:new("enter_ceo_office", {
 
         duration = 1.0,
         enter = function(cutscene, data)
+            game.menu_manager:set_can_pause(true)
+
             for _, player in pairs(game.players) do
                 player:set_input_mode(PLAYER_INPUT_MODE_USER)            
             end

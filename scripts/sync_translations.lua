@@ -55,7 +55,7 @@ return function(en_old, en_new_str, en_new_tbl, target_tbl, output_path)
                 -- Reconstruct the line
                 local indent = line:match("^(%s*)")
                 local comment = line:match("%-%-.+$") or ""
-                if comment ~= "" then comment = " " .. comment end
+                -- if comment ~= "" then comment = " " .. comment end
                 
                 -- We use the 'trailing' capture to preserve the comma (or lack thereof)
                 local newLine = string.format('%s%s = %s%s%s%s%s', indent, key, quote, final_val, quote, trailing, comment)
