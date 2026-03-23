@@ -234,7 +234,7 @@ return {
 
             input = {
                 title = "Entrada",
-                input = "Configuración de entrada...",
+                input = "CONFIGURACIÓN DE ENTRADA...",
             },
             input_submenu = {
                 title = "CONFIGURACIÓN DE ENTRADA",
@@ -355,7 +355,7 @@ return {
         },
         win = {
             title = "FELICITACIONES!",
-            wishlist = "Agregalo a tu lista de deseados en Steam", -- "wishlist" is a verb
+            wishlist = "AGREGALO A TU LISTA DE DESEADOS EN STEAM", -- "wishlist" is a verb
             continue = "CONTINUAR",
         },
         joystick_removed = {
