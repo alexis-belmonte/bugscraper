@@ -92,7 +92,7 @@ function DiscordPresence:update(dt)
 	elseif game.game_state == GAME_STATE_WIN or game.game_state == GAME_STATE_ELEVATOR_BURNING then
 		self.presence.details = Text:text("discord.details.win")
 	else
-		self.presence.details = nil
+		self.presence.details = ""
 	end
 
 	if self.next_presence_update < love.timer.getTime() then

@@ -8,17 +8,14 @@ local TextManager = Class:inherit()
 function TextManager:init()
     print("Loading text...")
 
+    self.supported_languages = {"en", "fr", "es", "pl", "pt_BR", "ja"}
+
     -- TODO only load required languages
     local start = love.timer.getTime()
-    self.languages = {
-        ["en"] = require "data.lang.en",
-        ["fr"] = require "data.lang.fr",
-        ["es"] = require "data.lang.es",
-        -- ["zh_Hans"] = require "data.lang.zh_Hans",
-        ["pl"] = require "data.lang.pl",
-        ["pt_BR"] = require "data.lang.pt_BR",
-        ["ja"] = require "data.lang.ja",
-    }
+    self.languages = {}
+    for _, lang in pairs(self.supported_languages) do
+        self.languages[lang] = require("data.lang."..lang)
+    end
 
     self.locale_to_language = { -- Some pre-defined default values.    
         ["en"] = "en",
@@ -90,7 +87,8 @@ function TextManager:find_default_locale()
     local option = Options:get("language")
 
     if not option or option == "default" then
-        local user_locales = love.system.getPreferredLocales()
+        -- local user_locales = love.system.getPreferredLocales()
+        local user_locales = {"en"}
         print("User preferred locales :", table_to_str(user_locales))
 
         for i = 1, #user_locales do

@@ -50,7 +50,6 @@ function Files:read_config_file(path, reference, create_if_missing)
     if not options_file_exists then
         if create_if_missing then
             print("'"..tostring(path).."' does not exist, so creating it")
-            self.is_first_time = true
             self:write_config_file(path, reference)
         end
         return copy_table_deep(reference)

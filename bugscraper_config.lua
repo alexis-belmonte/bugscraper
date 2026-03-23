@@ -1,6 +1,6 @@
 BUGSCRAPER_VERSION = "0.10"
 DISTRIBUTION_PLATFORM = "steam" -- default | itchio | steam
-BUILD_TYPE = "demo" -- normal | demo
+BUILD_TYPE = "normal" -- normal | demo
 
 INPUT_FILE_FORMAT_VERSION = 4
 METAPROGRESSION_FILE_FORMAT_VERSION = 3

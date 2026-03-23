@@ -8,7 +8,7 @@ local PROMPTS_NORMAL    = menu_util.PROMPTS_NORMAL
 local function func_language_menu(lang)
     return function()
         game.buffered_language = lang
-        game.menu_manager:set_menu("options_confirm_language")
+        game.menu_manager:set_menu("options_language_confirm_basic")
     end
 end
 
@@ -17,4 +17,6 @@ for _, lang in pairs(Text.supported_languages) do
     table.insert(options, {"{language."..lang.."}", func_language_menu(lang)})
 end
 
-return Menu:new(game, "{menu.options.language.title}", options, DEFAULT_MENU_BG_COLOR, PROMPTS_NORMAL)
+return Menu:new(game, "", options, DEFAULT_MENU_BG_COLOR, {
+    { { "ui_select" }, "✓ OK" },
+}, nil, { is_backable = false })

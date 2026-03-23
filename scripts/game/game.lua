@@ -130,7 +130,6 @@ function Game:init()
 	love.mouse.setVisible(Options:get("mouse_visible"))
 
 	self.is_game_ui_visible = true
-	self.is_first_time = Options.is_first_time
 	self.has_seen_controller_warning = false
 	self.ui_visible = true
 
@@ -140,6 +139,8 @@ function Game:init()
 	self.stat_ingame_time = Stats:get("ingame_time")
 
 	self.debug_mode = DEBUG_MODE
+
+	self.is_ready = false
 end
 
 function Game:new_game(params)
@@ -309,6 +310,20 @@ function Game:new_game(params)
 	_G_t_test = love.timer.getTime()
 end
 
+function Game:ready()
+	self.is_ready = true
+
+	if not Options:get("has_chosen_language") then
+		self.game_state = GAME_STATE_LANGUAGE_SETUP
+		for _, joy in pairs(love.joystick.getJoysticks()) do
+			self:queue_join_game("controller", joy)
+		end
+
+		self.music_player:set_disk("off")
+		self.menu_manager:set_menu("options_language_basic")
+	end
+end
+
 function Game:init_layers()
 	self.layers = {}
 	for i = 1, self.layers_count do
@@ -387,6 +402,10 @@ function Game:update_screen()
 end
 
 function Game:update(dt)
+	if not self.is_ready then
+		self:ready()
+	end
+
 	self.frame = self.frame + 1
 
 	self.frames_to_skip = max(0, self.frames_to_skip - 1)
@@ -965,7 +984,7 @@ end
 
 function Game:queue_join_game(input_profile_id, joystick)
 	self.join_cooldown_frames = 2
-
+	
 	local player_n = Input:find_free_user_number()
 	if player_n == nil then
 		return
@@ -974,14 +993,14 @@ function Game:queue_join_game(input_profile_id, joystick)
 	if joystick ~= nil and Input:get_joystick_user(joystick) ~= nil then
 		return
 	end
-
+	
 	Input:new_user(player_n)
 	Input:set_last_ui_user_n(player_n)
 	if joystick ~= nil then
 		Input:assign_joystick(player_n, joystick)
 	end
 	Input:assign_input_profile(player_n, input_profile_id)
-
+	
 	self.queued_players[player_n] = QueuedPlayer:new(player_n, input_profile_id, joystick)
 
 	return player_n
@@ -1232,6 +1251,11 @@ end
 
 function Game:joystickadded(joystick)
 	Input:joystickadded(joystick)
+
+	if self.game_state == GAME_STATE_LANGUAGE_SETUP then
+		print_debug("ADDED")
+		self:queue_join_game("controller", joystick)
+	end
 end
 
 function Game:joystickremoved(joystick)
@@ -1242,6 +1266,9 @@ function Game:joystickremoved(joystick)
 		if self.game_state == GAME_STATE_WAITING then
 			self:leave_game(player_n)
 			self.menu_manager:unpause()
+
+		elseif self.game_state == GAME_STATE_LANGUAGE_SETUP then
+			
 		else
 			self.menu_manager:enable_joystick_wait_mode(joystick)
 		end

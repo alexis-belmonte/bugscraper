@@ -5,7 +5,6 @@ local Class = require "scripts.meta.class"
 local OptionsManager = Class:inherit()
 
 function OptionsManager:init()
-	self.is_first_time = false
 	self.default_options = {
 		["$version"] = OPTIONS_FILE_FORMAT_VERSION,
 		language = "default",
@@ -55,6 +54,8 @@ function OptionsManager:init()
 		-- Save data (because who needs a separate file for that)
 		xp = 0,
 		xp_level = 0,
+		
+        has_chosen_language = false,
 	}
 	self.setters = {
 		sound_on = function(value) 

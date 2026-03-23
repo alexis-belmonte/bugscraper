@@ -132,10 +132,10 @@ local function generate_menus()
 
     menus.confirm_retry = Menu:new(game, "", {
         { "{menu.leave_menu}" },
-        { "{menu.no}", function()
+        { "❌ {menu.no}", function()
             game.menu_manager:back()
         end },
-        { "{menu.yes}", function()
+        { "✓ {menu.yes}", function()
             if game.level and game.level.backroom and game.level.backroom.name == "tutorial" and Metaprogression:get("has_played_tutorial") then
                 game:new_game({})
             elseif game.level and game.level.backroom and game.level.backroom.name == "credits" then
@@ -150,10 +150,10 @@ local function generate_menus()
 
     menus.confirm_tutorial = Menu:new(game, "", {
         { "{menu.leave_menu}" },
-        { "{menu.no}", function()
+        { "❌ {menu.no}", function()
             game.menu_manager:back()
         end },
-        { "{menu.yes}", function()
+        { "✓ {menu.yes}", function()
             game:new_game({ backroom = BackroomTutorial:new() })
         end },
     }, DEFAULT_MENU_BG_COLOR, PROMPTS_NORMAL)
@@ -161,8 +161,8 @@ local function generate_menus()
 
     menus.quit = Menu:new(game, "", {
         { "{menu.quit.description}" },
-        { "{menu.no}",              function() game.menu_manager:back() end },
-        { "{menu.yes}",             quit_game },
+        { "❌ {menu.no}",              function() game.menu_manager:back() end },
+        { "✓ {menu.yes}",             quit_game },
     }, DEFAULT_MENU_BG_COLOR, PROMPTS_NORMAL)
 
 
@@ -180,20 +180,23 @@ local function generate_menus()
     menus.options = require "data.menus.menu_options"
 
     menus.options_language = require "data.menus.menu_options_language"
-
+    
     menus.options_confirm_language = Menu:new(game, "", {
         { "{menu.options.confirm_language.description}" },
-        { "{menu.no}", function()
+        { "❌ {menu.no}", function()
             game.menu_manager:back()
         end },
-        { "{menu.yes}", function()
+        { "✓ {menu.yes}", function()
             if game.buffered_language then
                 Options:set("language", game.buffered_language)
             end
             quit_game(true)
         end },
     }, DEFAULT_MENU_BG_COLOR, PROMPTS_NORMAL)
+    
+    menus.options_language_basic = require "data.menus.menu_options_language_basic"
 
+    menus.options_language_confirm_basic = require "data.menus.menu_options_language_confirm_basic"
 
     menus.options_input = Menu:new(game, "{menu.options.input_submenu.title}", {
         { "<<< {menu.options.input_submenu.keyboard} >>>" },
@@ -231,6 +234,8 @@ local function generate_menus()
     menus.game_over = require "data.menus.menu_game_over"
 
     menus.win = require "data.menus.menu_win"
+
+    menus.demo_end = require "data.menus.menu_demo_end"
 
     menus.stats = require "data.menus.menu_stats"
 
