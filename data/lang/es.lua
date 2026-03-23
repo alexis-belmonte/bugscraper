@@ -1,363 +1,462 @@
 --[[
     TO TRANSLATORS:
-    * Reference document for all enemies, players, levels, etc:
+    * Reference document for all enemies, players, levels, etc: (can be outdated)
       https://docs.google.com/document/d/13UntpWqoTXgYnBm5HL0pZmjBDwMStIN8YB1IPdi7hlA
-    * Even though my target audience is people who already play games, since the game supports
-      local co-op and has very simple, accessible controls, it's not absurd to think that more
-      occasional gamers would try their hand at the game.
+    * To search for added or changed strings, you can use this regex in the search functionality 
+      of your text editor: (Ctrl+F then Alt+R on VS Code)
+      \[\[((ADDED)|(REMOVED))
     * It is very easy for me to add more glyphs if needed, just tell me and I'll do it.
     * Please notify me if there are any special technical requirements. (e.g. text rendering specifics, etc)
 ]]
 
 return {
-	__meta = {
-        menu_padding = 0.1,
+    __meta = {
+        -- Do not touch this section.
+        menu_padding = 0.18,
         large_mini_font = false,
     },
-	language = {
-		-- These should be kept untranslated in their original language ("english", "français", "中文", etc)
-		en = "English",
-		es = "Español",
-		fr = "Français",
-		zh = "简体中文",
-		pl = "Polski",
-		pt_BR = "Português Brasileiro",
-        ja = "日本語",
-	},
-	game = {
-		-- There's `demostración` but we can get away with just demo as is
-		demo = "DEMO", -- Chip appended to the game logo to indicate that this version is a demo
-		fps = "%d FPS",
-		congratulations = "FELICITACIONES!",
-		win_thanks = "Gracias por jugar esta demo",
-		win_wishlist = "Agregalo a tu lista de deseados en Steam :)", -- "Wishlist" is a verb
-		warning_web_controller = "Algunos navegadores no tienen el soporte de mandos necesario",
+    language = {
+        -- These should be kept untranslated in their original language ("English", "Français", "简体中文", etc)
+        en = "English",
+        es = "Español",
+        fr = "Français",
+        zh = "简体中文",
+        pl = "Polski",
+        pt_BR = "[[ADDED / 'Português Brasileiro']]",
+        ja = "[[ADDED / '日本語']]",
+    },
+    game = {
+        demo = "DEMO", -- Chip added to the game logo to indicate that this version is a demo
+        fps = "%d FPS",
+        congratulations = "FELICITACIONES!",
+        win_thanks = "Gracias por jugar esta demo",
+        win_wishlist = "Agregalo a tu lista de deseados en Steam :)", -- "Wishlist" is a verb
+        warning_web_controller = "Algunos navegadores no tienen el soporte de mandos necesario",
 
-		combo = "%d COMBO",
+        combo = "%d COMBO", 
+    },
+    level = {
+        world_prefix = "Departmento %s",
 
-	},
+        -- Department names
+        -- I chose to not use articles in english (so instead of "The Factory", it's just "Factory")
 
+        -- Dept 1: This can be any vaguely office-y name (I just chose this in english because of the word play), 
+        -- because this department just represents a generic office department.
+        world_1 = "Recursos de Depuracionces", 
+        -- Dept 2: This department is a factory themed after bees, with grungy metallic environment
+        world_2 = "Fábrica",
+        -- Dept 3: This is a moody, dark and mysterious room filled with endless racks of servers 
+        world_3 = "Servidores",
+        -- Dept 4: This is the highest department of the bugscraper, filled with lofty gardens and clean, white, modern architecture
+        world_4 = "Jardines",
 
-	level = {
-		world_prefix = "Departmento %s",
+        -- Dept 0: This is an underground secret department below the bugscraper. It contains a huge hangar with a large rocket. 
+        world_0 = "Sótano",
+    },
+    gun = {
+        -- Gun names
+        -- You can be more creative with these, you don't have to stay close to the originals.
+        -- Look at google doc for image references
+        machinegun = "Pistola de guisantes",
+        triple = "Pimienta triple",
+        burst = "Golpe de polen",
+        shotgun = "Escopeta de frambuesa",
+        minigun = "Ametralladora de semillas",
+        ring = "Baya grande",
+        mushroom_cannon = "Cañón de champiñones",
 
-		-- World names
-		world_1 = "Recursos de Depuracionces", -- The pun is lost (Debugging resources)
-		world_2 = "Fábrica",          -- CHANGED
-		world_3 = "Servidores", -- CHANGED
-		world_4 = "Jardines",        -- CHANGED
-		world_5 = "Ejecutivo",
+        resignation_letter = "Carta de Resignación",
+    },
+    player = {
+        name = {
+            -- Player names
+            -- If the native name clashes with something specific to the language/culture, please notify me.
+            -- You can also use translitations into the language if needed (e.g. Mio -> ミオ)
+            mio = "Mio",
+            cap = "Cap",
+            zia = "Zia",
+            tok = "Tok",
+            nel = "Nel",
+            nob = "Nob",
+            amb = "Amb",
 
-		world_0 = "Sótano", -- CHANGED
-	},
-	gun = {
-		-- Gun names
-		machinegun = "Pistola de guisantes",
-		triple = "Pimienta triple",
-		burst = "Golpe de polen",
-		shotgun = "Escopeta de frambuesa",
-		minigun = "Ametralladora de semillas",
-		ring = "Baya grande",
-		mushroom_cannon = "Cañón de champiñones",
+            -- These are guest characters from other games so please stay close to the original.
+            rico = "Rico", -- From 'The Bullet Hopper'
+            yv = "Y.V.", -- From 'Nuclear Throne' / See localized names here: https://docs.google.com/spreadsheets/d/18N1CNxIzSUm4CkIWUw0nbRnlxzAgoRbHpGyX8649Gjw/edit?usp=sharing
+            leo = "Leo",
+            dodu = "Dodu", 
+        },
+        abbreviation = "J%d", -- Short appreviation to denote players by their number. Example: in english, "P1" means "Player 1", in french "J1" means "Joueur 1".
+    },
+    enemy = {
+        -- These are the boss names. Please look at the Gdocs for reference.
+        -- Feel free to pick interesting names, and you don't have to base them off the english name.
 
-		resignation_letter =
-		"Carta de Resignación", -- CHANGED // don't ask why it's a gun. you'd have to question my coding.
-	},
-	player = {
-		name = {
-			-- Player names
-			-- No reason to change these during translation, except if:
-			--  * it's more appropriate to use a transliteration, or to use the script of the concerned language (e.g. Leo -> Léo in French)
-			--  * they clash with something specific to the language/culture (please notify me if it is the case)
-			mio = "Mio", -- `Mío` = `mine`; mino = means nothing
-			cap = "Cap",
-			zia = "Zia",
-			tok = "Tok",
-			nel = "Nel",
-			nob = "Nob", -- UNCHANGED (remove this line on the next commit)
-			amb = "Amb", -- UNCHANGED (remove this line on the next commit)
-			rico = "Rico",
-			leo = "Leo",
-			dodu = "Dodu",
-			yv = "Y.V.",  -- yung venuz
-		},
-		abbreviation = "J%d", -- Short appreviation to denote players by their number. Example: in english, "P1" means "Player 1", in french "J1" means "Joueur 1".
-	},
-	enemy = {
-		boss_1 = "Sr. Estiércol", -- keeping the format but people pick up less onto the abbreviation of sir (Señor)
-		boss_2 = "Su majestad",
-		boss_3 = "El maestro de redes",
+        -- (for example, the french name for "Mr. Dung" is "J. De Bouse", which is a 
+        -- play on words with the french word for 'dung' and a famous french humorist. 
+        -- "The Webmaster" is a play on words between the theme of the area and spider webs)
 
-        -- A very large cabbage-like, boulder-like, rolling enemy from the Garden area.
+        -- A somewhat witty and clownesque exectutive based off a Dung Beetle. 
+        boss_1 = "Sr. Estiércol",
+
+        -- The queen of the Factory, who's also a metal/rock singer.  
+        boss_2 = "Su majestad", 
+
+        -- The guardian of the Server Room, whose design is based off a motherboard and spiders.
+        boss_3 = "El maestro de redes",
+
+        -- A very large green cabbage-like, boulder-like, rolling enemy from the Garden area.   
+        -- You're free to be more creative with this one. 
+        -- (example: in French, I chose "Grobroco", "gros" (large) + "broco" (diminutive of broccoli))
         boss_4 = "Coloso Rodadoso",
 
         -- The CEO of the company, and the final boss. Its name is somewhat ominous-sounding.
-		-- Try to avoid ambiguity with the term "boss", which could be confused with the generic term for a video game boss.
-        boss_5 = "El Patronazo", -- works as is
-	},
-	upgrade = {
-		tea = {
-			title = "Té verde",
-			description = "+%d ❤ extra",
-		},
-		espresso = {
-			title = "Espresso",                                              -- Foreign word that is used as is here
-			description = "Multiplica x%d la velocidad de disparo durante un minuto", -- CHANGED
-		},
-		milk = {
-			title = "Leche", -- Dad? you came back?
-			description = "+%d ❤ permanente", -- CHANGED: "+%d maximum ❤"
-		},
-		boba = {
-			title = "Té de Boba",
-			description = "Multiplica x%d el maximo de munición",
-		},
-		soda = {
-			title = "Gaseosa", -- Cola works too but this is more specific.
-			description = "+%d salto en el aire",
-		},
-		fizzy_lemonade = {
-			title = "Limonada efervescente", -- Avoided the use of gaseosa as might be confusing.
-			description = "Mantén saltar para bajar suavemente",
-		},
-		apple_juice = {
-			title = "Jugo de manzana",
-			description = "Recupera +%d ❤",
-		},
-		hot_sauce = {
-			title = "Salsa picante",
-			description = "Hace x%d daño pero usa x%d munición", -- First "%d" is the damage, second "%d" is ammo
-		},
-		coconut_water = {
-			title = "Agua de coco",
-			description = "Pisar enemigos te da de vuelta %d%% munición",
-		},
-		hot_chocolate = {
-			title = "Chocolate caliente",
-			description = "x%d Velocidad de recarga", -- CHANGED
-		},
-		pomegranate_juice = {
-			title = "Jugo de granada",
-			description = "Crea una explosión cuando recibes daño",
-		},
-		energy_drink = {
-			title = "Bebida Energizante",
-			description = "El medidor del combo baja mas lento",
-		},
-	},
-	input = {
-		prompts = {
-			-- All of these may be shown as button prompts (i.e., "[Arrow keys] Move", "[C] Jump", etc)
-			move = "Mover",
-			left = "Izquierda",
-			right = "Derecha",
-			up = "Arriba",
-			down = "Abajo",
-			jump = "Saltar",
-			shoot = "Disparar",
-			interact = "Interactuar", -- CHANGED
-			leave_game = "Salir",
-			open = "Abrir",  -- CHANGED / As in, "open menu", and NOT for, say, opening chests.
-			collect = "Recolectar", -- CHANGED / As in, "collect item", "collect gun", etc
+        -- Try to avoid ambiguity with the term "boss", which could be confused with the generic term for a video game boss.
+        boss_5 = "El Patronazo",
+    },
+    upgrade = {
+        tea = {
+            title = "Té verde",
+            description = "+%d ❤ extra",
+        },
+        espresso = {
+            title = "Espresso",
+            description = "Multiplica x%d la velocidad de disparo durante un minuto",
+        },
+        milk = {
+            title = "Leche",
+            description = "+%d ❤ permanente",
+        },
+        boba = {
+            title = "Té de Boba",
+            description = "Multiplica x%d el maximo de munición",
+        },
+        soda = {
+            title = "Gaseosa", -- As in Coca-cola/Pepsi style soda.
+            description = "+%d salto en el aire",
+        },
+        fizzy_lemonade = {
+            title = "Limonada efervescente",
+            description = "Mantén saltar para bajar suavemente",
+        },
+        apple_juice = {
+            title = "Jugo de manzana",
+            description = "Recupera +%d ❤",
+        },
+        hot_sauce = {
+            title = "Salsa picante",
+            description = "Hace x%d daño pero usa x%d munición", -- First "%d" is the damage, second "%d" is ammo
+        },
+        coconut_water = {
+            title = "Agua de coco",
+            description = "Pisar enemigos te da de vuelta %d%% munición",
+        },
+        hot_chocolate = {
+            title = "Chocolate caliente",
+            description = "x%d Velocidad de recarga",
+        },
+        pomegranate_juice = {
+            title = "Jugo de granada",
+            description = "Crea una explosión cuando recibes daño",
+        },
+        energy_drink = {
+            title = "Bebida Energizante",
+            description = "El medidor del combo baja mas lento",
+        },
+    },
+    input = {
+        prompts = {
+            -- All of these are infinitive verbs and may be shown as button prompts 
+            -- (i.e., "[X] Shoot", "[C] Jump", etc)
 
-			ui_left = "Izquierda (menu)",
-			ui_right = "Derecha (menu)",
-			ui_up = "Arriba (menu)",
-			ui_down = "Abajo (menu)",
-			ui_select = "Confirmar",
-			ui_back = "Atrás",
-			pause = "Pausar",
+            -- Gameplay Actions
+            move = "Mover", 
+            left = "Izquierda",
+            right = "Derecha",
+            up = "Arriba",
+            down = "Abajo",
+            jump = "Saltar",
+            shoot = "Disparar",
+            interact = "Interactuar",
+            leave_game = "Salir",
+            open = "Abrir",         -- As in, "open menu", and NOT for, say, opening chests.
+            collect = "Recolectar",   -- As in, "collect item", "collect gun", etc
 
-			join = "Unirse",
-			-- Split sounds weird, share keyboard makes more sense
-			split_keyboard = "Compartir teclado", -- Verb, as in "Press [key] to split the keyboard". Shown on the title screen when one keyboard player has joined. Try to keep short since space is limited there.
+            -- UI Actions
+            ui_left = "Izquierda (menu)",
+            ui_right = "Derecha (menu)",
+            ui_up = "Arriba (menu)",
+            ui_down = "Abajo (menu)",
+            ui_select = "Confirmar",
+            ui_back = "Atrás",
+            pause = "Pausar",
+            join = "Unirse", -- As, in joining the game, adding a new player to the game.
+            -- As in, "Press [key] to split the keyboard". 
+            -- Shown on the title screen when one keyboard player has joined. 
+            -- Try to keep it as short as possible since space is limited there.
+            split_keyboard = "Compartir teclado", 
 
-			-- Keep as is, there's no good way to use a word here
-			jetpack = "Jetpack", -- Refers to "jetpackking", a move in the game
-			wall_jump = "Salto de pared",
-		},
-	},
-	menu = {
-		see_more = "ver maś...",
-		yes = "SÍ",
-		no = "NO", -- The same thing here hehe
-		leave_menu = "¿Salir del menú?",
-		quit = {
-			description = "¿Seguro que quieres salir?"
-		},
-		confirm_retry = {
-			-- Here refers to going back to the main menu to try another run, NOT restarting the game
-			description = "Reintentar?",
-		},
-		pause = {
-			title = "PAUSAR",
-			resume = "CONTINUAR",
-			retry = "REINTENTAR",
-			return_to_ground_floor = "VOLVER AL PRIMER PISO",
-			options = "OPCIONES",
-			credits = "CREDITOS",
-			feedback = "COMENTARIOS",
-			quit = "SALIR",
-			website = "SITIO OFICIAL",
-			discord = "DISCORD",
-			github = "GITHUB", -- UNCHANGED works as is.
-		},
-		options = {
-			title = "OPCIONES",
+            wall_jump = "Salto de pared",
+            jetpack = "Jetpack", -- Refers to "jetpacking", a move in the game performed by shooting downwards with a gun.
+        },
+    },
+    menu = {
+        see_more = "ver maś...",
+        yes = "SÍ",
+        no = "NO",
+        leave_menu = "¿Salir del menú?", -- Generic "leave menu?"
+        quit = {
+            description = "¿Seguro que quieres salir?"
+        },
+        confirm_retry = {
+            description = "Reintentar?",
+        },
+        pause = {
+            title = "PAUSAR",
+            resume = "CONTINUAR",
+            retry = "REINTENTAR",
 
-			input = {
-				title = "Entrada",
-				input = "Configuración de entrada...",
-			},
-			input_submenu = {
-				title = "CONFIGURACIÓN DE ENTRADA",
-				reset_controls = "REINICIAR CONTROLES",
-				controller_button_style = "ESTILO DE BOTONES",
-				controller_button_style_value = {
-					detect = "detectar",
-					switch = "Switch", -- A bit of context
-					playstation4 = "PlayStation 4", -- works as is
-					playstation5 = "PlayStation 5", -- works as is
-					xbox = "Xbox",   -- works as is
-				},
-				deadzone = "ZONA MUERTA DE LA PALANCA",
-				vibration = "VIBRACIÓN",
-				low_deadzone_warning = "Tolerancias de zona muerta baja pueden causar problemas", -- Warning displayed when the deadzone is very small
-				note_deadzone = "Ajustes de zona muerta tomarán efecto al salir de este menu",
+            -- This correspons to floor 0 in the game. To different cultures, the "ground floor" 
+            -- might usually mean "floor 1", so please make sure to avoid ambiguity when translating. 
+            -- (You can also translate as "main lobby" or something like it.)   
+            return_to_ground_floor = "VOLVER AL PRIMER PISO", 
+            options = "OPCIONES",
+            credits = "CREDITOS",
+            feedback = "COMENTARIOS",
+            quit = "SALIR",
+            website = "SITIO OFICIAL",
+            discord = "DISCORD",
+            github = "GITHUB",
+        },
+        options = {
+            title = "OPCIONES",
 
-				gameplay = "Jugabilidad",
-				interface = "Interfaz",
-				global = "Global", -- works as is
-				note_ui_min_button = "Al menos una configuración es requerida",
-				note_global_keyboard = "Estas configuraciones son las mismas para todos los jugadores de teclado",
-				note_global_controller = "Estas configuraciones son las mismas para todos los controladores",
-				subtitle_no_player = "[⚠ NO HAY JUGADOR %d]", -- Shown when navigating to player "%d"'s controller settings while no player of this number has joined yet.
-				subtitle_no_controller = "[⚠ NO HAY MANDO CONECTADO]", -- Shown in the controller settings while no controller is connected
-				no_buttons = "[NO HAY BOTÓN]",
-				press_button = "[PRESIONE BOTÓN]", -- Try to keep it short
-				press_again_to_remove = "Presione una tecla ya vinculada para removerla",
+            input = {
+                title = "Entrada",
+                input = "Configuración de entrada...",
+            },
+            input_submenu = {
+                title = "CONFIGURACIÓN DE ENTRADA",
+                reset_controls = "REINICIAR CONTROLES",
+                controller_button_style = "ESTILO DE BOTONES", -- The style of the buttons shown in-game. As in, PS4 style buttons, Xbox style buttons...
+                controller_button_style_value = {
+                    detect = "detectar",
+                    switch = "Switch",
+                    playstation4 = "PlayStation 4",
+                    playstation5 = "PlayStation 5",
+                    xbox = "Xbox",
+                },
+                deadzone = "ZONA MUERTA DE LA PALANCA",
+                vibration = "VIBRACIÓN",
+                low_deadzone_warning = "Tolerancias de zona muerta baja pueden causar problemas", -- Warning displayed when the joystick deadzone is very small
+                note_deadzone = "Ajustes de zona muerta tomarán efecto al salir de este menu",
 
-				keyboard = "Teclado",
-				keyboard_solo = "TECLADO (Por defecto)",
-				keyboard_p1 = "TECLADO (Mitad 1)", -- Split is an adjective here; as in, "the 1st split keyboard user"
-				keyboard_p2 = "TECLADO (Mitad 2)", -- Half works better than split however it still sounds weird.
+                gameplay = "Jugabilidad",
+                interface = "Interfaz",
+                global = "Global",
+                note_ui_min_button = "Al menos una configuración es requerida",
+                note_global_keyboard = "Estas configuraciones son las mismas para todos los jugadores de teclado",
+                note_global_controller = "Estas configuraciones son las mismas para todos los controladores",
+                -- Shown when navigating to player "%d"'s controller settings while no player of this number has joined yet.
+                subtitle_no_player = "[⚠ NO HAY JUGADOR %d]", 
+                -- Shown in the controller settings while no controller is connected
+                subtitle_no_controller = "[⚠ NO HAY MANDO CONECTADO]", 
+                no_buttons = "[NO HAY BOTÓN]",
+                press_button = "[PRESIONE BOTÓN]", -- Try to keep it as short as possible
+                -- When assigning buttons, if the user presses a button that is already bound, it will instead
+                -- remove that button.
+                press_again_to_remove = "Presione una tecla ya vinculada para removerla", 
+                
+                keyboard = "Teclado",
+                keyboard_solo = "TECLADO (Por defecto)",
+                -- "Split" as in, "the 1st split keyboard user"
+                keyboard_p1 = "TECLADO (Mitad 1)", 
+                keyboard_p2 = "TECLADO (Mitad 2)",
 
-				controller = "MANDO",
-				controller_p1 = "MANDO (Jugador 1)",
-				controller_p2 = "MANDO (Jugador 2)",
-				controller_p3 = "MANDO (Jugador 3)",
-				controller_p4 = "MANDO (Jugador 4)",
-			},
-			audio = {
-				title = "Audio", -- works as is
-				sound = "SONIDO",
-				volume = "VOLUMEN",
-				sfx_volume = "VOLUMEN DE LOS EFECTOS DE SONIDO",     -- UNCHANGED (Accurate)
-				music_volume = "VOLUMEN DE LA MÚSICA",
-				music_pause_menu = "REPRODUCIR MÚSICA DURANTE EL MENU DE PAUSA", -- Whether music should play on the pause menu
-				ambience = "SONIDOS AMBIENTALES",                    -- CHANGED
-			},
-			visuals = {
-				title = "Gráficos",
-				fullscreen = "PANTALLA COMPLETA",
-				pixel_scale = "ESCALA DE LOS PIXELES", -- How big should every pixel be displayed on-screen
-				pixel_scale_value = {
-					auto = "automática",
-					-- max_whole = "Escala máxima entera", -- Max integer scale
-					max_whole = "máximo entero",
-				},
-				vsync = "VSYNC", -- Sincronización vertical; if you want to be fancy but nobody really does that tbh
-				menu_blur = "DIFUMINAR FONDO DEL MENU",
-				background_speed = "VELOCIDAD DEL FONDO",
-				bullet_lightness = "BRILLO DE BALAS",
-			},
-			game = {
-				title = "Juego",
-				tutorial = "TUTORIAL...",
-				language = "IDIOMA...",
-				timer = "TEMPORIZADOR DE PARTIDA", -- round timer; timer as is sounds weird with no context
-				mouse_visible = "MOSTRAR PUNTERO DEL RATÓN", -- /!\ GOTCHA /!\: latam uses `mouse` but the goddamn europeans use `rat`
-				pause_on_unfocus = "PAUSAR AL PERDER EL FOCO", -- whether the game should pause when the window loses focus
-				screenshake = "SACUDIDO DE PATALLA", -- Same gotcha latam uses the foreign word
-				skip_boss_intros = "OMITIR INTRODUCCIÓN DE JEFES",
-				-- `Warn about low performance`
-				show_fps_warning = "AVISAR DE BAJO RENDIMIENTO", -- Whether the game should show a warning when its framerate is low
-				combo = "%d Combo",                  -- Work as is
-			},
-			language = {
-				title = "IDIOMA",
-			},
-			confirm_language = {
-				description = "¿Desea reiniciar el juego para aplicar el nuevo idioma?",
-			},
-		},
-		feedback = {
-			title = "COMENTARIOS", -- comments
-			bugs = "REPORTAR UN PROBLEMA",
-			features = "PROPONER UNA IDEA",
-		},
-		game_over = {
-			title = "JUEGO TERMINADO!", -- *sigh* Europeans use `fin de la partida` but the latam version `game over` (literally 1:1) fits better
-			kills = "Enemigos matados", -- The amount of enemies the player has killed
-			time = "Tiempo transcurrido", -- The time that the player took to complete the level
-			floor = "Piso",      -- Which storey the player was on when they died
-			max_combo = "Combo Máximo", -- CHANGED
-			score = "Puntaje",
-			continue = "CONTINUAR",
-			quick_restart = "REINICIO RÁPIDO",
-		},
-		new_reward = {
-			new_skin = "Nuevo Carácter!",
-			new_upgrade = "Nueva Mejora!",
-		},
-		win = {
-			title = "FELICITACIONES!",
-			wishlist = "Agregalo a tu lista de deseados en Steam", -- "wishlist" is a verb
-			continue = "CONTINUAR",
-		},
-		joystick_removed = {
-			title = "MANDO DESCONECTADO",
-			description = "Por favor conecte los siguientes mandos:",
-			continue = "CONTINUAR DE TODAS FORMAS",
-			item = "Jugador %d (%s)", -- e.g. "Player 2 (Xbox Controller)"
-		},
-		credits = {
-			-- not all people understand the symbol `&` I would like to get away with it
-			-- but better play it safe, if you desire you can replace `y` for `&`and get away with it
-			title = "CREDITOS",
-			ninesliced_presents = "Ninesliced presenta", -- CHANGED / Ninesliced with a capital letter ONLY on the N
-			game_by = "Un juego por",           -- As in, "A game by / John". If it is not possible to have the name *after* this, translate as "Creator" ("Creator / John")
-			leo_bernard = "Léo Bernard",        -- Please do not change this
-			music = "Musica",                   -- auditive design because sound design sounds weird
-			sound_design = "Diseño auditivo",   -- auditive design because sound design sounds weird
-			localization = "Localización",
-			additional_art = "Arte adicional",
-			playtesting = "Probadores de Jugabilidad",
-			special_thanks = "Agradecimentos especiales",
-			trailer = "Tráiler",                                -- CHANGED (Barely) it only needs an accent on the á to make it work
-			asset_creators = "Creadores de recursos",
-			tv_slideshow = "Contribuciones de la presentación en la TV", -- Refers to the powerpoint TV slideshow on the title screen, which was contributed by a variety of people
-			licenses = "Recursos y Lisencias de librerías",
-			more = "Y muchos mas...",
+                controller = "MANDO",
+                controller_p1 = "MANDO (Jugador 1)",
+                controller_p2 = "MANDO (Jugador 2)",
+                controller_p3 = "MANDO (Jugador 3)",
+                controller_p4 = "MANDO (Jugador 4)",
+            },
+            audio = {
+                title = "Audio",
+                sound = "SONIDO",
+                volume = "VOLUMEN",
+                sfx_volume = "VOLUMEN DE LOS EFECTOS DE SONIDO", -- Can also be translated as "effects volume" or "SFX volume"
+                music_volume = "VOLUMEN DE LA MÚSICA",
+                music_pause_menu = "REPRODUCIR MÚSICA DURANTE EL MENU DE PAUSA", -- Whether music should play on the pause menu
+                ambience = "SONIDOS AMBIENTALES",
+            },
+            visuals = {
+                title = "Gráficos",
+                fullscreen = "PANTALLA COMPLETA",
+                pixel_scale = "ESCALA DE LOS PIXELES", -- How big should every pixel be displayed on-screen (x1, x2, ...)
+                pixel_scale_value = {
+                    auto = "automática",
+                    max_whole = "máximo entero", -- Biggest whole number possible
+                },
+                vsync = "VSYNC",
+                menu_blur = "DIFUMINAR FONDO DEL MENU", -- Whether to apply the blurring effect in menu backgrounds
+                background_speed = "VELOCIDAD DEL FONDO", -- How quickly the background scrolls 
+                bullet_lightness = "BRILLO DE BALAS", -- How brightly bullets are rendered
+            },
+            game = {
+                title = "Juego",
+                tutorial = "TUTORIAL...",
+                language = "IDIOMA...",
+                timer = "TEMPORIZADOR DE PARTIDA",
+                mouse_visible = "MOSTRAR PUNTERO DEL RATÓN",
+                pause_on_unfocus = "PAUSAR AL PERDER EL FOCO", -- whether the game should pause when the window loses focus
+                screenshake = "SACUDIDO DE PATALLA",
+                skip_boss_intros = "OMITIR INTRODUCCIÓN DE JEFES", -- Whether the game should skip the boss intro animations 
+                show_fps_warning = "AVISAR DE BAJO RENDIMIENTO", -- Whether the game should show a warning when its framerate is low
+
+            },
+            language = {
+                title = "IDIOMA",
+            },
+            confirm_language = {
+                description = "¿Desea reiniciar el juego para aplicar el nuevo idioma?",
+            },
+        },
+        achievements = {
+            title = "[[ADDED / 'ACHIEVEMENTS']]",
+        },
+        feedback = {
+            title = "COMENTARIOS",
+            bugs = "REPORTAR UN PROBLEMA",
+            features = "PROPONER UNA IDEA",
+        },
+        game_over = {
+            title = "JUEGO TERMINADO!",
+            kills = "Enemigos matados", -- The amount of enemies the player has killed
+            deaths = "[[ADDED / 'Deaths']]",
+            time = "Tiempo transcurrido",            -- The time that the player took to complete the level
+            floor = "Piso",          -- Which storey the player was on when they died
+            score = "Puntaje",
+            max_combo = "Combo Máximo",
+
+            continue = "CONTINUAR",
+            quick_restart = "REINICIO RÁPIDO",
+        },
+        stats = {
+            title = "[[ADDED / 'STATS']]",
+
+            time_total = "[[ADDED / 'Time played (total)']]",
+            time_ingame = "[[ADDED / 'Time played (in game)']]",
+            runs = "[[ADDED / 'Runs']]",
+            best_run = "[[ADDED / 'Best wave reached']]", -- The biggest wave number reached on any run
+        },
+        new_reward = {
+            new_skin = "Nuevo Carácter!",
+            new_upgrade = "Nueva Mejora!",
+        },
+        win = {
+            title = "FELICITACIONES!",
+            wishlist = "Agregalo a tu lista de deseados en Steam", -- "wishlist" is a verb
+            continue = "CONTINUAR",
+        },
+        joystick_removed = {
+            title = "MANDO DESCONECTADO",
+            description = "Por favor conecte los siguientes mandos:",
+            continue = "CONTINUAR DE TODAS FORMAS",
+            item = "Jugador %d (%s)", -- e.g. "Player 2 (Xbox Controller)"
+        },
+        credits = {
+            title = "CREDITOS",
+            ninesliced_presents = "Ninesliced presenta",
+            game_by = "Un juego por", 
+            leo_bernard = "Léo Bernard", -- Please do not touch this
+            music = "Musica",
+            sound_design = "Diseño auditivo",
+            localization = "Localización",
+            additional_art = "Arte adicional",
+            playtesting = "Probadores de Jugabilidad",
+            special_thanks = "Agradecimentos especiales",
+            trailer = "Tráiler",
+            asset_creators = "Creadores de recursos",
+            tv_slideshow = "Contribuciones de la presentación en la TV", -- Refers to the powerpoint TV slideshow on the title screen, which was contributed by a variety of people 
+            licenses = "Recursos y Lisencias de librerías",
+            more = "Y muchos mas...",                        -- For the people that I might have forgotten in the special thanks section
             thank_you_for_playing = "¡Gracias por jugar!", -- Shown at the end of the credits
 
-			x_by_y = "%s por %s", -- "ASSET_NAME by CREATOR". Used to credit assets such as sound effects
-			asset_item = "%s por %s / %s", -- "ASSET_NAME by CREATOR / LICENCE". Used to credit assets such as sound effects
-		},
-		open_source = {
-			title = "Licencias de código abierto",
-		},
-	},
-	discord = { -- Text used for Discord rich presence
-		state = {
-			solo = "Jugando solo",
-			local_multiplayer = "Multijugador local",
-		},
-		details = {
-			waiting = "En el vestíbulo", -- *sigh* The europeans. (no one uses vestibulo on latam but better play it safe)
-			playing = "Jugando (Piso %d/%d)",
-			dying = "Derrotado (Piso %d/%d)",
-			win = "Pantalla de victoria",
-		},
-	},
+            x_by_y = "%s por %s",                              -- "ASSET_NAME by CREATOR". Used to credit assets such as sound effects
+            asset_item = "%s por %s / %s",                     -- "ASSET_NAME by CREATOR / LICENCE"
+        },
+        open_source = {
+            title = "Licencias de código abierto",
+        },
+    },
+    achievements = {
+        ach_complete_w1 = {
+            name = "[[ADDED / 'Bug Resources']]",
+            description = "[[ADDED / 'Complete department 1']]",
+        },
+        ach_complete_w2 = {
+            name = "[[ADDED / 'Factory']]",
+            description = "[[ADDED / 'Complete department 2']]",
+        },
+        ach_complete_w3 = {
+            name = "[[ADDED / 'Server Room']]",
+            description = "[[ADDED / 'Complete department 3']]",
+        },
+        ach_complete_w4 = {
+            name = "[[ADDED / 'Gardens']]",
+            description = "[[ADDED / 'Complete department 4']]",
+        },
+        ach_complete_end = {
+            name = "[[ADDED / 'Vacations']]",
+            description = "[[ADDED / 'Complete the game']]",
+        },
+        ach_death = {
+            name = "[[ADDED / 'Perseverance']]",
+            description = "[[ADDED / 'Die 50 times']]",
+        },
+        ach_all_upgrades = {
+            name = "[[ADDED / 'A Furious Cocktail']]",
+            description = "[[ADDED / 'Unlock all upgrades']]",
+        },
+        ach_all_skins = {
+            name = "[[ADDED / 'Team Leader']]",
+            description = "[[ADDED / 'Unlock all characters']]",
+        },
+        ach_max_hearts = {
+            name = "[[ADDED / 'Lover']]",
+            description = "[[ADDED / 'Obtain 7 ❤']]",
+        },
+        ach_no_damage_easy = {
+            name = "[[ADDED / 'Iron Bug']]",
+            description = "[[ADDED / 'Do not take damage for 20 floors']]",
+        },
+        ach_no_damage_full = {
+            name = "[[ADDED / 'Golden Bug']]",
+            description = "[[ADDED / 'Do not take damage for a full game']]",
+        },
+        ach_no_floor = {
+            name = "[[ADDED / 'The Floor Is Lava']]",
+            description = "[[ADDED / 'Do not touch the ground for 10 floors']]",
+        },
+        ach_big_combo = {
+            name = "[[ADDED / 'Furious']]",
+            description = "[[ADDED / 'Get a 100 combo']]",
+        },
+        ach_smash_easter_egg = {
+            name = "[[ADDED / 'GAME!']]", -- This is a reference to what the announcer says at the end of a match in Smash Bros.
+            description = "[[ADDED / 'Obtain the secret exit animation']]", 
+        },
+    },
+    discord = { -- Text used for Discord rich presence
+        state = {
+            solo = "Jugando solo",
+            local_multiplayer = "Multijugador local",
+        },
+        details = {
+            waiting = "En el vestíbulo",
+            playing = "Jugando (Piso %d/%d)",
+            dying = "Derrotado (Piso %d/%d)",
+            win = "Pantalla de victoria",
+        },
+    },
 }
