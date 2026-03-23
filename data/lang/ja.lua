@@ -109,7 +109,7 @@ return {
         -- A very large green cabbage-like, boulder-like, rolling enemy from the Garden area.   
         -- You're free to be more creative with this one. 
         -- (example: in French, I chose "Grobroco", "gros" (large) + "broco" (diminutive of broccoli))
-        boss_4 = "C.B.ローリング",-- I wanted to name it "Rolling Cabbage," but it's too long, so I made it sound like J.K. Rowling.
+        boss_4 = "ローリングキャベツ",
 
         -- The CEO of the company, and the final boss. Its name is somewhat ominous-sounding.
         -- Try to avoid ambiguity with the term "boss", which could be confused with the generic term for a video game boss.
@@ -322,7 +322,7 @@ return {
             },
         },
         achievements = {
-            title = "[[ADDED / 'ACHIEVEMENTS']]",
+            title = "実績",
         },
         feedback = {
             title = "フィードバック",
@@ -332,7 +332,7 @@ return {
         game_over = {
             title = "GAME OVER!",
             kills = "倒した敵の数",  -- The amount of enemies the player has killed
-            deaths = "[[ADDED / 'Deaths']]",
+            deaths = "やられた回数",
             time = "タイム",             -- The time that the player took to complete the level
             floor = "フロア",           -- Which storey the player was on when they died
             score = "スコア",
@@ -342,12 +342,12 @@ return {
             quick_restart = "クイックリスタート",
         },
         stats = {
-            title = "[[ADDED / 'STATS']]",
+            title = "統計",
 
-            time_total = "[[ADDED / 'Time played (total)']]",
-            time_ingame = "[[ADDED / 'Time played (in game)']]",
-            runs = "[[ADDED / 'Runs']]",
-            best_run = "[[ADDED / 'Best wave reached']]",  -- The biggest wave number reached on any run
+            time_total = "プレイ時間 (合計)",
+            time_ingame = "プレイ時間 (遊んだ分)",
+            runs = "挑戦回数",
+            best_run = "最高到達数",  -- The biggest wave number reached on any run
         },
         new_reward = {
             new_skin = "新キャラ追加!",
@@ -392,59 +392,59 @@ return {
     achievements = {
         ach_complete_w1 = {
             name = "バグ資料室", 
-            description = "[[ADDED / 'Complete department 1']]",
+            description = "部署1　突破",
         },
         ach_complete_w2 = {
             name = "工場",
-            description = "[[ADDED / 'Complete department 2']]",
+            description = "部署2　突破",
         },
         ach_complete_w3 = {
             name = "サーバールーム",
-            description = "[[ADDED / 'Complete department 3']]",
+            description = "部署3　突破",
         },
         ach_complete_w4 = {
             name = "ガーデン",
-            description = "[[ADDED / 'Complete department 4']]",
+            description = "部署4　突破",
         },
         ach_complete_end = {
-            name = "[[ADDED / 'Vacations']]",
-            description = "[[ADDED / 'Complete the game']]",
+            name = "バケーション",
+            description = "ミッション　コンプリート",
         },
         ach_death = {
-            name = "[[ADDED / 'Perseverance']]",
-            description = "[[ADDED / 'Die 50 times']]",
+            name = "不屈の精神",
+            description = "50回やられた",
         },
         ach_all_upgrades = {
-            name = "[[ADDED / 'A Furious Cocktail']]",
-            description = "[[ADDED / 'Unlock all upgrades']]",
+            name = "猛烈なカクテル", --It was translated like this in Minecraft.
+            description = "全てのアップグレードを解禁した",
         },
         ach_all_skins = {
-            name = "[[ADDED / 'Team Leader']]",
-            description = "[[ADDED / 'Unlock all characters']]",
+            name = "チームリーダー",
+            description = "全てのキャラを解禁した",
         },
         ach_max_hearts = {
-            name = "[[ADDED / 'Lover']]",
-            description = "[[ADDED / 'Obtain 7 ❤']]",
+            name = "恋人",
+            description = "❤を7つ獲得した",
         },
         ach_no_damage_easy = {
-            name = "[[ADDED / 'Iron Bug']]",
-            description = "[[ADDED / 'Do not take damage for 20 floors']]",
+            name = "アイアンバグ",
+            description = "ノーダメージで　20階突破した",
         },
         ach_no_damage_full = {
-            name = "[[ADDED / 'Golden Bug']]",
-            description = "[[ADDED / 'Do not take damage for a full game']]",
+            name = "ゴールデンバグ",
+            description = "ノーダメージで　1ゲーム制覇した",
         },
         ach_no_floor = {
-            name = "[[ADDED / 'The Floor Is Lava']]",
-            description = "[[ADDED / 'Do not touch the ground for 10 floors']]",
+            name = "溶岩の床",
+            description = "10階突破まで床に触れなかった",
         },
         ach_big_combo = {
-            name = "[[ADDED / 'Furious']]",
-            description = "[[ADDED / 'Get a 100 combo']]",
+            name = "バーサーカー",--I translated it as "berserker" to capture that feeling of bulldozing through everything with pure rage.
+            description = "100コンボ達成",
         },
         ach_smash_easter_egg = {
-            name = "[[ADDED / 'GAME!']]",  -- This is a reference to what the announcer says at the end of a match in Smash Bros.
-            description = "[[ADDED / 'Obtain the secret exit animation']]", 
+            name = "GAME SET!",  -- This is a reference to what the announcer says at the end of a match in Smash Bros.
+            description = "秘密の出口のアニメを見つける", 
         },
     },
     discord = { -- Text used for Discord rich presence
