@@ -111,6 +111,7 @@ jobs:
 
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@v3
+        if: ${{ failure() }}
 
       - name: Build and install makelove
         run: |
@@ -124,6 +125,10 @@ jobs:
           # This has the necessary patches to support LÖVE 12
           pip install git+https://github.com/alexis-belmonte/makelove
 
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        if: ${{ failure() }}
+      
       - name: Prepare binary dirs for makelove
         run: |
           win64_subfolder="$(ls -d "${LOVE_BINARIES_DIR}/win64/"*)"
@@ -146,6 +151,10 @@ jobs:
 
           export PATH="${APPIMAGETOOL_WRAPPER}:${PATH}"
           makelove win64 macos appimage || true
+
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        if: ${{ failure() }}
 
       - name: Add a Steam-centric version of the game
         run: |
