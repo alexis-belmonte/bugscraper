@@ -123,7 +123,7 @@ jobs:
       - name: Build platform-dependent packages
         run: |
           export DISPLAY=:100
-          X ${DISPLAY} &
+          sudo X ${DISPLAY} &
           wineboot
 
           source "${MAKELOVE_DIR}/.env/bin/activate"
@@ -133,9 +133,6 @@ jobs:
 
           export PATH="${APPIMAGETOOL_WRAPPER}:${PATH}"
           makelove || true
-
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
 
       - name: Add a Steam-centric version of the game
         run: |
