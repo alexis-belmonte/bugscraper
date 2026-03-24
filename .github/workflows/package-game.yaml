@@ -1,4 +1,4 @@
-name: Produce platform-dependent packages for publishing
+name: Produce artifact_name-dependent packages for publishing
 on:
   workflow_dispatch:
     inputs:
@@ -13,7 +13,7 @@ env:
   APPIMAGETOOL_WRAPPER: /opt/appimagetool-wrapper
 
   LOVE_BINARIES_DIR: /tmp/love-binaries
-  LOVE_PLATFORM_NAMES: win64.exe x86_64.AppImage macos.zip
+  LOVE_ARTIFACT_NAMES: win64.zip x86_64.AppImage macos.zip
 
   MAKELOVE_DIR: /tmp/makelove
 
@@ -74,30 +74,32 @@ jobs:
 
       - name: Gather official binaries from nightly
         run: |
-          for platform in ${LOVE_PLATFORM_NAMES[@]}; do
-            mkdir -p "${LOVE_BINARIES_DIR}/${platform}"
+          for artifact_name in ${LOVE_ARTIFACT_NAMES[@]}; do
+            mkdir -p "${LOVE_BINARIES_DIR}/${artifact_name}"
 
             # curl -L \
-            #   -o "${LOVE_BINARIES_DIR}/love-${platform}.zip" \
-            #   "https://nightly.link/love2d/love/workflows/main/main/love-${platform}.zip"
-            
+            #   -o "${LOVE_BINARIES_DIR}/love-${artifact_name}.zip" \
+            #   "https://nightly.link/love2d/love/workflows/main/main/love-${artifact_name}.zip"
+           
             curl -L \
-              -o "${LOVE_BINARIES_DIR}/love-${platform}.zip" \
-              "https://github.com/love2d/love/releases/download/11.5/love-11.5-${platform}"
+              -o "${LOVE_BINARIES_DIR}/love-${artifact_name}" \
+              "https://github.com/love2d/love/releases/download/11.5/love-11.5-${artifact_name}"
 
-            unzip -o \
-              "${LOVE_BINARIES_DIR}/love-${platform}.zip" \
-              -d "${LOVE_BINARIES_DIR}/${platform}"
-
-            rm "${LOVE_BINARIES_DIR}/love-${platform}.zip"
-
-            if [[ "${platform}" == "x86_64.AppImage" ]]; then
-              binary_path="$(ls -d "${LOVE_BINARIES_DIR}/${platform}"/* | head -n 1)"
-            else
-              binary_path="${LOVE_BINARIES_DIR}/${platform}"
+            if [[ "${artifact_name}" == *.zip ]]; then
+              unzip -o \
+                "${LOVE_BINARIES_DIR}/love-${artifact_name}.zip" \
+                -d "${LOVE_BINARIES_DIR}/${artifact_name}"
             fi
 
-            sed -i 's%\$\[LOVE_BINARIES_'"${platform}"'\]%'"${binary_path}"'%' makelove.toml
+            rm "${LOVE_BINARIES_DIR}/love-${artifact_name}.zip"
+
+            if [[ "${artifact_name}" == "x86_64.AppImage" ]]; then
+              binary_path="${LOVE_BINARIES_DIR}/love-${artifact_name}"
+            else
+              binary_path="${LOVE_BINARIES_DIR}/${artifact_name}"
+            fi
+
+            sed -i 's%\$\[LOVE_BINARIES_'"${artifact_name}"'\]%'"${binary_path}"'%' makelove.toml
           done
 
       - name: Prepare LÖVE binaries
@@ -124,7 +126,7 @@ jobs:
           # This has the necessary patches to support LÖVE 12
           pip install git+https://github.com/alexis-belmonte/makelove
 
-      - name: Build platform-dependent packages
+      - name: Build artifact_name-dependent packages
         run: |
           export DISPLAY=:100
           sudo X ${DISPLAY} &
