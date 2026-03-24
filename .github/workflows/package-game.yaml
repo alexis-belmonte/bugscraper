@@ -75,10 +75,10 @@ jobs:
       - name: Gather official binaries from nightly
         run: |
           for artifact_name in ${LOVE_ARTIFACT_NAMES[@]}; do
-            artifact_name_extless="${artifact_name%.*}"
-
-            if [[ "${artifact_name_extless}" == "x86_64.AppImage" ]]; then
+            if [[ "${artifact_name}" == "x86_64.AppImage" ]]; then
               artifact_name_extless="appimage"
+            else
+              artifact_name_extless="${artifact_name%.*}"
             fi
 
             mkdir -p "${LOVE_BINARIES_DIR}/${artifact_name_extless}"
@@ -91,25 +91,23 @@ jobs:
               -o "${LOVE_BINARIES_DIR}/love-${artifact_name}" \
               "https://github.com/love2d/love/releases/download/11.5/love-11.5-${artifact_name}"
 
-            if [[ "${artifact_name}" == *.zip ]]; then
+            if [[ "${artifact_name_extless}" == "macos" ]]; then
+              mv "${LOVE_BINARIES_DIR}/love-${artifact_name}" "${LOVE_BINARIES_DIR}/${artifact_name_extless}/love.zip"
+            elif [[ "${artifact_name}" == *.zip ]]; then
               unzip -o \
                 "${LOVE_BINARIES_DIR}/love-${artifact_name}" \
                 -d "${LOVE_BINARIES_DIR}/${artifact_name_extless}"
-            fi
-
-            rm "${LOVE_BINARIES_DIR}/love-${artifact_name}"
-
-            if [[ "${artifact_name}" == "x86_64.AppImage" ]]; then
-              binary_path="${LOVE_BINARIES_DIR}/love-${artifact_name}"
+              target_path="${LOVE_BINARIES_DIR}/${artifact_name_extless}"
             else
-              binary_path="${LOVE_BINARIES_DIR}/${artifact_name}"
+              target_path="$(ls -d "${LOVE_BINARIES_DIR}/${artifact_name_extless}"/*)"
             fi
 
-            sed -i 's%\$\[LOVE_BINARIES_'"${artifact_name_extless}"'\]%'"${binary_path}"'%' makelove.toml
-          done
+            if [[ "${artifact_name_extless}" != "macos" ]]; then
+              rm "${LOVE_BINARIES_DIR}/love-${artifact_name}"
+            fi
 
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
+            sed -i 's%\$\[LOVE_BINARIES_'"${artifact_name_extless}"'\]%'"${target_path}"'%' makelove.toml
+          done
 
       - name: Build and install makelove
         run: |
@@ -122,6 +120,15 @@ jobs:
 
           # This has the necessary patches to support LÖVE 12
           pip install git+https://github.com/alexis-belmonte/makelove
+
+      - name: Prepare binary dirs for makelove
+        run: |
+          win64_subfolder="$(ls -d "${LOVE_BINARIES_DIR}/win64/"*)"
+          mv "${win64_subfolder}/"{*,.*} "${LOVE_BINARIES_DIR}/win64/"
+          rmdir "${win64_subfolder}"
+
+          appimage_file="$(ls -d "${LOVE_BINARIES_DIR}/appimage/"*)"
+          chmod +x "${app_image}"
 
       - name: Build artifact_name-dependent packages
         run: |
@@ -136,6 +143,9 @@ jobs:
 
           export PATH="${APPIMAGETOOL_WRAPPER}:${PATH}"
           makelove win64 macos appimage || true
+
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
 
       - name: Add a Steam-centric version of the game
         run: |
