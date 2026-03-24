@@ -87,11 +87,11 @@ jobs:
 
             if [[ "${artifact_name}" == *.zip ]]; then
               unzip -o \
-                "${LOVE_BINARIES_DIR}/love-${artifact_name}.zip" \
+                "${LOVE_BINARIES_DIR}/love-${artifact_name}" \
                 -d "${LOVE_BINARIES_DIR}/${artifact_name}"
             fi
 
-            rm "${LOVE_BINARIES_DIR}/love-${artifact_name}.zip"
+            rm "${LOVE_BINARIES_DIR}/love-${artifact_name}"
 
             if [[ "${artifact_name}" == "x86_64.AppImage" ]]; then
               binary_path="${LOVE_BINARIES_DIR}/love-${artifact_name}"
