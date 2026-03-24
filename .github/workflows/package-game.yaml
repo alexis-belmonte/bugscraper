@@ -132,7 +132,7 @@ jobs:
           sed -i 's%\$\[BUGSCRAPER_VERSION\]%'${bugscraper_version}'%' makelove.toml
 
           export PATH="${APPIMAGETOOL_WRAPPER}:${PATH}"
-          makelove || true
+          makelove win64 macos appimage || true
 
       - name: Add a Steam-centric version of the game
         run: |
