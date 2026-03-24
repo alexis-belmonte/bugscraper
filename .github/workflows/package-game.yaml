@@ -106,7 +106,7 @@ jobs:
               target_path="$(ls -d "${LOVE_BINARIES_DIR}/${artifact_name_extless}"/*)"
             fi
 
-            if [[ "${artifact_name_extless}" != "macos" ]] || [[ "${artifact_name_extless}" != "appimage" ]]; then
+            if [[ "${artifact_name_extless}" != "macos" ]] && [[ "${artifact_name_extless}" != "appimage" ]]; then
               rm "${LOVE_BINARIES_DIR}/love-${artifact_name}"
             fi
 
