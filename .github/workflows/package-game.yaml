@@ -1,5 +1,11 @@
 name: Produce platform-dependent packages for publishing
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      tags:
+        description: 'Comma-separated list of tags to apply (e.g., "demo,debug")'
+        required: false
+        default: ''
 
 env:
   APPIMAGETOOL_DIR: /tmp/appimagetool
@@ -14,9 +20,16 @@ env:
 jobs:
   build-packages:
     runs-on: ubuntu-22.04
+    env:
+      TAGS: ${{ github.event.inputs.tags || '' }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - name: Apply tag-based patches
+        run: |
+          chmod +x _tools/patch_tags.sh
+          ./_tools/patch_tags.sh "$TAGS" || exit 1
 
       - name: Update base system
         run: |
