@@ -140,7 +140,7 @@ jobs:
           rmdir "${win64_subfolder}"
 
           appimage_file="$(ls -d "${LOVE_BINARIES_DIR}/appimage/"*)"
-          chmod +x "${app_image}"
+          chmod +x "${appimage_file}"
 
       - name: Build artifact_name-dependent packages
         run: |
