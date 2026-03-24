@@ -93,6 +93,10 @@ jobs:
 
             if [[ "${artifact_name_extless}" == "macos" ]]; then
               mv "${LOVE_BINARIES_DIR}/love-${artifact_name}" "${LOVE_BINARIES_DIR}/${artifact_name_extless}/love.zip"
+              target_path="${LOVE_BINARIES_DIR}/${artifact_name_extless}"
+            elif [[ "${artifact_name_extless}" == "appimage" ]]; then
+              mv "${LOVE_BINARIES_DIR}/love-${artifact_name}" "${LOVE_BINARIES_DIR}/${artifact_name_extless}/love-${artifact_name}"
+              target_path="${LOVE_BINARIES_DIR}/${artifact_name_extless}/love-${artifact_name}"
             elif [[ "${artifact_name}" == *.zip ]]; then
               unzip -o \
                 "${LOVE_BINARIES_DIR}/love-${artifact_name}" \
@@ -102,7 +106,7 @@ jobs:
               target_path="$(ls -d "${LOVE_BINARIES_DIR}/${artifact_name_extless}"/*)"
             fi
 
-            if [[ "${artifact_name_extless}" != "macos" ]]; then
+            if [[ "${artifact_name_extless}" != "macos" ]] || [[ "${artifact_name_extless}" != "appimage" ]]; then
               rm "${LOVE_BINARIES_DIR}/love-${artifact_name}"
             fi
 
