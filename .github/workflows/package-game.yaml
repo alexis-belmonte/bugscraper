@@ -224,4 +224,4 @@ jobs:
       - name: Delete Artifact
         uses: geekyeggo/delete-artifact@v1
         with:
-          name: bugscraper-packages-path
+          name: bugscraper-packages-pack
