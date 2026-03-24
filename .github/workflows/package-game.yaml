@@ -75,7 +75,9 @@ jobs:
       - name: Gather official binaries from nightly
         run: |
           for artifact_name in ${LOVE_ARTIFACT_NAMES[@]}; do
-            mkdir -p "${LOVE_BINARIES_DIR}/${artifact_name}"
+            artifact_name_extless="${artifact_name%.*}"
+
+            mkdir -p "${LOVE_BINARIES_DIR}/${artifact_name_extless}"
 
             # curl -L \
             #   -o "${LOVE_BINARIES_DIR}/love-${artifact_name}.zip" \
@@ -88,7 +90,7 @@ jobs:
             if [[ "${artifact_name}" == *.zip ]]; then
               unzip -o \
                 "${LOVE_BINARIES_DIR}/love-${artifact_name}" \
-                -d "${LOVE_BINARIES_DIR}/${artifact_name}"
+                -d "${LOVE_BINARIES_DIR}/${artifact_name_extless}"
             fi
 
             rm "${LOVE_BINARIES_DIR}/love-${artifact_name}"
@@ -101,6 +103,9 @@ jobs:
 
             sed -i 's%\$\[LOVE_BINARIES_'"${artifact_name}"'\]%'"${binary_path}"'%' makelove.toml
           done
+
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
 
       - name: Prepare LÖVE binaries
         run: |
