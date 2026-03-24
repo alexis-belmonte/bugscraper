@@ -85,6 +85,7 @@ for tag in "${TAGS[@]}"; do
             patch_file="${PATCH_APPEND[$key]}"
             
             echo "::notice title=Patch Application::APPEND: ${patch_file} → ${original_file}"
+            echo "" >> "$original_file"
             cat "$patch_file" >> "$original_file"
             
             # Delete patch file
