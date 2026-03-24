@@ -136,7 +136,7 @@ jobs:
       - name: Prepare binary dirs for makelove
         run: |
           win64_subfolder="$(ls -d "${LOVE_BINARIES_DIR}/win64/"*)"
-          mv "${win64_subfolder}/"{*,.*} "${LOVE_BINARIES_DIR}/win64/"
+          mv "${win64_subfolder}/"* "${LOVE_BINARIES_DIR}/win64/"
           rmdir "${win64_subfolder}"
 
           appimage_file="$(ls -d "${LOVE_BINARIES_DIR}/appimage/"*)"
