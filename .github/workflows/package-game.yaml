@@ -120,7 +120,7 @@ jobs:
           pip install --upgrade pip
 
           # This has the necessary patches to support LÖVE 12
-          pip install git+https://github.com/kongeor/makelove
+          pip install git+https://github.com/alexis-belmonte/makelove
 
       - name: Build platform-dependent packages
         run: |
