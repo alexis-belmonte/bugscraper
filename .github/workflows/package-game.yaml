@@ -109,6 +109,9 @@ jobs:
             sed -i 's%\$\[LOVE_BINARIES_'"${artifact_name_extless}"'\]%'"${target_path}"'%' makelove.toml
           done
 
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+
       - name: Build and install makelove
         run: |
           mkdir -p "${MAKELOVE_DIR}"
@@ -143,9 +146,6 @@ jobs:
 
           export PATH="${APPIMAGETOOL_WRAPPER}:${PATH}"
           makelove win64 macos appimage || true
-
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
 
       - name: Add a Steam-centric version of the game
         run: |
