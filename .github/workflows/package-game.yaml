@@ -77,6 +77,10 @@ jobs:
           for artifact_name in ${LOVE_ARTIFACT_NAMES[@]}; do
             artifact_name_extless="${artifact_name%.*}"
 
+            if [[ "${artifact_name_extless}" == "x86_64.AppImage" ]]; then
+              artifact_name_extless="appimage"
+            fi
+
             mkdir -p "${LOVE_BINARIES_DIR}/${artifact_name_extless}"
 
             # curl -L \
@@ -101,23 +105,11 @@ jobs:
               binary_path="${LOVE_BINARIES_DIR}/${artifact_name}"
             fi
 
-            sed -i 's%\$\[LOVE_BINARIES_'"${artifact_name}"'\]%'"${binary_path}"'%' makelove.toml
+            sed -i 's%\$\[LOVE_BINARIES_'"${artifact_name_extless}"'\]%'"${binary_path}"'%' makelove.toml
           done
 
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@v3
-
-      - name: Prepare LÖVE binaries
-        run: |
-          mv "${LOVE_BINARIES_DIR}/win64/"love*.zip "${LOVE_BINARIES_DIR}/love-win64.zip"
-          unzip "${LOVE_BINARIES_DIR}/love-win64.zip" \
-            -d "${LOVE_BINARIES_DIR}/win64/"
-          rm "${LOVE_BINARIES_DIR}/love-win64.zip"
-          love_win_subdir="$(find "${LOVE_BINARIES_DIR}/win64/" -maxdepth 1 -type d -name 'love*')"
-          mv "${love_win_subdir}"/* "${LOVE_BINARIES_DIR}/win64/"
-          rmdir "${love_win_subdir}"
-
-          mv "${LOVE_BINARIES_DIR}/macos/"*.zip "${LOVE_BINARIES_DIR}/macos/love.zip"
 
       - name: Build and install makelove
         run: |
