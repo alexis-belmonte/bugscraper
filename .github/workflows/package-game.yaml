@@ -132,6 +132,9 @@ jobs:
           export PATH="${APPIMAGETOOL_WRAPPER}:${PATH}"
           makelove || true
 
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+
       - name: Add a Steam-centric version of the game
         run: |
           mkdir -p _export/steam/{win64,macos,linux}
