@@ -211,7 +211,12 @@ return Cutscene:new("ceo_escape_w1", {
     CutsceneScene:new({
         description = "Give back control to players",
         duration = 0.0,
-        enter = function(cutscene, data)            
+        enter = function(cutscene, data)
+            if BUILD_TYPE == "demo" then
+                game.menu_manager:set_menu("demo_end")
+                return
+            end
+            
             if not Metaprogression:get("has_seen_w1_transition_cutscene") then
                 game.game_ui.cinematic_bar_color = nil
                 Metaprogression:set("has_seen_w1_transition_cutscene", true)
