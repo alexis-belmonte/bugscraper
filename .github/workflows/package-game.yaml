@@ -13,7 +13,7 @@ env:
   APPIMAGETOOL_WRAPPER: /opt/appimagetool-wrapper
 
   LOVE_BINARIES_DIR: /tmp/love-binaries
-  LOVE_PLATFORMS: windows-x64 linux-X64.AppImage macos
+  LOVE_PLATFORM_NAMES: win64.exe x86_64.AppImage macos.zip
 
   MAKELOVE_DIR: /tmp/makelove
 
@@ -74,12 +74,16 @@ jobs:
 
       - name: Gather official binaries from nightly
         run: |
-          for platform in ${LOVE_PLATFORMS[@]}; do
+          for platform in ${LOVE_PLATFORM_NAMES[@]}; do
             mkdir -p "${LOVE_BINARIES_DIR}/${platform}"
 
+            # curl -L \
+            #   -o "${LOVE_BINARIES_DIR}/love-${platform}.zip" \
+            #   "https://nightly.link/love2d/love/workflows/main/main/love-${platform}.zip"
+            
             curl -L \
               -o "${LOVE_BINARIES_DIR}/love-${platform}.zip" \
-              "https://nightly.link/love2d/love/workflows/main/main/love-${platform}.zip"
+              "https://github.com/love2d/love/releases/download/11.5/love-11.5-${platform}"
 
             unzip -o \
               "${LOVE_BINARIES_DIR}/love-${platform}.zip" \
@@ -87,7 +91,7 @@ jobs:
 
             rm "${LOVE_BINARIES_DIR}/love-${platform}.zip"
 
-            if [[ "${platform}" == "linux-X64.AppImage" ]]; then
+            if [[ "${platform}" == "x86_64.AppImage" ]]; then
               binary_path="$(ls -d "${LOVE_BINARIES_DIR}/${platform}"/* | head -n 1)"
             else
               binary_path="${LOVE_BINARIES_DIR}/${platform}"
@@ -98,12 +102,12 @@ jobs:
 
       - name: Prepare LÖVE binaries
         run: |
-          mv "${LOVE_BINARIES_DIR}/windows-x64/"love*.zip "${LOVE_BINARIES_DIR}/love-windows-x64.zip"
-          unzip "${LOVE_BINARIES_DIR}/love-windows-x64.zip" \
-            -d "${LOVE_BINARIES_DIR}/windows-x64/"
-          rm "${LOVE_BINARIES_DIR}/love-windows-x64.zip"
-          love_win_subdir="$(find "${LOVE_BINARIES_DIR}/windows-x64/" -maxdepth 1 -type d -name 'love*')"
-          mv "${love_win_subdir}"/* "${LOVE_BINARIES_DIR}/windows-x64/"
+          mv "${LOVE_BINARIES_DIR}/win64/"love*.zip "${LOVE_BINARIES_DIR}/love-win64.zip"
+          unzip "${LOVE_BINARIES_DIR}/love-win64.zip" \
+            -d "${LOVE_BINARIES_DIR}/win64/"
+          rm "${LOVE_BINARIES_DIR}/love-win64.zip"
+          love_win_subdir="$(find "${LOVE_BINARIES_DIR}/win64/" -maxdepth 1 -type d -name 'love*')"
+          mv "${love_win_subdir}"/* "${LOVE_BINARIES_DIR}/win64/"
           rmdir "${love_win_subdir}"
 
           mv "${LOVE_BINARIES_DIR}/macos/"*.zip "${LOVE_BINARIES_DIR}/macos/love.zip"
