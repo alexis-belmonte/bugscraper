@@ -22,11 +22,7 @@ jobs:
     runs-on: ubuntu-24.04
 
     env:
-      TAGS: ${{ github.event.inputs.tags || '' }}
-
-    strategy:
-      matrix:
-        export-folders: [appimage, love, macos, steam, win64]
+      TAGS: ${{ github.event.inputs.tags || "" }}
 
     steps:
       - name: Checkout repository
@@ -190,8 +186,42 @@ jobs:
           EOF
           chmod +x "_export/steam/linux/bugscraper.sh"
 
-      - name: Create platform-specific package artefact bundle
+      - name: Upload platform-specific package artefact bundle for the next job
         uses: actions/upload-artifact@v6
         with:
-          name: bugscraper-packages
-          path: _export/${{ matrix.export-folders }}
+          name: bugscraper-packages-pack
+          path: _export
+          retention-days: 1 
+
+  export-artifacts:
+    runs-on: ubuntu-24.04
+
+    needs: build-packages
+
+    strategy:
+      matrix:
+        export-folders: [appimage, love, macos, steam, win64]
+
+    steps:
+      - name: Download intermediate artifact
+        uses: actions/download-artifact@v6
+        with:
+          name: bugscraper-build-output
+
+      - name: Upload ${{ matrix.platform }} as separate artifact
+        uses: actions/upload-artifact@v6
+        with:
+          name: bugscraper-export-${{ matrix.platform }}
+          path: _export/${{ matrix.platform }}
+
+
+  cleanup:
+    runs-on: ubuntu-24.04
+
+    needs: export-artifacts
+
+    steps:
+      - name: Delete Artifact
+        uses: geekyeggo/delete-artifact@v1
+        with:
+          name: bugscraper-packages-path
