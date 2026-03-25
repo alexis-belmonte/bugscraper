@@ -207,13 +207,12 @@ jobs:
         uses: actions/download-artifact@v6
         with:
           name: bugscraper-packages-pack
-          path: .
 
       - name: Upload ${{ matrix.platform }} as separate artifact
         uses: actions/upload-artifact@v6
         with:
           name: bugscraper-export-${{ matrix.platform }}
-          path: _export/${{ matrix.platform }}
+          path: ${GITHUB_WORKSPACE}/_export/${{ matrix.platform }}
 
   cleanup:
     runs-on: ubuntu-24.04
