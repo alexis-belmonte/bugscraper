@@ -91,6 +91,8 @@ function NewXpRewardMenu:set_reward_graphics(reward)
             return
         end
 
+        Audio:play("sfx_ui_unlock")
+
         self.overtext = Text:text("menu.new_reward.new_skin")
         self.text = Text:text("player.name." .. skin.text_key)
         self.center_image = skin.img_walk_down
@@ -104,6 +106,8 @@ function NewXpRewardMenu:set_reward_graphics(reward)
         end
 
         local upgrade_inst = upgrade:new()
+        
+        Audio:play(upgrade_inst.activate_sound)
 
         self.overtext = Text:text("menu.new_reward.new_upgrade")
         self.text = upgrade_inst.title

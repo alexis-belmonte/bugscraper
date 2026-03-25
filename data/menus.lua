@@ -86,7 +86,7 @@ local function generate_menus()
         }
     )
     
-    menus.w4_boss_intro = BossIntroMenu:new(game, { 38 / 255, 43 / 255, 68 / 255, 0.8 }, Text:text("enemy.boss_4"), "", {
+    menus.w4_boss_intro = BossIntroMenu:new(game, { 38 / 255, 43 / 255, 68 / 255, 0.8 }, Text:text("enemy.boss_4"), "sfx_boss_intro_boss4", {
         { image = images.boss_intro_mole_boss_layer0, z_mult = 0.5 },
         { image = images.boss_intro_mole_boss_layer1, z_mult = 0.6 },
         { image = images.boss_intro_mole_boss_layer2, z_mult = 0.65 },

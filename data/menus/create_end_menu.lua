@@ -65,8 +65,14 @@ local function create_items(is_win)
                         item.value = lerp(item.value, value_target, 0.1)
                     end
 
-                    if math.floor(item.value / 5) * 5 > math.floor(old_value / 5) * 5 then
-                        Audio:play("xp_tick", 1, lerp(1 - (item.value / item.max_value), 0.5, 1.5))
+                    local sfx_tick = 5
+                    if math.floor(item.value / sfx_tick) * sfx_tick > math.floor(old_value / sfx_tick) * sfx_tick then
+                        local volume = 0.3
+                        if shown_level_threshold == math.huge then
+                            Audio:play("sfx_ui_xpbar_tick", volume, 1.0)
+                        else
+                            Audio:play("sfx_ui_xpbar_tick", volume, lerp(1 - (item.value / item.max_value), 0.75, 1.25))
+                        end
                     end
 
                     -- Shows the text
