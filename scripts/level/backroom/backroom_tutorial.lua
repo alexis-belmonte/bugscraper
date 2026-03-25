@@ -22,6 +22,7 @@ end
 
 function BackroomTutorial:generate(world_generator)
 	game.level:set_bounds(Rect:new(unpack(RECT_TUTORIAL_PARAMS)))
+	game.draw_shadows = false
 
 	-- Collision 
 	world_generator:reset()
