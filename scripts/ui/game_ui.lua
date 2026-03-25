@@ -105,6 +105,7 @@ function GameUI:init(game, is_visible)
 	self.iris_transition_target_t = 0
 
 	self.toasts = {}
+	self.frames_since_toast_sfx = 0
 
 	self.ending_counter_text = nil
 
@@ -764,6 +765,11 @@ end
 
 
 function GameUI:new_toast(image, title, description, params)
+	params = params or {}
+	if param(params.play_sfx, true) and self.frames_since_toast_sfx > 1 then
+		Audio:play("sfx_ui_achievement")
+		self.frames_since_toast_sfx = 0
+	end
 	table.insert(self.toasts, Toast:new(#self.toasts + 1, image, title, description, params))
 end
 
@@ -771,6 +777,8 @@ function GameUI:update_toast(dt)
 	for _, toast in pairs(self.toasts) do
 		toast:update(dt)
 	end
+
+	self.frames_since_toast_sfx = self.frames_since_toast_sfx + 1
 
 	for i=#self.toasts, 1, -1 do
 		if self.toasts[i].to_delete then
