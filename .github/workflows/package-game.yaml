@@ -1,5 +1,11 @@
-name: Produce platform-dependent packages for publishing
-on: workflow_dispatch
+name: Produce artifact_name-dependent packages for publishing
+on:
+  workflow_dispatch:
+    inputs:
+      tags:
+        description: 'Comma-separated list of tags to apply (e.g., "demo,debug")'
+        required: false
+        default: ''
 
 env:
   APPIMAGETOOL_DIR: /tmp/appimagetool
@@ -7,16 +13,25 @@ env:
   APPIMAGETOOL_WRAPPER: /opt/appimagetool-wrapper
 
   LOVE_BINARIES_DIR: /tmp/love-binaries
-  LOVE_PLATFORMS: windows-x64 linux-X64.AppImage macos
+  LOVE_ARTIFACT_NAMES: win64.zip x86_64.AppImage macos.zip
 
   MAKELOVE_DIR: /tmp/makelove
 
 jobs:
   build-packages:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
+
+    env:
+      TAGS: ${{ github.event.inputs.tags || '' }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - name: Apply tag-based patches
+        run: |
+          chmod +x _tools/patch_tags.sh
+          ./_tools/patch_tags.sh "$TAGS" || exit 1
 
       - name: Update base system
         run: |
@@ -24,9 +39,10 @@ jobs:
           sudo apt upgrade -y
 
           sudo add-apt-repository -y universe
+
           sudo apt install -y \
             git cmake ninja-build curl unzip python3 python3-pip wine squashfs-tools desktop-file-utils \
-            libglib2.0-dev libgpgme-dev libgcrypt20-dev libfuse2 libcurl4-openssl-dev
+            libglib2.0-dev libgpgme-dev libgcrypt20-dev libfuse2 libcurl4-openssl-dev xserver-xorg-video-dummy
 
       - name: Setup and install appimagetool
         run: |
@@ -60,39 +76,48 @@ jobs:
 
       - name: Gather official binaries from nightly
         run: |
-          for platform in ${LOVE_PLATFORMS[@]}; do
-            mkdir -p "${LOVE_BINARIES_DIR}/${platform}"
-
-            curl -L \
-              -o "${LOVE_BINARIES_DIR}/love-${platform}.zip" \
-              "https://nightly.link/love2d/love/workflows/main/main/love-${platform}.zip"
-
-            unzip -o \
-              "${LOVE_BINARIES_DIR}/love-${platform}.zip" \
-              -d "${LOVE_BINARIES_DIR}/${platform}"
-
-            rm "${LOVE_BINARIES_DIR}/love-${platform}.zip"
-
-            if [[ "${platform}" == "linux-X64.AppImage" ]]; then
-              binary_path="$(ls -d "${LOVE_BINARIES_DIR}/${platform}"/* | head -n 1)"
+          for artifact_name in ${LOVE_ARTIFACT_NAMES[@]}; do
+            if [[ "${artifact_name}" == "x86_64.AppImage" ]]; then
+              artifact_name_extless="appimage"
             else
-              binary_path="${LOVE_BINARIES_DIR}/${platform}"
+              artifact_name_extless="${artifact_name%.*}"
             fi
 
-            sed -i 's%\$\[LOVE_BINARIES_'"${platform}"'\]%'"${binary_path}"'%' makelove.toml
+            mkdir -p "${LOVE_BINARIES_DIR}/${artifact_name_extless}"
+
+            # curl -L \
+            #   -o "${LOVE_BINARIES_DIR}/love-${artifact_name}.zip" \
+            #   "https://nightly.link/love2d/love/workflows/main/main/love-${artifact_name}.zip"
+           
+            curl -L \
+              -o "${LOVE_BINARIES_DIR}/love-${artifact_name}" \
+              "https://github.com/love2d/love/releases/download/11.5/love-11.5-${artifact_name}"
+
+            if [[ "${artifact_name_extless}" == "macos" ]]; then
+              mv "${LOVE_BINARIES_DIR}/love-${artifact_name}" "${LOVE_BINARIES_DIR}/${artifact_name_extless}/love.zip"
+              target_path="${LOVE_BINARIES_DIR}/${artifact_name_extless}"
+            elif [[ "${artifact_name_extless}" == "appimage" ]]; then
+              mv "${LOVE_BINARIES_DIR}/love-${artifact_name}" "${LOVE_BINARIES_DIR}/${artifact_name_extless}/love-${artifact_name}"
+              target_path="${LOVE_BINARIES_DIR}/${artifact_name_extless}/love-${artifact_name}"
+            elif [[ "${artifact_name}" == *.zip ]]; then
+              unzip -o \
+                "${LOVE_BINARIES_DIR}/love-${artifact_name}" \
+                -d "${LOVE_BINARIES_DIR}/${artifact_name_extless}"
+              target_path="${LOVE_BINARIES_DIR}/${artifact_name_extless}"
+            else
+              target_path="$(ls -d "${LOVE_BINARIES_DIR}/${artifact_name_extless}"/*)"
+            fi
+
+            if [[ "${artifact_name_extless}" != "macos" ]] && [[ "${artifact_name_extless}" != "appimage" ]]; then
+              rm "${LOVE_BINARIES_DIR}/love-${artifact_name}"
+            fi
+
+            sed -i 's%\$\[LOVE_BINARIES_'"${artifact_name_extless}"'\]%'"${target_path}"'%' makelove.toml
           done
 
-      - name: Prepare LÖVE binaries
-        run: |
-          mv "${LOVE_BINARIES_DIR}/windows-x64/"love*.zip "${LOVE_BINARIES_DIR}/love-windows-x64.zip"
-          unzip "${LOVE_BINARIES_DIR}/love-windows-x64.zip" \
-            -d "${LOVE_BINARIES_DIR}/windows-x64/"
-          rm "${LOVE_BINARIES_DIR}/love-windows-x64.zip"
-          love_win_subdir="$(find "${LOVE_BINARIES_DIR}/windows-x64/" -maxdepth 1 -type d -name 'love*')"
-          mv "${love_win_subdir}"/* "${LOVE_BINARIES_DIR}/windows-x64/"
-          rmdir "${love_win_subdir}"
-
-          mv "${LOVE_BINARIES_DIR}/macos/"*.zip "${LOVE_BINARIES_DIR}/macos/love.zip"
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        if: ${{ failure() }}
 
       - name: Build and install makelove
         run: |
@@ -104,17 +129,38 @@ jobs:
           pip install --upgrade pip
 
           # This has the necessary patches to support LÖVE 12
-          pip install git+https://github.com/kongeor/makelove
+          pip install git+https://github.com/alexis-belmonte/makelove
 
-      - name: Build platform-dependent packages
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        if: ${{ failure() }}
+      
+      - name: Prepare binary dirs for makelove
         run: |
+          win64_subfolder="$(ls -d "${LOVE_BINARIES_DIR}/win64/"*)"
+          mv "${win64_subfolder}/"* "${LOVE_BINARIES_DIR}/win64/"
+          rmdir "${win64_subfolder}"
+
+          appimage_file="$(ls -d "${LOVE_BINARIES_DIR}/appimage/"*)"
+          chmod +x "${appimage_file}"
+
+      - name: Build artifact_name-dependent packages
+        run: |
+          export DISPLAY=:100
+          sudo X ${DISPLAY} &
+          wineboot
+
           source "${MAKELOVE_DIR}/.env/bin/activate"
 
           bugscraper_version="$(grep -Po 'BUGSCRAPER_VERSION\s*=\s*"\K[^"]+' bugscraper_config.lua)"
           sed -i 's%\$\[BUGSCRAPER_VERSION\]%'${bugscraper_version}'%' makelove.toml
 
           export PATH="${APPIMAGETOOL_WRAPPER}:${PATH}"
-          makelove || true
+          makelove win64 macos appimage || true
+
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        if: ${{ failure() }}
 
       - name: Add a Steam-centric version of the game
         run: |
@@ -140,8 +186,42 @@ jobs:
           EOF
           chmod +x "_export/steam/linux/bugscraper.sh"
 
-      - name: Create platform-specific package artefact bundle
-        uses: actions/upload-artifact@v4
+      - name: Upload platform-specific package artefact bundle for the next job
+        uses: actions/upload-artifact@v6
         with:
-          name: bugscraper-packages
+          name: bugscraper-packages-pack
           path: _export
+          retention-days: 1 
+
+  export-artifacts:
+    runs-on: ubuntu-24.04
+
+    needs: build-packages
+
+    strategy:
+      matrix:
+        platform: [appimage, love, macos, steam, win64]
+
+    steps:
+      - name: Download intermediate artifact
+        uses: actions/download-artifact@v6
+        with:
+          name: bugscraper-packages-pack
+
+      - name: Upload ${{ matrix.platform }} as separate artifact
+        uses: actions/upload-artifact@v6
+        with:
+          name: bugscraper-export-${{ matrix.platform }}
+          path: ${{ matrix.platform }}
+          if-no-files-found: error
+
+  cleanup:
+    runs-on: ubuntu-24.04
+
+    needs: export-artifacts
+
+    steps:
+      - name: Delete Artifact
+        uses: geekyeggo/delete-artifact@v6
+        with:
+          name: bugscraper-packages-pack
