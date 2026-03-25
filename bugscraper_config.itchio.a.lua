@@ -1,0 +1,1 @@
+DISTRIBUTION_PLATFORM = "steam"

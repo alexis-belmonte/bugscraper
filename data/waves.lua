@@ -115,42 +115,6 @@ local function spawn_timed_spikes_w5()
     end
 end
 
-local function debug_wave()
-    return new_wave({
-        min = 1,
-        max = 1,
-
-        enemies = {
-            { E.Motherboard, 1, position = { 3 * 16, 3 * 16 + 4 } },
-        },
-        run = function(self, level)
-            for _, actor in pairs(game.actors) do
-                if actor.name == "electric_arc" then
-                    actor:start_disable_timer(1)
-                end
-            end
-        end,
-
-        music = "boss_w1",
-    })
-end
-
-local function get_w4_vines_points_func_1(x_offset)
-    return function()
-        local pts = {}
-        local center = (game.level.cabin_inner_rect.ax + game.level.cabin_inner_rect.bx) / 2
-
-        local iy = 0
-        while iy < game.level.cabin_rect.by + 32 do
-            table.insert(pts, { center - x_offset + random_neighbor(8), iy })
-            iy = iy + random_range(10, 40)
-        end
-        table.insert(pts, { center - x_offset + random_neighbor(8), game.level.cabin_rect.by + 32 })
-
-        return pts
-    end
-end
-
 local function get_w4_vines_points_func_2()
     return function()
         local pts = {}
@@ -228,100 +192,6 @@ local thorns_arc_params = {
 }
 
 local waves_defs = {
-    -- {
-    --     min = 1,
-    --     max = 1,
-        
-    --     enemies = {
-    --         -- { E.FinalBoss, 1, position = { 12.5 * 16, 10 * 16 + 8 } }
-    --         { E.InvisibleDummy, 1, position = { 12.5 * 16, 10 * 16 + 8 } }
-    --     },
-
-    --     run = function ()
-    --         for _, actor in pairs(game.actors) do
-    --             if actor.name == "final_boss" then
-    --                 actor.state_machine:set_state("standby")
-    --             end
-    --         end
-    --     end,
-
-    --     roll_type = WAVE_ROLL_TYPE_FIXED,
-    --     music = "boss_w5",
-    --     -- background_transition = backgrounds.BackgroundAboveCity:new(),
-
-    --     -- cutscene = "final_boss_enter",
-
-    --     counter_display_func = function(_)
-    --         -- Pseudo random looking floor counter
-    --         local frame = math.floor(game.frame / 5)
-    --         local nb = (32849 * frame) % 999
-    --         return math.floor(clamp(nb, 100, 999))
-    --     end,
-        
-    --     fade_out_music = false,
-    --     elevator = ElevatorW1,
-    -- },
-
-    -- {
-    --     -- roll_type = WAVE_ROLL_TYPE_FIXED,
-    --     min = 1,
-    --     max = 1,
-    --     enemies = {
-    --         { E.BeeBossRework, 1, position = { 240 - 16, 200 } },
-    --     },
-    --     music = "boss_w2",
-    --     ambience = "bee_boss_crowd_normal",
-
-    --     run = function(self, level)
-    --         for _, actor in pairs(level.game.actors) do
-    --             if actor.name == "timed_spikes" then
-    --                 actor:remove()
-    --             end
-    --         end
-    --     end,
-
-    --     elevator = ElevatorW2,
-    -- },
-    
-    -- {
-    --     -- roll_type = WAVE_ROLL_TYPE_FIXED,
-    --     min = 1,
-    --     max = 1,
-    --     enemies = {
-    --         { E.HerMajesty, 1, position = { 240 - 16, 200 } },
-    --     },
-    --     music = "boss_w2",
-    --     ambience = "bee_boss_crowd_normal",
-
-    --     run = function(self, level)
-    --         for _, actor in pairs(level.game.actors) do
-    --             if actor.name == "timed_spikes" then
-    --                 actor:remove()
-    --             end
-    --         end
-    --     end,
-
-    --     elevator = ElevatorW2,
-    -- },
-
-
-    -- {
-    --     roll_type = WAVE_ROLL_TYPE_FIXED,
-    --     background = backgrounds.BackgroundGreenhouse:new(),
-    --     elevator = ElevatorW4,
-
-    --     min = 1,
-    --     max = 1,
-    --     enemies = {
-    --         { E.MoleBoss, 1, --[[position = { CANVAS_WIDTH/2 - 43, 11 * 16 - 4 } ]]}
-    --     },
-
-    --     run = function(self, level)
-    --     end,
-    -- },
-
-    -------------------------------------------
-
 
     {
         min = 5,
@@ -1288,16 +1158,6 @@ local waves_defs = {
     new_cafeteria(),
     ---------------------------------------------
 
-    -- E.GoldenBeetle
-    -- E.CloudStorm
-    -- E.Rollopod
-    -- E.Shooter
-    -- E.Centipede
-    
-    -- E.CloudDropper
-    -- E.MushroomAnt
-    -- E.SquidMother
-
     {
         min = 6,
         max = 6,
@@ -1376,16 +1236,6 @@ local waves_defs = {
     },
 
     {
-        
-    -- E.GoldenBeetle
-    -- E.CloudStormZone
-    -- E.Rollopod
-    -- E.Shooter
-    -- E.Centipede
-    
-    -- E.CloudDropper
-    -- E.MushroomAnt
-    -- E.SquidMother
         min = 6,
         max = 6,
 
@@ -1865,27 +1715,6 @@ if BUILD_TYPE == "demo" then
 end
 
 local waves = parse_waves_table(waves_defs)
-
------------------------------------------------------------------------
------------------------------------------------------------------------
------------------------------------------------------------------------
------------------------------------------------------------------------
------------------------------------------------------------------------
------------------------------------------------------------------------
------------------------------------------------------------------------
------------------------------------------------------------------------
------------------------------------------------------------------------
------------------------------------------------------------------------
------------------------------------------------------------------------
------------------------------------------------------------------------
------------------------------------------------------------------------
------------------------------------------------------------------------
------------------------------------------------------------------------
------------------------------------------------------------------------
------------------------------------------------------------------------
------------------------------------------------------------------------
------------------------------------------------------------------------
-
 
 local function sanity_check_waves()
     for i, wave in ipairs(waves) do
