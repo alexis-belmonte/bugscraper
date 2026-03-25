@@ -212,7 +212,8 @@ jobs:
         uses: actions/upload-artifact@v6
         with:
           name: bugscraper-export-${{ matrix.platform }}
-          path: ${GITHUB_WORKSPACE}/_export/${{ matrix.platform }}
+          path: ${{ github.workspace }}/_export/${{ matrix.platform }}
+          if-no-files-found: error
 
   cleanup:
     runs-on: ubuntu-24.04
