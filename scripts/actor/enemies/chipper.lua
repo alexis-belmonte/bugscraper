@@ -50,7 +50,7 @@ function Chipper:init(x, y, spr)
     self.sound_death = "sfx_enemy_kill_general_glitch_{01-10}"
     self.sound_stomp = "sfx_enemy_kill_general_glitch_{01-10}"
 
-    self:set_constant_sound("crawl", "sfx_enemy_chipper_crawl_lp_{01-04}", true, 1.0)
+    self:set_constant_sound("crawl", "sfx_enemy_chipper_crawl_lp_{01-04}", false, 1.0)
     self:set_constant_sound_volume("crawl", 0.2)
 
     self.state_machine = StateMachine:new({
@@ -137,6 +137,12 @@ function Chipper:init(x, y, spr)
             end,
         },
     }, "wander")
+end
+
+function Chipper:ready()
+    Chipper.super.ready(self)
+    
+    self:play_constant_sound("crawl")
 end
 
 function Chipper:update(dt)
