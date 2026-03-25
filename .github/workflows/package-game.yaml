@@ -208,6 +208,9 @@ jobs:
         with:
           name: bugscraper-packages-pack
 
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+
       - name: Upload ${{ matrix.platform }} as separate artifact
         uses: actions/upload-artifact@v6
         with:
