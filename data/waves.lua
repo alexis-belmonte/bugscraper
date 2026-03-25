@@ -30,7 +30,7 @@ local function new_cafeteria(params)
 
     local run_func = params.run_func or function(...) end
     local wave_enemies = {
-        { E.ShopCafeteria, 1, position = { 35*16, 13*16 }, ignore_position_clamp = true },
+        { E.ShopCafeteria, 1, position = { params.shopkeeper_x_override or 35*16, 13*16 }, ignore_position_clamp = true },
     }
     if params.empty_cafeteria then
         wave_enemies = {}
@@ -1706,12 +1706,10 @@ local waves_defs = {
     },
 }
 
+-- This is for debugging only 
 if BUILD_TYPE == "demo" then
-    local demo_waves = {}
-    for i=1, 40 do
-        table.insert(demo_waves, waves_defs[i])
-    end
-    waves_defs = demo_waves
+    waves_defs[20] = new_cafeteria({ achievements = {"ach_complete_w1"} })
+    waves_defs[30] = new_cafeteria({ ceo_info = 1, shopkeeper_x_override = 5000 })
 end
 
 local waves = parse_waves_table(waves_defs)

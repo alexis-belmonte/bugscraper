@@ -30,7 +30,7 @@ local function new_cafeteria(params)
 
     local run_func = params.run_func or function(...) end
     local wave_enemies = {
-        { E.ShopCafeteria, 1, position = { 35*16, 13*16 }, ignore_position_clamp = true },
+        { E.ShopCafeteria, 1, position = { params.shopkeeper_x_override or 35*16, 13*16 }, ignore_position_clamp = true },
     }
     if params.empty_cafeteria then
         wave_enemies = {}
@@ -407,7 +407,126 @@ local waves_defs = {
         cutscene = "dung_boss_enter",
     },
 
-    new_cafeteria({ ceo_info = 1, achievements = {"ach_complete_w1"} }),
+    new_cafeteria({ achievements = {"ach_complete_w1"} }),
+
+    
+    {
+        min = 6,
+        max = 7,
+
+        enemies = {
+            { E.Larva, 2 },
+            { E.Bee,   2 },
+        },
+
+        background = backgrounds.BackgroundFactory:new(),
+        music = "w2",
+        ambience = "w2",
+
+        elevator = ElevatorW2,
+
+        over_title = get_world_prefix(2),
+        title = get_world_name(2),
+        over_title_color = COL_ORANGE,
+        title_color = {COL_LIGHT_YELLOW, COL_WHITE, COL_ORANGE, COL_ORANGE, stacked=true},
+        title_outline_color = COL_BLACK_BLUE,
+    },
+
+    {
+        min = 5,
+        max = 7,
+
+        enemies = {
+            { E.Larva,  2 },
+            { E.Bee,    2 },
+            { E.Stabee, 4 },
+        },
+    },
+
+    {
+        min = 4,
+        max = 4,
+
+        enemies = {
+            { E.Beelet, 2 },
+        },
+    },
+
+    {
+        min = 8,
+        max = 8,
+
+        enemies = {
+            { E.Larva,      4 },
+            { E.Bee,        4 },
+            { E.Boomshroom, 4 },
+            { E.Beelet,     2 },
+        },
+    },
+
+    {
+        min = 6,
+        max = 6,
+
+        enemies = {
+            { E.Bee,         4 },
+            { E.HoneypotAnt, 4 },
+        },
+    },
+
+    {
+        min = 6,
+        max = 6,
+
+        enemies = {
+            { E.Bee,    4 },
+            { E.Beelet, 3 },
+        },
+    },
+
+    {
+        min = 6,
+        max = 6,
+
+        enemies = {
+            { E.Bee,         3 },
+            { E.HoneypotAnt, 4 },
+            { E.Stabee,      3 },
+        },
+        fixed_enemies = {
+            { E.FlyingSpawner, 1 },
+        }
+    },
+
+    {
+        min = 10,
+        max = 10,
+
+        enemies = {
+            { E.SnailShelled, 1 },
+            { E.Bee,          3 },
+            { E.HoneypotAnt,  1 },
+            { E.Stabee,       2 },
+            { E.Larva,        2 },
+        },
+    },
+
+
+    {
+        min = 6,
+        max = 6,
+
+        enemies = {
+            { E.Beelet, 8 },
+        },
+        fixed_enemies = {
+            { E.Comball, 1 },
+        },
+    },
+
+    ---------------------------------------------
+    new_cafeteria({ ceo_info = 1, shopkeeper_x_override = 5000 }),
+    ---------------------------------------------
 }
 
 local waves = parse_waves_table(waves_defs)
