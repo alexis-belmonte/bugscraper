@@ -21,6 +21,7 @@ love_version = "11.5"
 
 [archive_files]
 "changes.md" = "changes.md"
+"READ_ME_IF_CRACKED_GAME.txt" = "data/READ_ME_IF_CRACKED_GAME.txt"
 
 [hooks]
 postbuild = [
