@@ -27,11 +27,10 @@ function Steamworks:init()
 	end
 	
 	self:enable()
-	self.is_enabled = true
 end
 
 function Steamworks:enable()
-	LuaSteam.Init()
+	self.is_enabled = LuaSteam.Init()
 end
 
 function Steamworks:disable()
@@ -63,8 +62,8 @@ function Steamworks:set_achievement(achievement_id)
 		return
 	end
 
-	-- LuaSteam.UserStats.SetAchievement(achievement_id)
-    -- LuaSteam.UserStats.StoreStats()
+	LuaSteam.UserStats.SetAchievement(achievement_id)
+    LuaSteam.UserStats.StoreStats()
 end
 
 function Steamworks:clear_achievement(achievement_id)
@@ -72,8 +71,8 @@ function Steamworks:clear_achievement(achievement_id)
 		return
 	end
 
-	-- LuaSteam.UserStats.ClearAchievement(achievement_id)
-	-- LuaSteam.UserStats.StoreStats()
+	LuaSteam.UserStats.ClearAchievement(achievement_id)
+	LuaSteam.UserStats.StoreStats()
 end
 
 function Steamworks:reset_all_stats(achievements_too)
@@ -81,7 +80,7 @@ function Steamworks:reset_all_stats(achievements_too)
 		return
 	end
 
-	-- LuaSteam.UserStats.ResetAllStats(achievements_too)
+	LuaSteam.UserStats.ResetAllStats(achievements_too)
 end
 
 return Steamworks:new()
