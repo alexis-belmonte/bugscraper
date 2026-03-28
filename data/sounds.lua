@@ -90,6 +90,8 @@ local sfxnames = {
 	["sfx_player_damage_normal"] =         {"sfx/actor/player/sfx_player_damage_normal.ogg", "static"},
 	["sfx_player_damage_poison"] =         {"sfx/actor/player/sfx_player_damage_poison.ogg", "static"},
 	["sfx_player_death"] =                 {"sfx/actor/player/sfx_player_death.ogg", "static"},
+	["sfx_player_death_intro"] =           {"sfx/actor/player/sfx_player_death_intro.ogg", "static"},
+	["sfx_player_death_punch"] =           {"sfx/actor/player/sfx_player_death_punch.ogg", "static"},
 	["sfx_player_leave_game"] =            {"sfx/actor/player/sfx_player_leave_game.ogg", "static"},
 	["sfx_player_leave_game_easter_egg"] = {"sfx/actor/player/sfx_player_leave_game_easter_egg.ogg", "static"},
 	

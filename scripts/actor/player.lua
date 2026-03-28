@@ -330,7 +330,7 @@ function Player:get_state_machine()
 				game:frameskip(30)
 
 				self.timer_before_death = self.max_timer_before_death
-				self:play_sound("sfx_player_death")
+				self:play_sound("sfx_player_death_intro")
 			end,
 			update = function(state, dt)
 				local goal_r = 5*sign(self.dir_x)*pi2
@@ -344,7 +344,7 @@ function Player:get_state_machine()
 					game:screenshake(10)
 					Input:vibrate_all(0.3, 0.5)
 					
-					self:play_sound("explosion")
+					self:play_sound("sfx_player_death_punch")
 
 					Particles:splash(self.mid_x, state.death_y - state.death_oy + self.h/2, 40, {COL_LIGHT_YELLOW, COL_ORANGE, COL_LIGHT_RED, COL_WHITE})
 					Particles:star_splash(self.mid_x, state.death_y-state.death_oy + self.h/2)
