@@ -1,6 +1,6 @@
 name = "bugscraper"
-# default_targets = ["win64", "macos", "appimage"]
-default_targets = ["win64"]
+# default_targets = ["lovejs", "win32", "win64", "macos", "appimage"]
+default_targets = ["win64", "macos", "appimage"]
 build_directory = "_export"
 icon_file = "icon.png"
 
@@ -20,7 +20,6 @@ love_version = "11.5"
 
 [archive_files]
 "changes.md" = "changes.md"
-"READ_ME_IF_CRACKED_GAME.txt" = "data/READ_ME_IF_CRACKED_GAME.txt"
 
 [win64]
 love_binaries = "$[LOVE_BINARIES_win64]"
