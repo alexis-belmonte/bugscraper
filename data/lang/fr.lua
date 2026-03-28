@@ -30,7 +30,7 @@ return {
         fps = "%d FPS",
         congratulations = "FÉLICITATIONS !",
         win_thanks = "Merci d'avoir joué à la démo",
-        win_wishlist = "Ajoutez à votre liste de souhaits Steam :)", -- "Wishlist" is a verb
+        win_wishlist = "Ajoutez à votre liste de souhaits :)", -- "Wishlist" is a verb
         warning_web_controller = "Certains navigateurs ne supportent pas correctement les manettes",
 
         combo = "COMBO %d !", 
@@ -154,10 +154,10 @@ return {
         },
         hot_chocolate = {
             title = "Chocolat chaud",
-            description = "Vitesse de recharge plus rapide",
+            description = "Recharge plus rapide",
         },
         pomegranate_juice = {
-            title = "Jus de grenadine",
+            title = "Jus de grenade",
             description = "Créer une explosion en cas de dégâts",
         },
         energy_drink = {
@@ -178,7 +178,7 @@ return {
             down = "Bas",
             jump = "Sauter",
             shoot = "Tirer",
-            interact = "Intéragir",
+            interact = "Interagir",
             leave_game = "Quitter",
             open = "Ouvrir",         -- As in, "open menu", and NOT for, say, opening chests.
             collect = "Collecter",   -- As in, "collect item", "collect gun", etc
@@ -351,11 +351,11 @@ return {
         },
         new_reward = {
             new_skin = "Nouveau personnage !",
-            new_upgrade = "Nouvelle upgrade !",
+            new_upgrade = "Nouvelle amélioration !",
         },
         win = {
             title = "FÉLICITATIONS !",
-            wishlist = "AJOUTER À VOTRE LISTE DE SOUHAITS SUR STEAM", -- "wishlist" is a verb
+            wishlist = "AJOUTER À VOTRE LISTE DE SOUHAITS", -- "wishlist" is a verb
             continue = "CONTINUER",
         },
         joystick_removed = {
@@ -380,7 +380,7 @@ return {
             tv_slideshow = "Contributeur·rices diaporama TV", -- Refers to the powerpoint TV slideshow on the title screen, which was contributed by a variety of people 
             licenses = "Licences des assets & bibliothèques",
             more = "Et bien plus...",                        -- For the people that I might have forgotten in the special thanks section
-            thank_you_for_playing = "Merci pour avoir joué ! ❤", -- Shown at the end of the credits
+            thank_you_for_playing = "Merci d'avoir joué ! ❤", -- Shown at the end of the credits
 
             x_by_y = "%s par %s",                              -- "ASSET_NAME by CREATOR". Used to credit assets such as sound effects
             asset_item = "%s par %s / %s",                     -- "ASSET_NAME by CREATOR / LICENCE"
@@ -392,19 +392,19 @@ return {
     achievements = {
         ach_complete_w1 = {
             name = "Ressources parasites", 
-            description = "Finir le départment 1",
+            description = "Finir le département 1",
         },
         ach_complete_w2 = {
             name = "Chambre de production",
-            description = "Finir le départment 2",
+            description = "Finir le département 2",
         },
         ach_complete_w3 = {
             name = "Salle des serveurs",
-            description = "Finir le départment 3",
+            description = "Finir le département 3",
         },
         ach_complete_w4 = {
             name = "Jardins",
-            description = "Finir le départment 4",
+            description = "Finir le département 4",
         },
         ach_complete_end = {
             name = "Vacances",
@@ -412,39 +412,39 @@ return {
         },
         ach_death = {
             name = "Persévérant",
-            description = "Mourrez 50 fois",
+            description = "Mourir 50 fois",
         },
         ach_all_upgrades = {
             name = "Une soif insatiable",
-            description = "Débloquez toutes les upgrades",
+            description = "Débloquer toutes les améliorations",
         },
         ach_all_skins = {
             name = "Bain de foule",
-            description = "Débloquez tous les personnages",
+            description = "Débloquer tous les personnages",
         },
         ach_max_hearts = {
             name = "Romantique",
-            description = "Obtenez 7 ❤",
+            description = "Obtenir 7 ❤",
         },
         ach_no_damage_easy = {
             name = "Insecte métalleux",
-            description = "Ne prenez pas de dégâts pendant 20 vagues",
+            description = "Ne pas prendre de dégâts pendant 20 vagues",
         },
         ach_no_damage_full = {
             name = "Insecte doré",
-            description = "Ne prenez pas de dégâts pendant une partie entière",
+            description = "Ne pas prendre de dégâts pendant une partie entière",
         },
         ach_no_floor = {
             name = "Sur des coquilles d'œufs",
-            description = "Ne touchez pas le sol pendant 10 vagues",
+            description = "Ne pas toucher le sol pendant 10 vagues",
         },
         ach_big_combo = {
             name = "Furieux",
-            description = "Obtenez un combo 100",
+            description = "Obtenir un combo 100",
         },
         ach_smash_easter_egg = {
             name = "FINI !", -- This is a reference to what the announcer says at the end of a match in Smash Bros.
-            description = "Obtenez l'animation de sortie secrète", 
+            description = "Obtenir l'animation de sortie secrète", 
         },
     },
     discord = { -- Text used for Discord rich presence
