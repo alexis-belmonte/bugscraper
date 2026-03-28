@@ -23,7 +23,7 @@ love_version = "11.5"
 "READ_ME_IF_CRACKED_GAME.txt" = "data/READ_ME_IF_CRACKED_GAME.txt"
 
 [win64]
-love_binaries = "$[LOVE_BINARIES_windows-x64]"
+love_binaries = "$[LOVE_BINARIES_win64]"
 
 [windows]
 # The files specified here will be added in addition to the ones specified on top level.
@@ -67,7 +67,7 @@ CFBundleIdentifier = "com.yolwoocle.bugscraper"
 NSHumanReadableCopyright = "Copyright © 2026 Léo Bernard"
 
 [appimage]
-source_appimage = "$[LOVE_BINARIES_linux-X64.AppImage]"
+source_appimage = "$[LOVE_BINARIES_appimage]"
 
 [linux]
 # [linux.archive_files]
