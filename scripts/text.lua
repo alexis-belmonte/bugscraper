@@ -8,7 +8,7 @@ local TextManager = Class:inherit()
 function TextManager:init()
     print("Loading text...")
 
-    self.supported_languages = {"en", "fr", "es", "pl", "pt_BR", "ja"}
+    self.supported_languages = {"en", "fr", "es", "pl", --[["pt_BR",]] "ja"}
 
     -- TODO only load required languages
     local start = love.timer.getTime()
@@ -28,7 +28,7 @@ function TextManager:init()
 
         ["es"] = "es",
 
-        ["pt_BR"] = "pt_BR",
+        -- ["pt_BR"] = "pt_BR",
 
         ["ja"] = "ja",
 
@@ -87,6 +87,7 @@ function TextManager:find_default_locale()
     local option = Options:get("language")
 
     if not option or option == "default" then
+        -- NOTE: This whole part is useless since backporting to LÖVE 11. Add back when porting to LÖVE 12. 
         -- local user_locales = love.system.getPreferredLocales()
         local user_locales = {"en"}
         print("User preferred locales :", table_to_str(user_locales))
