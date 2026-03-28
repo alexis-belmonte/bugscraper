@@ -29,7 +29,7 @@ love_binaries = "$[LOVE_BINARIES_win64]"
 # All specified files will simply be added to the .zip archive.
 [windows.archive_files]
 "steam_appid.txt" = "steam_appid.txt"
-"luasteam.dll" = "lib/steam/win64/win64_luasteam.dll"
+"luasteam.dll" = "lib/steam/CACA/win64_luasteam.dll"
 "steam_api64.dll" = "lib/steam/win64/steam_api64.dll"
 "steam_api64.lib" = "lib/steam/win64/steam_api64.lib"
 
