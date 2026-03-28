@@ -130,6 +130,7 @@ local function get_w4_vines_points_func_2()
 end
 
 local function get_w4_vines_points_func_3()
+    -- spiral
     return function()
         local pts = {}
         local cx = (game.level.cabin_inner_rect.ax + game.level.cabin_inner_rect.bx) / 2
@@ -140,10 +141,22 @@ local function get_w4_vines_points_func_3()
         local max_theta = 8 * math.pi
         local theta = max_theta
 
+        local function get_point(theta_)
+            local r = a * theta_
+            local x = cx + math.cos(theta_) * r
+            local y = cy + math.sin(theta_) * r
+            return x, y
+        end
+
+        local x1, y1 = get_point(theta - theta_step)
+        local x2, y2 = get_point(theta)
+        local nx, ny = normalize_vect(x2 - x1, y2 - y1)
+        local norm = dist(x2 - x1, y2 - y1)
+        local x3, y3 = x2 + nx*150, y2 + ny*150
+        table.insert(pts, {x3, y3})
+
         while theta >= 0 do
-            local r = a * theta
-            local x = cx + math.cos(theta) * r
-            local y = cy + math.sin(theta) * r
+            local x, y = get_point(theta)
             table.insert(pts, {x, y})
             theta = theta - theta_step
         end
@@ -1093,18 +1106,21 @@ local waves_defs = {
             --     interval_size = 150,
             --     progress_speed = 80,
             --     arc_params = thorns_arc_params
+            --     is_front = true,
             -- }}},
             -- {E.ProgressingArc, 1, args = {{
             --     points = get_w4_vines_points_func_1(64),
             --     interval_size = 150,
             --     progress_speed = -80,
             --     arc_params = thorns_arc_params
+            --     is_front = true,
             -- }}},
             {E.ProgressingArc, 1, args = {{
                 points = get_w4_vines_points_func_2(),
                 interval_size = 150,
                 progress_speed = 80,
-                arc_params = thorns_arc_params
+                arc_params = thorns_arc_params,
+                is_front = true,
             }}},
         }
     },
@@ -1174,7 +1190,8 @@ local waves_defs = {
                 points = get_w4_vines_points_func_3(),
                 interval_size = 150,
                 progress_speed = 160,
-                arc_params = thorns_arc_params
+                arc_params = thorns_arc_params,
+                is_front = true,
             }}},
         },
     },
@@ -1259,7 +1276,7 @@ local waves_defs = {
             { E.CloudDropper, 30 },
         },
         fixed_enemies = {
-            { E.Centipede, 30 },
+            { E.Centipede, 1 },
         }
     },
 
@@ -1606,7 +1623,8 @@ local waves_defs = {
                 points = get_w4_vines_points_func_3(),
                 interval_size = 150,
                 progress_speed = 160,
-                arc_params = thorns_arc_params
+                arc_params = thorns_arc_params,
+                is_front = true,
             }}},
         },
 
