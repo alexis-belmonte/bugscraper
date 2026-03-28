@@ -2,7 +2,11 @@
 
 ## 0.10
 
-Not a very exciting update, sorry! In addition of being busy with classes, this time I was more focused on bugfixing and polishing, as I want to release a new demo on Steam soon, as I start promoting the game more to journalists and influencers and whatnot. Really hope that I can add some new upgrades and content in the next update! Thank you for your patience! :)
+Big update but not a very exciting update, sorry! It's just a ton of bug fixes, QOL additions and polishing.
+
+In addition of being busy with classes, this is also because I want to release a new demo on Steam soon, to start promoting the game more to journalists and influencers and whatnot. 
+
+Really hope that I can add some new upgrades and content in the next update! Thank you for your patience! :)
 
 "⭐" emoji represent particularily noteworthy changes.
 
@@ -68,9 +72,8 @@ Not a very exciting update, sorry! In addition of being busy with classes, this 
 
 
 ### Localization
-- Gave names to boss 4 & 5
+- ⭐ New language: Japanese, courtesy of Sora
 - Updated the following localizations:
-    - Japanese, courtesy of Sora
     - Brazilian Portuguese, courtesy of Nicole Sanches and itzKiwiSky (not integrated in the game yet)
     - Polish, courtesy of Jakub Piłasiewicz
     - Spanish, courtesy of Alejandro Alzate Sánchez
