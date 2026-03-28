@@ -324,6 +324,9 @@ function Actor:draw()
 	end
 end
 
+function Actor:draw_front()
+end
+
 function Actor:draw_hud()
 	if not Input:get_user(self.last_interaction_hovering_player_n) then
 		return

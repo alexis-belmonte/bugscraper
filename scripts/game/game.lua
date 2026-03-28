@@ -636,7 +636,7 @@ function Game:draw_game()
 		self.level:draw_front()
 
 		for _, actor in pairs(self.actors) do
-			if actor.is_active and actor.is_front then
+			if actor.is_active and actor.is_visible and actor.is_front then
 				actor:draw()
 			end
 		end
