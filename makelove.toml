@@ -22,11 +22,6 @@ love_version = "11.5"
 "changes.md" = "changes.md"
 "READ_ME_IF_CRACKED_GAME.txt" = "data/READ_ME_IF_CRACKED_GAME.txt"
 
-[hooks]
-postbuild = [
-    "bash post_build.sh {build_directory} {version}",
-]
-
 [win64]
 love_binaries = "$[LOVE_BINARIES_windows-x64]"
 
