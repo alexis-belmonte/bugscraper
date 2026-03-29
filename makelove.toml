@@ -11,9 +11,6 @@ love_files = [
     "-./_export",
     "-*.aseprite",
     "-*.lnk",
-
-    "-./luasteam.dll",
-    "-./steam_api64.dll",
 ]
 
 love_version = "11.5" 
