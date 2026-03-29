@@ -55,10 +55,10 @@ love_binaries = "$[LOVE_BINARIES_macos]"
 
 # The files specified here will be added in addition to the ones specified on top level.
 # All specified files will be copied to the <name>/Contents/Resources/ directory of the .app file.
-[macos.archive_files]
-"steam_appid.txt" = "steam_appid.txt"
-"lib/steam/osx/osx_luasteam.so" = "luasteam.so"
-"lib/steam/osx/libsteam_api.dylib" = "libsteam_api.dylib"
+# [macos.archive_files]
+# "steam_appid.txt" = "steam_appid.txt"
+# "lib/steam/osx/osx_luasteam.so" = "luasteam.so"
+# "lib/steam/osx/libsteam_api.dylib" = "libsteam_api.dylib"
 
 
 [macos.app_metadata]
@@ -70,10 +70,10 @@ NSHumanReadableCopyright = "Copyright © 2026 Léo Bernard"
 source_appimage = "$[LOVE_BINARIES_appimage]"
 
 [linux]
-shared_libraries = [
-    "lib/steam/linux64/libsteam_api.so", 
-    "lib/steam/linux64/linux64_luasteam.so",
-]
+# shared_libraries = [
+#     "lib/steam/linux64/libsteam_api.so", 
+#     "lib/steam/linux64/linux64_luasteam.so",
+# ]
 
 # These values are included in the .desktop file
 [linux.desktop_file_metadata]
