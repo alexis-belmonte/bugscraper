@@ -54,10 +54,10 @@ love_binaries = "$[LOVE_BINARIES_macos]"
 
 # The files specified here will be added in addition to the ones specified on top level.
 # All specified files will be copied to the <name>/Contents/Resources/ directory of the .app file.
-# [macos.archive_files]
-# "steam_appid.txt" = "steam_appid.txt"
-# "_dyn/osx/luasteam.so" = "lib/steam/osx/osx_luasteam.so"
-# "_dyn/osx/libsteam_api.dylib" = "lib/steam/osx/libsteam_api.dylib"
+[macos.archive_files]
+"steam_appid.txt" = "steam_appid.txt"
+"_dyn/osx/luasteam.so" = "lib/steam/osx/osx_luasteam.so"
+"_dyn/osx/libsteam_api.dylib" = "lib/steam/osx/libsteam_api.dylib"
 
 
 [macos.app_metadata]
