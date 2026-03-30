@@ -68,6 +68,11 @@ NSHumanReadableCopyright = "Copyright © 2026 Léo Bernard"
 [appimage]
 source_appimage = "$[LOVE_BINARIES_appimage]"
 
+shared_libraries = [
+	"libsteam_api.so",
+	"linux64_luasteam.so",
+]
+
 [linux]
 # [linux.archive_files]
 # "steam_appid.txt" = "steam_appid.txt"
