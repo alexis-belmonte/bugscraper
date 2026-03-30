@@ -29,9 +29,9 @@ love_binaries = "$[LOVE_BINARIES_win64]"
 # All specified files will simply be added to the .zip archive.
 [windows.archive_files]
 "steam_appid.txt" = "steam_appid.txt"
-"./luasteam.dll" = "lib/steam/win64/win64_luasteam.dll"
-# "steam_api64.dll" = "lib/steam/win64/steam_api64.dll"
-# "steam_api64.lib" = "lib/steam/win64/steam_api64.lib"
+"luasteam.dll" = "steam_win64_luasteam.dll"
+"steam_api64.dll" = "steam_win64_api64.dll"
+"steam_api64.lib" = "steam_win64_api64.lib"
 
 # Exe metadata is specified as a version string (key) and it's value
 # The values shown here are the ones set by makelove by default (you can overwrite them here)
@@ -54,10 +54,10 @@ love_binaries = "$[LOVE_BINARIES_macos]"
 
 # The files specified here will be added in addition to the ones specified on top level.
 # All specified files will be copied to the <name>/Contents/Resources/ directory of the .app file.
-[macos.archive_files]
-"steam_appid.txt" = "steam_appid.txt"
-"_dyn/osx/luasteam.so" = "lib/steam/osx/osx_luasteam.so"
-"_dyn/osx/libsteam_api.dylib" = "lib/steam/osx/libsteam_api.dylib"
+# [macos.archive_files]
+# "steam_appid.txt" = "steam_appid.txt"
+# "_dyn/osx/luasteam.so" = "lib/steam/osx/osx_luasteam.so"
+# "_dyn/osx/libsteam_api.dylib" = "lib/steam/osx/libsteam_api.dylib"
 
 
 [macos.app_metadata]
