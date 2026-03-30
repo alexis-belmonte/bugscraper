@@ -29,9 +29,9 @@ love_binaries = "$[LOVE_BINARIES_win64]"
 # All specified files will simply be added to the .zip archive.
 [windows.archive_files]
 "steam_appid.txt" = "steam_appid.txt"
-"luasteam.dll" = "steam_win64_luasteam.dll"
-"steam_api64.dll" = "steam_win64_api64.dll"
-"steam_api64.lib" = "steam_win64_api64.lib"
+"luasteam.dll" = "luasteam.dll"
+"steam_win64_api64.dll" = "steam_api64.dll"
+"steam_api64.lib" = "steam_api64.lib"
 
 # Exe metadata is specified as a version string (key) and it's value
 # The values shown here are the ones set by makelove by default (you can overwrite them here)
@@ -71,6 +71,7 @@ source_appimage = "$[LOVE_BINARIES_appimage]"
 shared_libraries = [
 	"libsteam_api.so",
 	"linux64_luasteam.so",
+    "steam_appid.txt",
 ]
 
 [linux]
