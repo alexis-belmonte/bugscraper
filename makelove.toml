@@ -18,6 +18,7 @@ love_version = "11.5"
 [archive_files]
 "changes.md" = "changes.md"
 "data/READ_ME_IF_CRACKED_GAME.txt" = "READ_ME_IF_CRACKED_GAME.txt"
+"steam_appid.txt" = "steam_appid.txt"
 
 [win64]
 love_binaries = "$[LOVE_BINARIES_win64]"
@@ -26,13 +27,12 @@ love_binaries = "$[LOVE_BINARIES_win64]"
 # The files specified here will be added in addition to the ones specified on top level.
 # All specified files will simply be added to the .zip archive.
 [windows.archive_files]
-"steam_appid.txt" = "steam_appid.txt"
 # "lib/steam/win64/win64_luasteam.dll" = "luasteam.dll"
 # "lib/steam/win64/steam_api64.dll" = "steam_api64.dll"
 # "lib/steam/win64/steam_api64.lib" = "steam_api64.lib"
-"win64_luasteam.dll" = "luasteam.dll"
-"steam_api64.dll" = "steam_api64.dll"
-"steam_api64.lib" = "steam_api64.lib"
+# "win64_luasteam.dll" = "luasteam.dll"
+# "steam_api64.dll" = "steam_api64.dll"
+# "steam_api64.lib" = "steam_api64.lib"
 
 # Exe metadata is specified as a version string (key) and it's value
 # The values shown here are the ones set by makelove by default (you can overwrite them here)
