@@ -243,11 +243,9 @@ return Cutscene:new("credits", {
                 "Alexis Belmonte",
                 "AuramoBalzoni",
                 "Axel 'Vlad' Born",
-                
                 "Bettina Delaveaud",
                 "Corentin Vaillant",
                 "Fabien Delpiano",
-                
                 "Fantine Delpiano-Manfrini",
                 "Feishiko",
                 "Gaspard Delpiano-Manfrini",
@@ -264,11 +262,9 @@ return Cutscene:new("credits", {
                 "Guillaume Tran",
                 "Herweins",
                 "Indie Game Lyon",
-                
                 "Jan Willem Nijman",
                 "Kaïs",
                 "Léo Lanteri Thauvin",
-                
                 "LinkyLorelei",
                 "Louie Chapman",
                 "LÖVE contributors",
@@ -285,11 +281,9 @@ return Cutscene:new("credits", {
                 "LÖVE Discord members",
                 "Maman & Papa ❤",      
                 "MatthJ4",
-                
                 "Médiathèque José Cabanis",
                 "Noba",
                 "Nolan Carlisi (arkanyota)",
-                
                 "oat_addict",
                 "Play Sorbonne Université",
                 "Quentin Picault",
@@ -305,7 +299,6 @@ return Cutscene:new("credits", {
                 "Raphytator",
                 "Solluco",
                 "Tahina Dombrowski",
-                
                 "Théodore Billotte",
                 "Thomas Saurel",
                 "Toulouse Game Dev",
