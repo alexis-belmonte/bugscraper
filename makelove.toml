@@ -30,7 +30,7 @@ love_binaries = "$[LOVE_BINARIES_win64]"
 [windows.archive_files]
 "steam_appid.txt" = "steam_appid.txt"
 "luasteam.dll" = "luasteam.dll"
-"steam_win64_api64.dll" = "steam_api64.dll"
+"steam_api64.dll" = "steam_api64.dll"
 "steam_api64.lib" = "steam_api64.lib"
 
 # Exe metadata is specified as a version string (key) and it's value
@@ -56,8 +56,8 @@ love_binaries = "$[LOVE_BINARIES_macos]"
 # All specified files will be copied to the <name>/Contents/Resources/ directory of the .app file.
 [macos.archive_files]
 "steam_appid.txt" = "steam_appid.txt"
-"luasteam.so" = "steam_osx_luasteam.so"
-"libsteam_api.dylib" = "steam_osx_libsteam_api.dylib"
+"luasteam.so" = "luasteam.so"
+"libsteam_api.dylib" = "libsteam_api.dylib"
 
 
 [macos.app_metadata]
