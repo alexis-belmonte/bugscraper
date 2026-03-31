@@ -19,7 +19,7 @@ local pause_items           = {
     { "🏆 {menu.achievements.title}", func_set_menu('achievements') },
     { "⎘ {menu.stats.title}", func_set_menu('stats') },
     { "💡 {menu.pause.feedback}", func_set_menu("feedback") },
-    -- { "❤ {menu.pause.credits}", func_set_menu('credits') },
+    { "❤ {menu.pause.credits}", func_set_menu('credits') },
 }
 if OPERATING_SYSTEM ~= "Web" then
     -- Disable quitting on web

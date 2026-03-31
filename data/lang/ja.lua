@@ -378,7 +378,7 @@ return {
             trailer = "予告編",
             asset_creators = "アセット制作",
             tv_slideshow = "スライダーショー寄稿者", -- Refers to the powerpoint TV slideshow on the title screen, which was contributed by a variety of people 
-            licenses = "アセット &ライブラリーライセンス",
+            licenses = "アセット & ライブラリーライセンス",
             more = "その他多数の人達...",                        -- For the people that I might have forgotten in the special thanks section
             thank_you_for_playing = "Thank you for playing!", -- Shown at the end of the credits
 
@@ -392,23 +392,23 @@ return {
     achievements = {
         ach_complete_w1 = {
             name = "バグ資料室", 
-            description = "部署1　突破",
+            description = "部署1 突破",
         },
         ach_complete_w2 = {
             name = "工場",
-            description = "部署2　突破",
+            description = "部署2 突破",
         },
         ach_complete_w3 = {
             name = "サーバールーム",
-            description = "部署3　突破",
+            description = "部署3 突破",
         },
         ach_complete_w4 = {
             name = "ガーデン",
-            description = "部署4　突破",
+            description = "部署4 突破",
         },
         ach_complete_end = {
             name = "バケーション",
-            description = "ミッション　コンプリート",
+            description = "ミッション コンプリート",
         },
         ach_death = {
             name = "不屈の精神",
