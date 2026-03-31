@@ -11,6 +11,9 @@ love_files = [
     "-./_export",
     "-*.aseprite",
     "-*.lnk",
+    "-*.dll",
+    "-*.so",
+    "-*.dylib",
 
     "-./luasteam.dll",
     "-./steam_api64.dll",
