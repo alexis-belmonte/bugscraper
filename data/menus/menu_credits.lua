@@ -39,6 +39,7 @@ return Menu:new(game, "{menu.credits.title}", {
     { "" },
     { "< {language.ja} >" },
     { "Sora", empty_func },
+    -- { "TODO", empty_func },
     { "" },
     { "Polyglot Project", empty_func },
     { "" },
