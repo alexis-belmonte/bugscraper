@@ -8,7 +8,7 @@ local TextManager = Class:inherit()
 function TextManager:init()
     print("Loading text...")
 
-    self.supported_languages = {"en", "fr", "es", "pl", --[["pt_BR",]] "ja"}
+    self.supported_languages = {"en", "fr", "es", "pl", "pt_BR", "ja"}
 
     -- TODO only load required languages
     local start = love.timer.getTime()
