@@ -54,7 +54,6 @@ return Menu:new(game, "{menu.credits.title}", {
     { "Corentin Vaillant", empty_func },
     { "Guillaume Tran", empty_func },
     { "hades140701", empty_func },
-    { "hades140701", empty_func },
     { "Lars Loe (MadByte)", empty_func },
     { "Lucas Froehlinger 😎", empty_func },
     { "NerdOfGamers + partner", empty_func },
