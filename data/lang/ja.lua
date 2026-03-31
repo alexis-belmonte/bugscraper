@@ -29,9 +29,9 @@ return {
         demo = "体験版", -- Chip added to the game logo to indicate that this version is a demo
         fps = "%d FPS",
         congratulations = "CONGRATULATIONS!",
-        win_thanks = "デモで遊んでくれてありがとう",
+        win_thanks = "デモをプレイしていただき、ありがとうございました。",
         win_wishlist = "ウィッシュリスト登録よろしくね(^_^)", -- "Wishlist" is a verb
-        warning_web_controller = "一部ブラウザではコントローラーがサポートしない場合があります",
+        warning_web_controller = "一部のブラウザでは、コントローラーに対応していない場合があります。",
 
         combo = "%d コンボ", 
     },
@@ -59,8 +59,8 @@ return {
         -- You can be more creative with these, you don't have to stay close to the originals.
         -- Look at google doc for image references
         machinegun = "ナッツガン",
-        triple = "サンレンコショウ",
-        burst = "バクカフン",
+        triple = "トリプルペッパー",
+        burst = "バグカフン",
         shotgun = "ラズベリーショット",
         minigun = "タネガン",
         ring = "ビッグベリー",
@@ -85,7 +85,7 @@ return {
             rico = "リコ", -- From 'The Bullet Hopper'
             yv = "Y.V.", -- From 'Nuclear Throne' / See localized names here: https://docs.google.com/spreadsheets/d/18N1CNxIzSUm4CkIWUw0nbRnlxzAgoRbHpGyX8649Gjw/edit?usp=sharing
             leo = "レオ",
-            dodu = "ドゥドゥー", 
+            dodu = "ドドゥー", 
         },
         abbreviation = "P%d", -- Short appreviation to denote players by their number. Example: in english, "P1" means "Player 1", in french "J1" means "Joueur 1".
     },
@@ -109,7 +109,7 @@ return {
         -- A very large green cabbage-like, boulder-like, rolling enemy from the Garden area.   
         -- You're free to be more creative with this one. 
         -- (example: in French, I chose "Grobroco", "gros" (large) + "broco" (diminutive of broccoli))
-        boss_4 = "ローリングキャベツ",
+        boss_4 = "キャベツ大石",
 
         -- The CEO of the company, and the final boss. Its name is somewhat ominous-sounding.
         -- Try to avoid ambiguity with the term "boss", which could be confused with the generic term for a video game boss.
@@ -118,19 +118,19 @@ return {
     upgrade = {
         tea = {
             title = "緑茶",
-            description = "一時的に ❤+%d追加",
+            description = "追加❤ +%d",
         },
         espresso = {
             title = "エスプレッソ",
-            description = "%d階上がるまで 発射速度がx%d上昇",
+            description = "%d階上がるまで発射速度 x%d上昇",
         },
         milk = {
             title = "ミルク",
-            description = "最大❤ +%d追加",
+            description = "最大❤ +%d増加",
         },
         boba = {
             title = "タピオカティー",
-            description = "弾薬最大数 x%d追加",
+            description = "弾薬最大数 x%d増加",
         },
         soda = {
             title = "サイダー", -- As in Coca-cola/Pepsi style soda.
@@ -138,7 +138,7 @@ return {
         },
         fizzy_lemonade = {
             title = "炭酸レモネード",
-            description = "ジャンプを押しっぱでグライド可能",
+            description = "ジャンプボタン長押しでグライド可能",
         },
         apple_juice = {
             title = "リンゴジュース",
@@ -146,7 +146,7 @@ return {
         },
         hot_sauce = {
             title = "チリソース",
-            description = "ダメージをx%d追加する代わりに 弾薬数x%d減少", -- First "%d" is the damage, second "%d" is ammo
+            description = "与ダメージ x%d / 弾薬消費量 x%d", -- First "%d" is the damage, second "%d" is ammo
         },
         coconut_water = {
             title = "ココナッツウォーター",
@@ -154,7 +154,7 @@ return {
         },
         hot_chocolate = {
             title = "ホットチョコ",
-            description = "リロード速度が速くなる",
+            description = "装填速度が速くなる",
         },
         pomegranate_juice = {
             title = "ザクロジュース",
@@ -171,7 +171,7 @@ return {
             -- (i.e., "[X] Shoot", "[C] Jump", etc)
 
             -- Gameplay Actions
-            move = "動作", 
+            move = "移動", 
             left = "左",
             right = "右",
             up = "上",
@@ -179,7 +179,7 @@ return {
             jump = "ジャンプ",
             shoot = "ショット",
             interact = "インタラクト",
-            leave_game = "抜ける",
+            leave_game = "ゲーム終了",
             open = "メニュー",         -- As in, "open menu", and NOT for, say, opening chests.
             collect = "図鑑",   -- As in, "collect item", "collect gun", etc
 
@@ -191,14 +191,14 @@ return {
             ui_select = "決定",
             ui_back = "戻る",
             pause = "ポーズ",
-            join = "加わる", -- As, in joining the game, adding a new player to the game.
+            join = "参加", -- As, in joining the game, adding a new player to the game.
             -- As in, "Press [key] to split the keyboard". 
             -- Shown on the title screen when one keyboard player has joined. 
             -- Try to keep it as short as possible since space is limited there.
             split_keyboard = "キーボード分割", 
 
             wall_jump = "壁ジャンプ",
-            jetpack = "ジャンプショット", -- Refers to "jetpacking", a move in the game performed by shooting downwards with a gun.
+            jetpack = "ジェットパック", -- Refers to "jetpacking", a move in the game performed by shooting downwards with a gun.
         },
     },
     menu = {
@@ -221,7 +221,7 @@ return {
             -- might usually mean "floor 1", so please make sure to avoid ambiguity when translating. 
             -- (You can also translate as "main lobby" or something like it.)   
             return_to_ground_floor = "ロビーに戻る", 
-            options = "オプション",
+            options = "設定",
             credits = "クレジット",
             feedback = "フィードバック",
             quit = "終了",
@@ -230,15 +230,15 @@ return {
             github = "GitHub",
         },
         options = {
-            title = "オプション",
+            title = "設定",
 
             input = {
-                title = "入力",
-                input = "入力設定",
+                title = "操作",
+                input = "操作設定",
             },
             input_submenu = {
-                title = "入力設定",
-                reset_controls = "操作リセット",
+                title = "操作設定",
+                reset_controls = "操作設定リセット",
                 controller_button_style = "ボタンスタイル", -- The style of the buttons shown in-game. As in, PS4 style buttons, Xbox style buttons...
                 controller_button_style_value = {
                     detect = "検出",
@@ -248,13 +248,13 @@ return {
                     xbox = "Xbox",
                 },
                 deadzone = "ジョイスティック感度",
-                vibration = "バイブレーション",
+                vibration = "振動",
                 low_deadzone_warning = "感度が低すぎると 不具合を引き起こす場合があります", -- Warning displayed when the joystick deadzone is very small
                 note_deadzone = "感度はメニューを閉じたときに適用されます",
 
                 gameplay = "ゲームプレイ",
-                interface = "インターフェース",
-                global = "グローバル",
+                interface = "UI",
+                global = "一般",
                 note_ui_min_button = "最低1つ設定してください",
                 note_global_keyboard = "キーボード設定は全プレイヤー共有です",
                 note_global_controller = "コントローラー設定は全プレイヤー共有です",
@@ -283,7 +283,7 @@ return {
             audio = {
                 title = "オーディオ",
                 sound = "サウンド",
-                volume = "ボリューム",
+                volume = "音量",
                 sfx_volume = "SE音量", -- Can also be translated as "effects volume" or "SFX volume"
                 music_volume = "BGM音量",
                 music_pause_menu = "ポーズメニュー中のBGM", -- Whether music should play on the pause menu
@@ -334,7 +334,7 @@ return {
             kills = "倒した敵の数",  -- The amount of enemies the player has killed
             deaths = "やられた回数",
             time = "タイム",             -- The time that the player took to complete the level
-            floor = "フロア",           -- Which storey the player was on when they died
+            floor = "階",           -- Which storey the player was on when they died
             score = "スコア",
             max_combo = "最大コンボ数",
 
@@ -344,14 +344,14 @@ return {
         stats = {
             title = "統計",
 
-            time_total = "プレイ時間 (合計)",
+            time_total = "起動時間",
             time_ingame = "プレイ時間 (遊んだ分)",
             runs = "挑戦回数",
             best_run = "最高到達数",  -- The biggest wave number reached on any run
         },
         new_reward = {
-            new_skin = "新キャラ追加!",
-            new_upgrade = "新アップグレード追加!",
+            new_skin = "新キャラ獲得!",
+            new_upgrade = "新アップグレード獲得!",
         },
         win = {
             title = "CONGRATULATIONS!",
@@ -375,7 +375,7 @@ return {
             additional_art = "追加アート",
             playtesting = "プレイテスター",
             special_thanks = "スペシャルサンクス",
-            trailer = "トレーラー",
+            trailer = "予告編",
             asset_creators = "アセット制作",
             tv_slideshow = "スライダーショー寄稿者", -- Refers to the powerpoint TV slideshow on the title screen, which was contributed by a variety of people 
             licenses = "アセット &ライブラリーライセンス",
@@ -416,11 +416,11 @@ return {
         },
         ach_all_upgrades = {
             name = "猛烈なカクテル", --It was translated like this in Minecraft.
-            description = "全てのアップグレードを解禁した",
+            description = "全てのアップグレードを解放した",
         },
         ach_all_skins = {
             name = "チームリーダー",
-            description = "全てのキャラを解禁した",
+            description = "全てのキャラを解放した",
         },
         ach_max_hearts = {
             name = "恋人",
@@ -428,11 +428,11 @@ return {
         },
         ach_no_damage_easy = {
             name = "アイアンバグ",
-            description = "ノーダメージで　20階突破した",
+            description = "ノーダメージで20階突破した",
         },
         ach_no_damage_full = {
             name = "ゴールデンバグ",
-            description = "ノーダメージで　1ゲーム制覇した",
+            description = "ノーダメージで1ゲーム制覇した",
         },
         ach_no_floor = {
             name = "溶岩の床",
@@ -444,7 +444,7 @@ return {
         },
         ach_smash_easter_egg = {
             name = "GAME SET!",  -- This is a reference to what the announcer says at the end of a match in Smash Bros.
-            description = "秘密の出口のアニメを見つける", 
+            description = "秘密の出口の演出を見つけた", 
         },
     },
     discord = { -- Text used for Discord rich presence
