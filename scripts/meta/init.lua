@@ -7,6 +7,9 @@ local function init()
     print("Distribution platform: "..tostring(DISTRIBUTION_PLATFORM))
     print("Build type: "..tostring(BUILD_TYPE))
     print("")
+    
+    local ext = package.config:sub(1, 1) == '\\' and 'dll' or 'so'
+    package.cpath = string.format("%s;%s/?.%s", package.cpath, love.filesystem.getSourceBaseDirectory(), ext)
 
     if PROFILER_INIT then
         love.profiler = require "lib.profiler.profile"
