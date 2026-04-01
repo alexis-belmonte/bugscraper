@@ -181,6 +181,7 @@ jobs:
           # temporarily on the disk instead.
           export APPIMAGE_EXTRACT_AND_RUN=1
 
+          export LD_LIBRARY_PATH="\${LD_LIBRARY_PATH}:\${working_directory}/squashfs-root"
           "\${working_directory}/bugscraper.AppImage" \$@
           
           EOF
