@@ -3,13 +3,17 @@ local creq = require "lib.creq.creq"
 local Class = require "scripts.meta.class"
 local LuaSteam
 local import_success
-if pcall(function()
+
+local pcall_res, err = pcall(function()
 	LuaSteam = require "luasteam"
-end) then
-	print("Steamworks: successfully loaded")
 	import_success = true
+end)
+
+if pcall_res then
+	print("Steamworks: successfully loaded")
 else
 	print("Steamworks: error during import (require failed)")
+	print("Steamworks: error - ", err)
 	import_success = false
 end
 
