@@ -1,0 +1,2 @@
+DISTRIBUTION_PLATFORM = "itchio"
+DEBUG_MODE = false

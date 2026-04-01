@@ -30,7 +30,7 @@ local function new_cafeteria(params)
 
     local run_func = params.run_func or function(...) end
     local wave_enemies = {
-        { E.ShopCafeteria, 1, position = { 35*16, 13*16 }, ignore_position_clamp = true },
+        { E.ShopCafeteria, 1, position = { params.shopkeeper_x_override or 35*16, 13*16 }, ignore_position_clamp = true },
     }
     if params.empty_cafeteria then
         wave_enemies = {}
@@ -115,42 +115,6 @@ local function spawn_timed_spikes_w5()
     end
 end
 
-local function debug_wave()
-    return new_wave({
-        min = 1,
-        max = 1,
-
-        enemies = {
-            { E.Motherboard, 1, position = { 3 * 16, 3 * 16 + 4 } },
-        },
-        run = function(self, level)
-            for _, actor in pairs(game.actors) do
-                if actor.name == "electric_arc" then
-                    actor:start_disable_timer(1)
-                end
-            end
-        end,
-
-        music = "boss_w1",
-    })
-end
-
-local function get_w4_vines_points_func_1(x_offset)
-    return function()
-        local pts = {}
-        local center = (game.level.cabin_inner_rect.ax + game.level.cabin_inner_rect.bx) / 2
-
-        local iy = 0
-        while iy < game.level.cabin_rect.by + 32 do
-            table.insert(pts, { center - x_offset + random_neighbor(8), iy })
-            iy = iy + random_range(10, 40)
-        end
-        table.insert(pts, { center - x_offset + random_neighbor(8), game.level.cabin_rect.by + 32 })
-
-        return pts
-    end
-end
-
 local function get_w4_vines_points_func_2()
     return function()
         local pts = {}
@@ -166,6 +130,7 @@ local function get_w4_vines_points_func_2()
 end
 
 local function get_w4_vines_points_func_3()
+    -- spiral
     return function()
         local pts = {}
         local cx = (game.level.cabin_inner_rect.ax + game.level.cabin_inner_rect.bx) / 2
@@ -176,10 +141,22 @@ local function get_w4_vines_points_func_3()
         local max_theta = 8 * math.pi
         local theta = max_theta
 
+        local function get_point(theta_)
+            local r = a * theta_
+            local x = cx + math.cos(theta_) * r
+            local y = cy + math.sin(theta_) * r
+            return x, y
+        end
+
+        local x1, y1 = get_point(theta - theta_step)
+        local x2, y2 = get_point(theta)
+        local nx, ny = normalize_vect(x2 - x1, y2 - y1)
+        local norm = dist(x2 - x1, y2 - y1)
+        local x3, y3 = x2 + nx*150, y2 + ny*150
+        table.insert(pts, {x3, y3})
+
         while theta >= 0 do
-            local r = a * theta
-            local x = cx + math.cos(theta) * r
-            local y = cy + math.sin(theta) * r
+            local x, y = get_point(theta)
             table.insert(pts, {x, y})
             theta = theta - theta_step
         end
@@ -228,100 +205,6 @@ local thorns_arc_params = {
 }
 
 local waves_defs = {
-    -- {
-    --     min = 1,
-    --     max = 1,
-        
-    --     enemies = {
-    --         -- { E.FinalBoss, 1, position = { 12.5 * 16, 10 * 16 + 8 } }
-    --         { E.InvisibleDummy, 1, position = { 12.5 * 16, 10 * 16 + 8 } }
-    --     },
-
-    --     run = function ()
-    --         for _, actor in pairs(game.actors) do
-    --             if actor.name == "final_boss" then
-    --                 actor.state_machine:set_state("standby")
-    --             end
-    --         end
-    --     end,
-
-    --     roll_type = WAVE_ROLL_TYPE_FIXED,
-    --     music = "boss_w5",
-    --     -- background_transition = backgrounds.BackgroundAboveCity:new(),
-
-    --     -- cutscene = "final_boss_enter",
-
-    --     counter_display_func = function(_)
-    --         -- Pseudo random looking floor counter
-    --         local frame = math.floor(game.frame / 5)
-    --         local nb = (32849 * frame) % 999
-    --         return math.floor(clamp(nb, 100, 999))
-    --     end,
-        
-    --     fade_out_music = false,
-    --     elevator = ElevatorW1,
-    -- },
-
-    -- {
-    --     -- roll_type = WAVE_ROLL_TYPE_FIXED,
-    --     min = 1,
-    --     max = 1,
-    --     enemies = {
-    --         { E.BeeBossRework, 1, position = { 240 - 16, 200 } },
-    --     },
-    --     music = "boss_w2",
-    --     ambience = "bee_boss_crowd_normal",
-
-    --     run = function(self, level)
-    --         for _, actor in pairs(level.game.actors) do
-    --             if actor.name == "timed_spikes" then
-    --                 actor:remove()
-    --             end
-    --         end
-    --     end,
-
-    --     elevator = ElevatorW2,
-    -- },
-    
-    -- {
-    --     -- roll_type = WAVE_ROLL_TYPE_FIXED,
-    --     min = 1,
-    --     max = 1,
-    --     enemies = {
-    --         { E.HerMajesty, 1, position = { 240 - 16, 200 } },
-    --     },
-    --     music = "boss_w2",
-    --     ambience = "bee_boss_crowd_normal",
-
-    --     run = function(self, level)
-    --         for _, actor in pairs(level.game.actors) do
-    --             if actor.name == "timed_spikes" then
-    --                 actor:remove()
-    --             end
-    --         end
-    --     end,
-
-    --     elevator = ElevatorW2,
-    -- },
-
-
-    -- {
-    --     roll_type = WAVE_ROLL_TYPE_FIXED,
-    --     background = backgrounds.BackgroundGreenhouse:new(),
-    --     elevator = ElevatorW4,
-
-    --     min = 1,
-    --     max = 1,
-    --     enemies = {
-    --         { E.MoleBoss, 1, --[[position = { CANVAS_WIDTH/2 - 43, 11 * 16 - 4 } ]]}
-    --     },
-
-    --     run = function(self, level)
-    --     end,
-    -- },
-
-    -------------------------------------------
-
 
     {
         min = 5,
@@ -1223,18 +1106,21 @@ local waves_defs = {
             --     interval_size = 150,
             --     progress_speed = 80,
             --     arc_params = thorns_arc_params
+            --     is_front = true,
             -- }}},
             -- {E.ProgressingArc, 1, args = {{
             --     points = get_w4_vines_points_func_1(64),
             --     interval_size = 150,
             --     progress_speed = -80,
             --     arc_params = thorns_arc_params
+            --     is_front = true,
             -- }}},
             {E.ProgressingArc, 1, args = {{
                 points = get_w4_vines_points_func_2(),
                 interval_size = 150,
                 progress_speed = 80,
-                arc_params = thorns_arc_params
+                arc_params = thorns_arc_params,
+                is_front = true,
             }}},
         }
     },
@@ -1288,16 +1174,6 @@ local waves_defs = {
     new_cafeteria(),
     ---------------------------------------------
 
-    -- E.GoldenBeetle
-    -- E.CloudStorm
-    -- E.Rollopod
-    -- E.Shooter
-    -- E.Centipede
-    
-    -- E.CloudDropper
-    -- E.MushroomAnt
-    -- E.SquidMother
-
     {
         min = 6,
         max = 6,
@@ -1314,7 +1190,8 @@ local waves_defs = {
                 points = get_w4_vines_points_func_3(),
                 interval_size = 150,
                 progress_speed = 160,
-                arc_params = thorns_arc_params
+                arc_params = thorns_arc_params,
+                is_front = true,
             }}},
         },
     },
@@ -1376,16 +1253,6 @@ local waves_defs = {
     },
 
     {
-        
-    -- E.GoldenBeetle
-    -- E.CloudStormZone
-    -- E.Rollopod
-    -- E.Shooter
-    -- E.Centipede
-    
-    -- E.CloudDropper
-    -- E.MushroomAnt
-    -- E.SquidMother
         min = 6,
         max = 6,
 
@@ -1409,7 +1276,7 @@ local waves_defs = {
             { E.CloudDropper, 30 },
         },
         fixed_enemies = {
-            { E.Centipede, 30 },
+            { E.Centipede, 1 },
         }
     },
 
@@ -1756,7 +1623,8 @@ local waves_defs = {
                 points = get_w4_vines_points_func_3(),
                 interval_size = 150,
                 progress_speed = 160,
-                arc_params = thorns_arc_params
+                arc_params = thorns_arc_params,
+                is_front = true,
             }}},
         },
 
@@ -1856,36 +1724,13 @@ local waves_defs = {
     },
 }
 
+-- This is for debugging only 
 if BUILD_TYPE == "demo" then
-    local demo_waves = {}
-    for i=1, 40 do
-        table.insert(demo_waves, waves_defs[i])
-    end
-    waves_defs = demo_waves
+    waves_defs[20] = new_cafeteria({ achievements = {"ach_complete_w1"} })
+    waves_defs[30] = new_cafeteria({ ceo_info = 1, shopkeeper_x_override = 5000 })
 end
 
 local waves = parse_waves_table(waves_defs)
-
------------------------------------------------------------------------
------------------------------------------------------------------------
------------------------------------------------------------------------
------------------------------------------------------------------------
------------------------------------------------------------------------
------------------------------------------------------------------------
------------------------------------------------------------------------
------------------------------------------------------------------------
------------------------------------------------------------------------
------------------------------------------------------------------------
------------------------------------------------------------------------
------------------------------------------------------------------------
------------------------------------------------------------------------
------------------------------------------------------------------------
------------------------------------------------------------------------
------------------------------------------------------------------------
------------------------------------------------------------------------
------------------------------------------------------------------------
------------------------------------------------------------------------
-
 
 local function sanity_check_waves()
     for i, wave in ipairs(waves) do

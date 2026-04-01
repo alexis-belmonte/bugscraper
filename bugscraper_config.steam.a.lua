@@ -1,0 +1,2 @@
+DISTRIBUTION_PLATFORM = "steam"
+DEBUG_MODE = false

@@ -8,6 +8,10 @@ return Cutscene:new("ceo_escape_w1", {
         
         duration = 0.1,
         enter = function(cutscene, data)
+            if BUILD_TYPE == "demo" then
+                Metaprogression:set("has_seen_w1_transition_cutscene", false)
+            end
+            
             if not Metaprogression:get("has_seen_w1_transition_cutscene") then
                 game.menu_manager:set_can_pause(false)
                 game.game_ui.cinematic_bars_enabled = true
@@ -133,7 +137,7 @@ return Cutscene:new("ceo_escape_w1", {
     CutsceneScene:new({
         description = "CEO brrrrr",
         
-        duration = 3.0,
+        duration = 1.0,
         enter = function(cutscene, data)
             data.ceo.vx = 0
             data.ceo.vy = -50
@@ -170,11 +174,40 @@ return Cutscene:new("ceo_escape_w1", {
             data.update_jetpack(dt)
         end,
     }),
+
+    
+    CutsceneScene:new({
+        description = "ceo jetpack fadeout 1",
+        
+        duration = 2.0,
+        enter = function(cutscene, data)
+            if BUILD_TYPE == "demo" then
+                local cx, cy = game.camera:get_real_position()
+                game.game_ui:start_iris_transition(data.ceo.mid_x - cx, data.ceo.mid_y - cy - 16, 1.0, CANVAS_WIDTH, 32)
+            end
+        end,
+        update = function(cutscene, data, dt)
+            data.update_jetpack(dt)
+            
+            if BUILD_TYPE == "demo" then
+                local cx, cy = game.camera:get_real_position()
+
+                game.game_ui.iris_transition_x = data.ceo.mid_x - cx
+                game.game_ui.iris_transition_y = data.ceo.mid_y - cy - 16
+            end
+        end,
+        exit = function(cutscene, data)
+        end,
+    }),
     
     CutsceneScene:new({
         description = "Give back control to players",
         duration = 0.0,
         enter = function(cutscene, data)
+            if BUILD_TYPE == "demo" then
+                return true
+            end
+
             if not Metaprogression:get("has_seen_w1_transition_cutscene") then
                 game.menu_manager:set_can_pause(true)
                 game.game_ui.cinematic_bars_enabled = false
@@ -191,9 +224,40 @@ return Cutscene:new("ceo_escape_w1", {
     }),
 
     CutsceneScene:new({
+        description = "CEO jetpack fadeout 2",
+        
+        duration = 1.0,
+        enter = function(cutscene, data)
+            if BUILD_TYPE == "demo" then
+                local cx, cy = game.camera:get_real_position()
+                game.game_ui:start_iris_transition(data.ceo.mid_x - cx, data.ceo.mid_y - cy  - 16, 1.0, 32, 0)
+                game.music_player:fade_out("game_over", 1.0)
+            end
+        end,
+        update = function(cutscene, data, dt)
+            data.update_jetpack(dt)
+
+            if BUILD_TYPE == "demo" then
+                local cx, cy = game.camera:get_real_position()
+
+                game.game_ui.iris_transition_x = data.ceo.mid_x - cx
+                game.game_ui.iris_transition_y = data.ceo.mid_y - cy  - 16
+            end
+        end,
+        exit = function(cutscene, data)
+            if BUILD_TYPE == "demo" then
+                game:save_stats()
+                game.menu_manager:set_menu("demo_end")
+            end
+        end,
+    }),
+
+    CutsceneScene:new({
         description = "CEO brrrrrr",
         
-        duration = 3.0,
+        duration = 1.0,
+        enter = function(cutscene, data)
+        end,
         update = function(cutscene, data, dt)
             data.update_jetpack(dt)
         end,
@@ -207,16 +271,11 @@ return Cutscene:new("ceo_escape_w1", {
             data.ceo.spr:update_offset(0, 0)
         end,
     }),
-    
+
     CutsceneScene:new({
         description = "Give back control to players",
         duration = 0.0,
         enter = function(cutscene, data)
-            if BUILD_TYPE == "demo" then
-                game.menu_manager:set_menu("demo_end")
-                return
-            end
-            
             if not Metaprogression:get("has_seen_w1_transition_cutscene") then
                 game.game_ui.cinematic_bar_color = nil
                 Metaprogression:set("has_seen_w1_transition_cutscene", true)

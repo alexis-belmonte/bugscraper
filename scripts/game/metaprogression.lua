@@ -154,10 +154,10 @@ function MetaprogressionManager:unlock_upgrade(upgrade_name)
 end
 
 function MetaprogressionManager:check_achievements()
-    if #self:get("upgrades") >= self.max_upgrades then
+    if #self:get("upgrades") >= self.max_upgrades and BUILD_TYPE ~= "demo" then
         Achievements:grant("ach_all_upgrades")
     end
-    if #self:get("skins") >= self.max_skins then
+    if #self:get("skins") >= self.max_skins and BUILD_TYPE ~= "demo" then
         Achievements:grant("ach_all_skins")
     end
 end

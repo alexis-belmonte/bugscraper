@@ -1,16 +1,121 @@
 # Bugscraper changelog
 
-### 0.10
+## 0.10
+
+Big update but not a very exciting update, sorry! It's just a ton of bug fixes, QOL additions and polishing.
+
+In addition of being busy with classes, this is also because I want to release a new demo on Steam soon, to start promoting the game more to journalists and influencers and whatnot. 
+
+Really hope that I can add some new upgrades and content in the next update! Thank you for your patience! :)
+
+"⭐" emoji represent particularily noteworthy changes.
+
+### General
+- ⭐ Achievements! There are 12 of them currently, you can obtain them in-game and through Steam too.
+- ⭐ Statistics screen, available through the pause menu
+- Increased despawn time for guns and gun orbs
+- Section 1
+    - Mr Dung now has a fainted effect after death
+    - Mr Dung's final death ejected animation now depends on his x position
+- Section 2
+    - Made Stabees slightly larger
+    - Changed color of timed spikes warning
+- Section 4
+    - Cloud Storm Zone enemy (placeholder name) wait timer now starts at a random value after spawn
+    - Vines now render in front of everything
+    - Extended wave 70 spiral vines to be visible outside of the cabin too
+    - Added boss intro to Boss 4
+    - Added death animation to Boss 4
+    - Reduced Boss 4's HP
+- Section 5
+    - Updated final few waves to match W4's enemies
+    - Final boss polish
+        - Second-to-last wave before final boss contains 2x Heart jar 
+        - Final boss intro and death cutscene
+        - Win screen
+- Input 
+    - Added Y as confirm button on controllers
+- Multiplayer 
+    - Decreased amount of waves until respawn in multiplayer from 5 to 3
+    - Made players cocoon respawning more obvious
+    - Cocoons are now rendered in front of all actors except players
+    - All players are now respawned at wave 99
+- Misc 
+    - Changed: Heart drops now go through solid collisions
+    - Steam API Integration
+    - Cutscenes fixes (made some unpausable + fixed minor final cutscene issues)
+    - Removed shadows in tutorial
+
+
+### UI
+- Improved readability of text menu item player indicator
+- Added animations to menus when they're set
+- Moved input options down in options menu
+- New character screen now shows source of guest characters
+- Added "feedback" button to language selection menu
+
+ 
+### Audio
+- New sounds courtesy of Martin:
+    - Achievemnts xp bar tick
+    - Boss 3
+    - Motherboard & Pendulum sounds
+    - Grasshopper SFX
+    - Metal fly
+    - Chipper
+    - Big Chippers
+    - Golden Beetle
+    - Nex XP reward SFX
+- W5 music (placeholder)
+- Chipper SFX is a bit less loud
+- Synced death sound with visuals
+
+
+### Localization
+- Updated the following localizations:
+    - ⭐ New language: Japanese, courtesy of Sora
+    - Brazilian Portuguese, courtesy of Nicole Sanches, kiwisky, and Clément Macheret 
+    - Polish, courtesy of Jakub Piłasiewicz
+    - Spanish, courtesy of Alejandro Alzate Sánchez 
+    - French
+- Removed Simplified Chinese localization for now
+- Added basic language selection screen on first startup
+
+
+### Fixes
+- Fixed: Issue where vines would not be deleted before Boss 4
+- Fixed: Multiple Centipedes could spawn in a later W4 wave
+- Fixed: Dying while a heart was attracted towards a player would cause that heart to jitter until the end of the game
+- Fixed: Exit sign easter egg camera issue
+- Fixed: Breakable actors now spawn state changing particles correctly
+- Fixed: Screenshake would still be updated while game was paused
+- Fixed: Background would not scroll after final boss enter cutscene
+- Fixed: Weird crash related to CloudStormZone enemies AI management
+- Fixed: Game would crash if steamworks API was not correctly loaded
+- Fixed: Explosions should always insta-kill all enemies
+- Fixed: Ghost players can no longer shoot when no player is alive (like in GAME_STATE_DYING state)
+- Fixed: Cocoons will no longer spawn players if the game is in "GAME_STATE_DYING" state
+- Fixed: Golden beetles would reset explosion timer after being shot
+- Fixed: Properly centered menus
+- Fixed: You could move at the beginning of ceo_escape_w5 cutscene
+- Fixed: chippers walk sound could stay after their death
+- Fixed: Disabled debug mode to releases
+- Fixed: Removed loot from final vending machine
+
+
+### Optimizations
+- Optimized loading of some sounds
+- Backported the game from LÖVE 12 to LÖVE 11.5
 
 
 
-### 0.9.3
+## 0.9.3
 (*2026-02-02*)
 
 - **Fixed**: wrong texture was given to Mr. Dung's flying balls
 
 
-### 0.9.2
+## 0.9.2
 (*2026-01-30*)
 
 New update! Please give me as much feedback as possible regarding department 4. I'm still working on reworking boss 2, please give it my sweet time. 🙇‍♂️
@@ -34,7 +139,7 @@ New update! Please give me as much feedback as possible regarding department 4. 
 - **Changed**: New splash screen
 - **Changed**: Boss 3 now stops the music after beaten
 
-#### Fixes 
+### Fixes 
 - **Fixed**: Music would not change in cafeterias after selecting an upgrade
 - **Fixed**: Stomping an enemy while holding jump a few frames after landing on the floor would shoot the player upwards
 - **Fixed**: You can no longer assign the same button for different UI actions
@@ -43,7 +148,7 @@ New update! Please give me as much feedback as possible regarding department 4. 
 - **Optimized**: Slight optimisation to the game's 3D renderer
 
 
-### 0.9.1
+## 0.9.1
 (*2026-01-17*)
 
 - **Added**: Heart jars in cafeterias, which give a heart to every player in the game
@@ -66,12 +171,12 @@ New update! Please give me as much feedback as possible regarding department 4. 
 - Small tweak to pendulum animation
 
 
-### 0.9
+## 0.9
 (*2026-01-09*)
 
 I added a "⭐" emoji next to highlights to make this changelog easier to read.
 
-#### Gameplay 
+### Gameplay 
 - ⭐ **Added**: New character, Amb! She's a shy harworking bug, usually messing around in the Server Room.
 - ⭐ **Added**: New enemy, the 'Dropper' (placeholder name): spawns in dept. 4, flies around randomly and drops down as soon as it is damaged, spawning 4 projectiles when hitting the floor  
 - ⭐ **Added**: New Boss for dept 4! Please not that this is still a WIP
@@ -83,7 +188,7 @@ I added a "⭐" emoji next to highlights to make this changelog easier to read.
 - **Changed**: Made bullets' hitboxes slightly bigger
 - **Changed**: Guns are now instantly collected when you press the 'interact' button
 
-#### Visuals
+### Visuals
 - **Changed**: Improved & polished Webmaster boss
 - **Added**: New "Buglatro" TV slide by 8lueskii 
 - **Added**: Added warning signs before spikes in dept. 2 appear
@@ -99,7 +204,7 @@ I added a "⭐" emoji next to highlights to make this changelog easier to read.
 - **Changed**: Grahpical changes to poison and stink bugs, which are now yellow, to make them more consistent 
 - **Changed**: Small change to the ground floor sprite
 
-#### UI
+### UI
 - **Changed**: Moved upgrades UI position to the top right
 - **Changed**: Changed the UI layout of upgrades to be vertical
 - **Changed**: The timer now display in front of the UI when paused
@@ -108,7 +213,7 @@ I added a "⭐" emoji next to highlights to make this changelog easier to read.
 - **Changed**: Slight tweaks to various UI elements
 - **Removed**: Removed convention mode from options
 
-#### Sound
+### Sound
 - ⭐ **Added**: New music! Including pause music for dept 2 and bosses, and various changes to the music of the game (Including Dept. 1 & Dept. 3). Courtesy of OLX.
 - ⭐ **Added/Changed**: New sounds! Courtesy of Martin Domergue
     - Various enemy sounds including honeypot ants & grasshoppers
@@ -125,7 +230,7 @@ I added a "⭐" emoji next to highlights to make this changelog easier to read.
 - **Added**: Added intros to music loops: music will now have an intro before their main loop
 - **Changed**: Music will now play back to its previous point when exiting a cafeteria
 
-#### Fixes
+### Fixes
 - **Fixed**: Fixed issue where you could spawn multiple players
 - **Fixed**: Fixed issue where the Pea Gun could duplicate in the tutorial
 - **Fixed**: Fixed issue where player could slightly clip through the elevator door when exiting cafeterias 
@@ -139,14 +244,14 @@ I added a "⭐" emoji next to highlights to make this changelog easier to read.
 - **Fixed**: Fixed bug where vines weren't removed after wave 80
 - **Fixed**: Fixed minor graphical issue with dept. 3's falling grid animation
 
-#### Localization 
+### Localization 
 - **Changed**: Minor changes to some localized text
 - **Changed**: The game now takes into account all user locales
 - **Changed**: Added a menu padding parameter to locales
 - **Changed**: Updated Spanish translations, courtesy of Alejandro Alzate Sánchez
 - **Changed**: Some updates to Portugese Brazilian translations, courtesy of itzKiwiSky
 
-#### Misc
+### Misc
 - **Added**: Added a new CEO escape cutscene after dept. 3
 - **Added**: Added some gamepad vibrations in menus
 - **Changed**: The game will no longer boot if bugscraper.png is not present, courtesy of Alejandro Alzate Sánchez
@@ -154,22 +259,22 @@ I added a "⭐" emoji next to highlights to make this changelog easier to read.
 And many other various optimizations, improvements and fixes.
 
 
-### 0.8.1
+## 0.8.1
 (*2025-10-01*)
 
 - **Fix**: Fixed issue where vines (placeholder name) would not deal any damage 
 - **Fix**: Fixed issue where Chippers would not play their telegraph sound  
 
 
-### 0.8
+## 0.8
 (*2025-09-27*)
 
-#### Highlights
+### Highlights
 - 🔊 **Sound design** has been completely reworked from scratch, thanks to the work of the new sound designer in the team, Martin Domergue!! Please note that this is still a work in progress, and do not hesitate to send feedback and criticism, it is highly appreciated.
 - 🪴 **New 4th department!** The Gardens are the Bugscraper's highest area, a luxurious place where reside the company's highest ranked executives. Please note that it is still a work in progress and a lot of things are still placeholders.
 - 🔘 **New "interact" button!** This button is used to open up the new cafeteria interface, to exit the game, or to collect guns. Unfortunately this will reset your custom remappings, I'm sorry :(
 
-#### Gameplay
+### Gameplay
 - **Change**: Sound design has been completely reworked from scratch, thanks to the work of the new sound designer in the team, Martin Domergue
 - **Added**: New department 4. The Gardens are the Bugscraper's highest area, a luxurious place where reside the company's highest ranked executives. Please note that it is still a work in progress and a lot of things are still placeholders.
 - **Added**: Added a "interact" button, mapped by default to "Z" on keyboard and the right action button (Nintendo A, Xbox B, Playstation circle) on controllers. This addition also changes the default mappings and removes the "exit game" action. Unfortunately this will reset any custom remappings you might have had. 
@@ -187,7 +292,7 @@ And many other various optimizations, improvements and fixes.
 - **Change**: Made guns slightly more pleasant to use by making bullets spawn from the base of guns
 - **Added**: Added a new easter egg 👀 
 
-#### Graphics
+### Graphics
 - **Change**: Weapons and hearts will now always render in front of enemies
 - **Change**: Added visual effect to ghosts' spinning
 - **Change**: Minor tweak to splash screen graphic
@@ -197,7 +302,7 @@ And many other various optimizations, improvements and fixes.
 - **Added**: Added a few TV slides
 - Various other minor graphical changes 
 
-#### Menus
+### Menus
 - **Added**: Added "SFX Volume" option
 - **Change**: You can now use keyboard inputs to navigate menus even if no keyboard player joined the game
 - **Added**: Added simplified chinese localisation. Right now it's all machine-translated but I do plan on adding manual translations later on.
@@ -205,7 +310,7 @@ And many other various optimizations, improvements and fixes.
 - **Change**: Changed feedback menu
 - **Change**: Buttons are no longer selectable during the game over animation
 
-#### Fixes
+### Fixes
 - **Fix**: Fixed bug where the 3D graphics of the Comball would not appear at the right location while in the elevator door
 - **Fix**: Fixed minor visual artifact that sometimes happened when enemies spawn from the elevator door
 - **Fix**: Fixed issue where splash screen would not be correctly cut if width of window is very large
@@ -221,7 +326,7 @@ And many other various optimizations, improvements and fixes.
 - **Fix**: Fixed minor graphical issue where the timer & cinematic bar would clash sometimes
 
 
-### 0.7.2
+## 0.7.2
 (*2025-07-04*)
 
 - **Fix**: Fixed issue where a certain easter egg would crash the game
@@ -229,7 +334,7 @@ And many other various optimizations, improvements and fixes.
 - **Fix**: Linux version is now correctly supported on Steam
 
 
-### 0.7.1
+## 0.7.1
 (*2025-07-03*)
 
 - **Fix**: Fixed issue where enemies would not drop any loot

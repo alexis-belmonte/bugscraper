@@ -321,7 +321,7 @@ return {
             },
         },
         achievements = {
-            title = "[[ADDED / 'ACHIEVEMENTS']]",
+            title = "OSIĄGNIĘCIA",
         },
         feedback = {
             title = "ZOSTAW OPINIE",
@@ -331,7 +331,7 @@ return {
         game_over = {
             title = "KONIEC GRY!",
             kills = "Zabici wrogowie", -- The amount of enemies the player has killed
-            deaths = "[[ADDED / 'Deaths']]",
+            deaths = "Zgony",
             time = "Czas",            -- The time that the player took to complete the level
             floor = "Piętro",          -- Which storey the player was on when they died
             score = "Wynik",
@@ -341,12 +341,12 @@ return {
             quick_restart = "POWTÓRZ",
         },
         stats = {
-            title = "[[ADDED / 'STATS']]",
+            title = "STATYSTYKI",
 
-            time_total = "[[ADDED / 'Time played (total)']]",
-            time_ingame = "[[ADDED / 'Time played (in game)']]",
-            runs = "[[ADDED / 'Runs']]",
-            best_run = "[[ADDED / 'Best wave reached']]", -- The biggest wave number reached on any run
+            time_total = "Czas w grze",
+            time_ingame = "Czas grania",
+            runs = "Podejścia",
+            best_run = "Najwyższe piętro", -- The biggest wave number reached on any run
         },
         new_reward = {
             new_skin = "Nowa postać!",
@@ -390,60 +390,60 @@ return {
     },
     achievements = {
         ach_complete_w1 = {
-            name = "Korporobale", 
-            description = "[[ADDED / 'Complete department 1']]",
+            name = "Korporobale",
+            description = "Ukończ dział 1",
         },
         ach_complete_w2 = {
             name = "Pasieka Metalu",
-            description = "[[ADDED / 'Complete department 2']]",
+            description = "Ukończ dział 2",
         },
         ach_complete_w3 = {
             name = "Serwerowy Piekielnik",
-            description = "[[ADDED / 'Complete department 3']]",
+            description = "Ukończ dział 3",
         },
         ach_complete_w4 = {
             name = "Ogrody",
-            description = "[[ADDED / 'Complete department 4']]",
+            description = "Ukończ dział 4",
         },
         ach_complete_end = {
-            name = "[[ADDED / 'Vacations']]",
-            description = "[[ADDED / 'Complete the game']]",
+            name = "Wakacje",
+            description = "Ukończ gre",
         },
         ach_death = {
-            name = "[[ADDED / 'Perseverance']]",
-            description = "[[ADDED / 'Die 50 times']]",
+            name = "Wytrwałość",
+            description = "Zgiń 50 razy",
         },
         ach_all_upgrades = {
-            name = "[[ADDED / 'A Furious Cocktail']]",
-            description = "[[ADDED / 'Unlock all upgrades']]",
+            name = "Wściekły Koktajl",
+            description = "Odblokuj wszystkie ulepszenia",
         },
         ach_all_skins = {
-            name = "[[ADDED / 'Team Leader']]",
-            description = "[[ADDED / 'Unlock all characters']]",
+            name = "Lider Zespołu",
+            description = "Odblokuj wszystkie postacie",
         },
         ach_max_hearts = {
-            name = "[[ADDED / 'Lover']]",
-            description = "[[ADDED / 'Obtain 7 ❤']]",
+            name = "Lover",
+            description = "Uzyskaj 7 ❤",
         },
         ach_no_damage_easy = {
-            name = "[[ADDED / 'Iron Bug']]",
-            description = "[[ADDED / 'Do not take damage for 20 floors']]",
+            name = "Żelazny Robal",
+            description = "Nie odnieś obrażeń przez 20 pięter",
         },
         ach_no_damage_full = {
-            name = "[[ADDED / 'Golden Bug']]",
-            description = "[[ADDED / 'Do not take damage for a full game']]",
+            name = "Złoty Robal",
+            description = "Nie odnieś obrażeń przez całą gre",
         },
         ach_no_floor = {
-            name = "[[ADDED / 'The Floor Is Lava']]",
-            description = "[[ADDED / 'Do not touch the ground for 10 floors']]",
+            name = "Podłoga to Lawa",
+            description = "Nie dotknij podłogi przez 10 pięter",
         },
         ach_big_combo = {
-            name = "[[ADDED / 'Furious']]",
-            description = "[[ADDED / 'Get a 100 combo']]",
+            name = "Wściekły",
+            description = "Zdobądz 100 combo",
         },
         ach_smash_easter_egg = {
-            name = "[[ADDED / 'GAME!']]", -- This is a reference to what the announcer says at the end of a match in Smash Bros.
-            description = "[[ADDED / 'Obtain the secret exit animation']]", 
+            name = "GAME!", -- This is a reference to what the announcer says at the end of a match in Smash Bros.
+            description = "Znajdź tajne wyjście",
         },
     },
     discord = { -- Text used for Discord rich presence

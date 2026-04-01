@@ -41,6 +41,8 @@ function ElectricArc:init(x, y, params)
     -- self.particle_probability = 0.005
     self.particle_probability = 0.001
 
+    self.is_front = param(params.is_front, false)
+
     self.active_arc_min_line_width = 1
     self.active_arc_max_line_width = 3
     self.inactive_arc_min_line_width = 0.1
@@ -210,14 +212,14 @@ end
 
 function ElectricArc:draw_back()
     ElectricArc.super.draw_back(self)
-
-    if self.lightning.style == LIGHTNING_STYLE_THORNS then
-        self.lightning:draw(0, 0, {thorns_outline = COL_BLACK_BLUE})
-    end
 end
 
 function ElectricArc:draw()
     ElectricArc.super.draw(self)
+
+    if self.lightning.style == LIGHTNING_STYLE_THORNS then
+        self.lightning:draw(0, 0, {thorns_outline = COL_BLACK_BLUE})
+    end
 
     self.lightning:draw()
 

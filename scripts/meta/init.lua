@@ -7,15 +7,14 @@ local function init()
     print("Distribution platform: "..tostring(DISTRIBUTION_PLATFORM))
     print("Build type: "..tostring(BUILD_TYPE))
     print("")
+    
+    local ext = package.config:sub(1, 1) == '\\' and 'dll' or 'so'
+    package.cpath = string.format("%s;%s/?.%s", package.cpath, love.filesystem.getSourceBaseDirectory(), ext)
 
     if PROFILER_INIT then
         love.profiler = require "lib.profiler.profile"
         love.profiler.start()
     end
-
-    -- Courtesy of https://github.com/MarvellousSoft/MarvInc/blob/e914dcd15d7b538793c7dcac27d3350d716d47db/marv/main.lua#L10-L13
-    local windows = package.config:sub(1, 1) == '\\'
-    package.cpath = string.format("%s;%s/?.%s", package.cpath, love.filesystem.getSourceBaseDirectory(), (windows and "dll" or "so"))
 
     local FileManager = require "scripts.file.files"
     Files = FileManager:new()

@@ -1,7 +1,6 @@
 name = "bugscraper"
 # default_targets = ["lovejs", "win32", "win64", "macos", "appimage"]
-# default_targets = ["win64", "macos", "appimage"]
-default_targets = ["win64"]
+default_targets = ["win64", "macos", "appimage"]
 build_directory = "_export"
 icon_file = "icon.png"
 
@@ -12,6 +11,9 @@ love_files = [
     "-./_export",
     "-*.aseprite",
     "-*.lnk",
+    "-*.dll",
+    "-*.so",
+    "-*.dylib",
 
     "-./luasteam.dll",
     "-./steam_api64.dll",
@@ -22,11 +24,6 @@ love_version = "11.5"
 [archive_files]
 "changes.md" = "changes.md"
 
-[hooks]
-postbuild = [
-    "bash post_build.sh {build_directory} {version}",
-]
-
 [win64]
 love_binaries = "$[LOVE_BINARIES_win64]"
 
@@ -35,9 +32,9 @@ love_binaries = "$[LOVE_BINARIES_win64]"
 # All specified files will simply be added to the .zip archive.
 [windows.archive_files]
 "steam_appid.txt" = "steam_appid.txt"
-"luasteam.dll" = "lib/steam/win64/win64_luasteam.dll"
-"steam_api64.dll" = "lib/steam/win64/steam_api64.dll"
-"steam_api64.lib" = "lib/steam/win64/steam_api64.lib"
+"luasteam.dll" = "luasteam.dll"
+"steam_api64.dll" = "steam_api64.dll"
+"steam_api64.lib" = "steam_api64.lib"
 
 # Exe metadata is specified as a version string (key) and it's value
 # The values shown here are the ones set by makelove by default (you can overwrite them here)
@@ -62,8 +59,8 @@ love_binaries = "$[LOVE_BINARIES_macos]"
 # All specified files will be copied to the <name>/Contents/Resources/ directory of the .app file.
 [macos.archive_files]
 "steam_appid.txt" = "steam_appid.txt"
-"_dyn/osx/luasteam.so" = "lib/steam/osx/osx_luasteam.so"
-"_dyn/osx/libsteam_api.dylib" = "lib/steam/osx/libsteam_api.dylib"
+"luasteam.so" = "luasteam.so"
+"libsteam_api.dylib" = "libsteam_api.dylib"
 
 
 [macos.app_metadata]
@@ -73,6 +70,12 @@ NSHumanReadableCopyright = "Copyright © 2026 Léo Bernard"
 
 [appimage]
 source_appimage = "$[LOVE_BINARIES_appimage]"
+
+# shared_libraries = [
+# 	"libsteam_api.so",
+# 	"linux64_luasteam.so",
+#     "steam_appid.txt",
+# ]
 
 [linux]
 # [linux.archive_files]

@@ -90,6 +90,8 @@ local sfxnames = {
 	["sfx_player_damage_normal"] =         {"sfx/actor/player/sfx_player_damage_normal.ogg", "static"},
 	["sfx_player_damage_poison"] =         {"sfx/actor/player/sfx_player_damage_poison.ogg", "static"},
 	["sfx_player_death"] =                 {"sfx/actor/player/sfx_player_death.ogg", "static"},
+	["sfx_player_death_intro"] =           {"sfx/actor/player/sfx_player_death_intro.ogg", "static"},
+	["sfx_player_death_punch"] =           {"sfx/actor/player/sfx_player_death_punch.ogg", "static"},
 	["sfx_player_leave_game"] =            {"sfx/actor/player/sfx_player_leave_game.ogg", "static"},
 	["sfx_player_leave_game_easter_egg"] = {"sfx/actor/player/sfx_player_leave_game_easter_egg.ogg", "static"},
 	
@@ -170,6 +172,8 @@ local sfxnames = {
 	["sfx_w2_cutscene_clap"] =            {"sfx/cutscene/sfx_w2_cutscene_clap.ogg", "static"},
 	["sfx_w2_cutscene_bees_beeingbees"] = {"sfx/cutscene/sfx_w2_cutscene_bees_beeingbees.ogg", "static"},
 	["sfx_w2_cutscene_roof_breaking"] =   {"sfx/cutscene/sfx_w2_cutscene_roof_breaking.ogg", "static"},
+
+	["sfx_cutscene_boss_claps"] =         {"sfx/cutscene/sfx_cutscene_boss_claps.ogg", "static"},
 
 	-- W2	
 	-- Timed spikes
@@ -268,6 +272,9 @@ local sfxnames = {
 	["sfx_enemy_goldenbeetle_explode_{01-03}"] = {"sfx/enemy/goldenbeetle/sfx_enemy_goldenbeetle_explode_{}.ogg", "static"},
 	["sfx_enemy_goldenbeetle_beep"] = {"sfx/enemy/goldenbeetle/sfx_enemy_goldenbeetle_beep.ogg", "static"},
 
+	-- Rollossus
+	["sfx_boss_intro_boss4"] = {"sfx/enemy/boss4/sfx_boss_intro_boss4.ogg", "static"},
+
 
 	-- UPGRADES
 	["sfx_upgrades_apple_juice_pickedup"] = {"sfx/upgrades/sfx_upgrades_apple_juice_pickedup.ogg", "static"},
@@ -294,6 +301,10 @@ local sfxnames = {
 	["ui_menu_hover_{01-04}"] = {"ui/ui_menu_hover_{}.ogg", "static"},
 	["ui_menu_select_{01-04}"] = {"ui/ui_menu_select_{}.ogg", "static"},
 
+	-- Achievements
+	["sfx_ui_achievement"] = {"sfx/ui/sfx_ui_achievement.ogg", "static"},
+	["sfx_ui_unlock"] = {"sfx/ui/sfx_ui_unlock.ogg", "static"},
+	["sfx_ui_xpbar_tick"] = {"sfx/ui/sfx_ui_xpbar_tick.ogg", "static"},
 
 	-- LEVEL
 	["sfx_door_open"] = {"sfx/level/door/sfx_door_open.ogg", "static"},

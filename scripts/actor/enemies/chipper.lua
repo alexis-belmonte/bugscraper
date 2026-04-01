@@ -42,7 +42,10 @@ function Chipper:init(x, y, spr)
     self.player_detection_range = 256
     self.player_detection_width = 16
     self.telegraph_timer = Timer:new(0.5)
-    self.telegraph_source = Audio:get_sound("sfx_enemy_chipper_trigger"):clone()
+    -- self.telegraph_source = Audio:get_sound("sfx_enemy_chipper_trigger"):clone()
+    self:set_constant_sound("trigger", "sfx_enemy_chipper_trigger", false)
+    self:set_constant_sound_volume("trigger", 0.7)
+
     self.attack_speed = 100
     self.post_attack_timer = Timer:new(0.5)
     self.score = 10
@@ -50,7 +53,7 @@ function Chipper:init(x, y, spr)
     self.sound_death = "sfx_enemy_kill_general_glitch_{01-10}"
     self.sound_stomp = "sfx_enemy_kill_general_glitch_{01-10}"
 
-    self:set_constant_sound("crawl", "sfx_enemy_chipper_crawl_lp_{01-04}", true, 1.0)
+    self:set_constant_sound("crawl", "sfx_enemy_chipper_crawl_lp_{01-04}", false, 1.0)
     self:set_constant_sound_volume("crawl", 0.2)
 
     self.state_machine = StateMachine:new({
@@ -95,7 +98,7 @@ function Chipper:init(x, y, spr)
                 self.anim_frames = self.attack_anim_frames
                 self.telegraph_timer:start()
 
-                self.telegraph_source:play()
+                self:play_constant_sound("trigger")
             end,
             update = function(state, dt)
                 if self.telegraph_timer:update(dt) then
@@ -120,7 +123,7 @@ function Chipper:init(x, y, spr)
             enter = function(state)
                 self.anim_frames = self.normal_anim_frames
                 self.post_attack_timer:start()
-                self.telegraph_source:stop()
+                self:stop_constant_sound("trigger")
             
 				self:play_sound_var("sfx_bullet_bounce_{01-02}", 0.2, 1.2)
                 self:play_sound_var("metal_impact", 0, 1)
@@ -137,6 +140,12 @@ function Chipper:init(x, y, spr)
             end,
         },
     }, "wander")
+end
+
+function Chipper:ready()
+    Chipper.super.ready(self)
+    
+    self:play_constant_sound("crawl")
 end
 
 function Chipper:update(dt)

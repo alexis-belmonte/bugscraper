@@ -41,8 +41,11 @@ function ProgressingArc:init(x, y, params)
     self.cur_ray_index = 1
     self.cur_ray = nil
     self.cur_ray_direction = nil
-
+    
+    self.is_front = param(params.is_front, false)
+    
     self.arc_params = params.arc_params
+    self.arc_params.is_front = param(params.arc_params, self.is_front)
     
     self.rays_spawned = false
 
@@ -210,7 +213,8 @@ function ProgressingArc:draw()
             line_color(COL_GREEN, self.points[i][1], self.points[i][2], self.points[i+1][1], self.points[i+1][2])
         end
     end
-    
+
+    -- Dotted points
     for i = 1, #self.points-1 do
         line_dotted(transparent_color(COL_LIGHT_GREEN, 0.8), 
             self.points[i][1], self.points[i][2], self.points[i+1][1], self.points[i+1][2], { 
