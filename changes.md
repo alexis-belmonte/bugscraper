@@ -72,12 +72,12 @@ Really hope that I can add some new upgrades and content in the next update! Tha
 
 
 ### Localization
-- ⭐ New language: Japanese, courtesy of Sora
-- Updated the following localizations:
-    - Brazilian Portuguese, courtesy of Nicole Sanches and itzKiwiSky (not integrated in the game yet)
+- Updated the following languages:
+    - ⭐ New language: Japanese, courtesy of Sora
+    - Brazilian Portuguese, courtesy of Nicole Sanches, kiwisky and parinamais
     - Polish, courtesy of Jakub Piłasiewicz
     - Spanish, courtesy of Alejandro Alzate Sánchez
-    - French
+    - French, English
 - Removed Simplified Chinese localization for now
 - Added basic language selection screen on first startup
 

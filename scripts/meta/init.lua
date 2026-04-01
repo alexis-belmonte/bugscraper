@@ -8,18 +8,22 @@ local function init()
     print("Build type: "..tostring(BUILD_TYPE))
     print("")
 
+    local ext = package.config:sub(1, 1) == '\\' and 'dll' or 'so'
+    package.cpath = string.format("%s;%s/?.%s", package.cpath, love.filesystem.getSourceBaseDirectory(), ext)
+
     if PROFILER_INIT then
         love.profiler = require "lib.profiler.profile"
         love.profiler.start()
     end
 
+    OPERATING_SYSTEM = love.system.getOS()
+    
     local FileManager = require "scripts.file.files"
     Files = FileManager:new()
 
     local OptionsManager = require "scripts.game.options"
     Options = OptionsManager:new()
 
-    OPERATING_SYSTEM = love.system.getOS()
     USE_CANVAS_RESIZING = true
     SCREEN_WIDTH, SCREEN_HEIGHT = 0, 0
 
