@@ -4,16 +4,7 @@ local Class = require "scripts.meta.class"
 local LuaSteam
 local import_success
 if pcall(function()
-	local osstrings = {
-		["Windows"] = "win64", 
-		["OS X"] = "osx", 
-		["Linux"] = "linux64", 
-	}
-	local os = osstrings[OPERATING_SYSTEM]
-	if os then
-		LuaSteam = require "steam."..os..".luasteam"
-	end
-	error()
+	LuaSteam = require "luasteam"
 end) then
 	print("Steamworks: successfully loaded")
 	import_success = true

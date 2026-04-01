@@ -11,25 +11,18 @@ love_files = [
     "-./_export",
     "-*.aseprite",
     "-*.lnk",
-    "-./*.dll",
-    "-./*.so",
-    "-./*.dylib",
+    "-*.dll",
+    "-*.so",
+    "-*.dylib",
+
+    "-./luasteam.dll",
+    "-./steam_api64.dll",
 ]
 
 love_version = "11.5" 
 
 [archive_files]
 "changes.md" = "changes.md"
-
-[hooks]
-# Both hooks are a list of commands to be executed. They use the default shell.
-# For more information, see the README.md
-# prebuild = []
-# postbuild = [
-# 	# {build_directory} and {version} will be replaced
-# 	# This is obviously only for illustrative purposes, you will probaly want to wrap this in a script
-# 	# "butler push {build_directory}/win32/SuperGame-win32.zip pfirsich/supergame:win32 --userversion {version}",
-# ]
 
 [win64]
 love_binaries = "$[LOVE_BINARIES_win64]"
@@ -39,9 +32,9 @@ love_binaries = "$[LOVE_BINARIES_win64]"
 # All specified files will simply be added to the .zip archive.
 [windows.archive_files]
 "steam_appid.txt" = "steam_appid.txt"
-# "luasteam.dll" = "luasteam.dll"
-# "steam_api64.dll" = "steam_api64.dll"
-# "steam_api64.lib" = "steam_api64.lib"
+"luasteam.dll" = "luasteam.dll"
+"steam_api64.dll" = "steam_api64.dll"
+"steam_api64.lib" = "steam_api64.lib"
 
 # Exe metadata is specified as a version string (key) and it's value
 # The values shown here are the ones set by makelove by default (you can overwrite them here)
@@ -65,9 +58,9 @@ love_binaries = "$[LOVE_BINARIES_macos]"
 # The files specified here will be added in addition to the ones specified on top level.
 # All specified files will be copied to the <name>/Contents/Resources/ directory of the .app file.
 [macos.archive_files]
-# "steam_appid.txt" = "steam_appid.txt"
-# "luasteam.so" = "luasteam.so"
-# "libsteam_api.dylib" = "libsteam_api.dylib"
+"steam_appid.txt" = "steam_appid.txt"
+"luasteam.so" = "luasteam.so"
+"libsteam_api.dylib" = "libsteam_api.dylib"
 
 
 [macos.app_metadata]
@@ -78,13 +71,18 @@ NSHumanReadableCopyright = "Copyright © 2026 Léo Bernard"
 [appimage]
 source_appimage = "$[LOVE_BINARIES_appimage]"
 
-shared_libraries = [
-    "steam_appid.txt",
-	"lib/steam/linux64/libsteam_api.so",
-	"lib/steam/linux64/luasteam.so",
-]
+# shared_libraries = [
+# 	"libsteam_api.so",
+# 	"linux64_luasteam.so",
+#     "steam_appid.txt",
+# ]
 
 [linux]
+# [linux.archive_files]
+# "steam_appid.txt" = "steam_appid.txt"
+# "luasteam.so" = "luasteam_linux64.so"
+# "libsteam_api.so" = "libsteam_api_linux64.so"
+
 # These values are included in the .desktop file
 [linux.desktop_file_metadata]
 Comment="Bugscraper: Rise to the top of a bug-filled skyscraper"
