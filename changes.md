@@ -76,7 +76,7 @@ Really hope that I can add some new upgrades and content in the next update! Tha
     - ⭐ New language: Japanese, courtesy of Sora
     - Brazilian Portuguese, courtesy of Nicole Sanches, kiwisky, and Clément Macheret 
     - Polish, courtesy of Jakub Piłasiewicz
-    - Spanish, courtesy of Alejandro Alzate Sánchez
+    - Spanish, courtesy of Alejandro Alzate Sánchez 
     - French
 - Removed Simplified Chinese localization for now
 - Added basic language selection screen on first startup
