@@ -2,13 +2,13 @@
 
 ## 0.10
 
-Big update but not a very exciting update, sorry! It's just a ton of bug fixes, QOL additions and polishing.
+Big but not very exciting update, sorry! The biggest additions are achievments and stats. But it's mostly just a ton of bug fixes, QOL additions and polishing.
 
-In addition of being busy with classes, this is also because I want to release a new demo on Steam soon, to start promoting the game more to journalists and influencers and whatnot. 
+This is because I've been focusing on getting things done to release a new demo on Steam soon. 
 
-Really hope that I can add some new upgrades and content in the next update! Thank you for your patience! :)
+Please not that the Steam integration doesn't work on macOS and Linux yet, so you won't get achievements for now. We're working on fixing that for the next update.
 
-"⭐" emoji represent particularily noteworthy changes.
+Thank you for your patience! :)
 
 ### General
 - ⭐ Achievements! There are 12 of them currently, you can obtain them in-game and through Steam too.
