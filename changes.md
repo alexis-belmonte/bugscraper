@@ -73,8 +73,8 @@ Thank you for your patience! :)
 
 ### Localization
 - Updated the following localizations:
-    - ⭐ New language: Japanese, courtesy of Sora
-    - Brazilian Portuguese, courtesy of Nicole Sanches, kiwisky, and Clément Macheret 
+    - ⭐ New language: Japanese, courtesy of Sora and Clément Macheret
+    - Brazilian Portuguese, courtesy of Nicole Sanches, kiwisky and parinamais
     - Polish, courtesy of Jakub Piłasiewicz
     - Spanish, courtesy of Alejandro Alzate Sánchez 
     - French
