@@ -54,8 +54,8 @@ function BackroomGroundFloor:generate(world_generator)
 		{x = 433-16, y = 223-16, z = 0, img = images.ground_floor_computer_left,         sound = "sfx_actor_jumping_prop_screen_{01-04}"},
 		{x = 518-16, y = 223-16, z = 0, img = images.ground_floor_computer_left,         sound = "sfx_actor_jumping_prop_screen_{01-04}"},
 		{x = 454-16, y = 232-16, z = 0, img = images.ground_floor_mug,                   sound = "sfx_actor_jumping_prop_mug_{01-02}"},
-		{x = 79-16,  y = 213-16, z = 0, img = images.ground_floor_potted_tree,           sound = "empty"},
-		{x = 146,    y = 213-16, z = 0, img = images.ground_floor_potted_plant,          sound = "empty"},
+		{x = 79-16,  y = 213-16, z = 0, img = images.ground_floor_potted_tree,           sound = "sfx_actor_jumping_prop_plant_big_{01-02}"},
+		{x = 146,    y = 213-16, z = 0, img = images.ground_floor_potted_plant,          sound = "sfx_actor_jumping_prop_plant_big_{01-02}"},
 		{x = 644-16, y = 222-16, z = 0, img = images.ground_floor_lamp,                  sound = "sfx_actor_jumping_prop_screen_{01-04}"},
 		{x = 574-16, y = 222-16, z = 0, img = images.ground_floor_computer_right,        sound = "sfx_actor_jumping_prop_screen_{01-04}"},
 		{x = 651-16, y = 222-16, z = 0, img = images.ground_floor_computer_right,        sound = "sfx_actor_jumping_prop_screen_{01-04}"},
@@ -74,7 +74,7 @@ function BackroomGroundFloor:generate(world_generator)
 		{x = 678-16, y = 225-16, z = 0, img = images.ground_floor_stack_papers_small,    sound = "sfx_actor_jumping_prop_paper_stack_{01-04}"},
 		{x = 1007-16, y = 247-16, z = 0, img = images.ground_floor_bucket_1,             sound = "sfx_actor_jumping_prop_boba_{01-06}"},
 		{x = 1088-16, y = 247-16, z = 0, img = images.ground_floor_bucket_2,             sound = "sfx_actor_jumping_prop_boba_{01-06}"},
-		{x = 978-16, y = 228-16, z = 0, img = images.ground_floor_caution_sign,          sound = "empty"},
+		{x = 978-16, y = 228-16, z = 0, img = images.ground_floor_caution_sign,          sound = "sfx_actor_jumping_prop_sign_{01-04}"},
 	}) do
 		local prop = enemies.JumpingProp:new(prop_data.x, prop_data.y, prop_data.img, prop_data.sound)
 		if prop_data.z then
