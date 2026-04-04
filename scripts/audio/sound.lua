@@ -36,7 +36,7 @@ end
 
 function Sound:update_source()
     local layer_volume = Options:get(self.layer .. "_volume") or 1.0
-    
+
     self.source:setVolume(self.volume * layer_volume)
 	self.source:setPitch(self.pitch)
     if self.source:getChannelCount() == 1 then
@@ -55,9 +55,19 @@ function Sound:set_pitch(pitch)
 end
 
 function Sound:set_position(x, y, z)
-    self.x = x
-    self.y = y
-    self.z = z
+    local cx, cy = game.camera:get_real_position()
+    local corrected_x = ((x or (cx + CANVAS_WIDTH/2) ) - cx) / CANVAS_WIDTH
+    local corrected_y = ((y or (cy + CANVAS_HEIGHT/2)) - cy) / CANVAS_WIDTH
+    local corrected_z = z or 1
+
+    -- Convert from [0, 1] range to [-1, 1] range 
+    corrected_x = (corrected_x*2 - 1) * AUDIO_3D_RANGE
+    corrected_y = (corrected_y*2 - 1) * AUDIO_3D_RANGE
+    corrected_z = 1
+
+    self.x = corrected_x
+    self.y = corrected_y
+    self.z = corrected_z
     self:update_source()
 end
 

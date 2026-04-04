@@ -560,6 +560,7 @@ end
 
 function Actor:update_constant_sounds(dt)
 	for name, sound in pairs(self.constant_sounds) do
+		sound:set_position(self.mid_x, self.mid_y)
 		sound:update_source()
 	end
 end
