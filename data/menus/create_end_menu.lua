@@ -69,9 +69,9 @@ local function create_items(is_win)
                     if math.floor(item.value / sfx_tick) * sfx_tick > math.floor(old_value / sfx_tick) * sfx_tick then
                         local volume = 0.3
                         if shown_level_threshold == math.huge then
-                            Audio:play("sfx_ui_xpbar_tick", volume, 1.0)
+                            Audio:play("sfx_ui_xpbar_03", volume, 1.0)
                         else
-                            Audio:play("sfx_ui_xpbar_tick", volume, lerp(1 - (item.value / item.max_value), 0.75, 1.25))
+                            Audio:play("sfx_ui_xpbar_03", volume, lerp(1 - (item.value / item.max_value), 0.75, 1.25))
                         end
                     end
 
