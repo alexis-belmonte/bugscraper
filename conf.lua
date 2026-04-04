@@ -1,7 +1,7 @@
 require "bugscraper_config"
 
 function love.conf(t)
-    t.identity = "bugscraper"..(BUILD_TYPE == "demo" and "_demo" or "")
+    t.identity = "bugscraper"
     t.version = "11.5"
     -- t.graphics.renderers = {"opengl"}
     -- t.graphics.excluderenderers = {"vulkan"}
