@@ -889,7 +889,7 @@ function Debug:draw_info_view()
                     game.cutscene.total_duration
                 )
             ),
-            concat("score: ", game.score) .. " / ".. concat("xp: ", Metaprogression:get_xp()) .. " / " .. concat("xp_level: ", Metaprogression:get_xp_level()),
+            concat("score: ", game.score) .. " / ".. concat("total_xp: ", Metaprogression:get_total_xp()) .. " / ".. concat("xp: ", Metaprogression:get_xp()) .. " / " .. concat("xp_level: ", Metaprogression:get_xp_level()),
             concat("unlocked_skins: ", skininfo),
             concat("achievements: ", achievementsinfo),
             concat("unlocked_upgrades: ", upgradeinfo),
