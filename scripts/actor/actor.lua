@@ -300,6 +300,8 @@ function Actor:update(dt)
 
 	-- Check for interactions
 	self:check_for_interactions(dt)
+
+	self:update_constant_sounds(dt)
 end
 
 function Actor:draw_back()
@@ -553,6 +555,12 @@ function Actor:set_constant_sound(name, sound_name, play, volume, pitch, params)
 	if play then
 		new_sound:seek(random_range(0, new_sound:get_duration()))
 		new_sound:play()
+	end
+end
+
+function Actor:update_constant_sounds(dt)
+	for name, sound in pairs(self.constant_sounds) do
+		sound:update_source()
 	end
 end
 

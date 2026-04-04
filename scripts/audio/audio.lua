@@ -30,7 +30,7 @@ end
 function AudioManager:play(snd, volume, pitch, params)
 	params = params or {}
 	local layer = params.layer or "sfx"
-	local layer_volume = Options:get(layer .. "_volume") or 1.0
+	
     -- Formalize inputs
     local sndname = snd
 	if type(snd) == "table" then
@@ -46,7 +46,7 @@ function AudioManager:play(snd, volume, pitch, params)
     if sound == nil then   return   end
 	
 	local new_sound = sound:clone()
-	new_sound:set_volume(volume * sound.volume * layer_volume)
+	new_sound:set_volume(volume * sound.volume)
 	new_sound:set_pitch(pitch * sound.pitch)
 
 	-- Sound position
@@ -67,7 +67,7 @@ function AudioManager:play(snd, volume, pitch, params)
 	
 	if self.current_effect == "echo" then
 		local echo_sound = sound:clone()
-		echo_sound:set_volume(volume * sound.volume * layer_volume * 0.3)
+		echo_sound:set_volume(volume * sound.volume * 0.3)
 		echo_sound:set_effect("echo")
 		echo_sound:play()
 	end

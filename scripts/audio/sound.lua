@@ -14,6 +14,7 @@ function Sound:init(source, pitch, volume, params)
     self.is_looping = param(params.looping, false)
 
     self.is_paused = false
+    self.layer = param(params.layer, "sfx")
 
     self.x = 0
     self.y = 0
@@ -34,7 +35,9 @@ function Sound:clone(volume, pitch, params)
 end
 
 function Sound:update_source()
-    self.source:setVolume(self.volume)
+    local layer_volume = Options:get(self.layer .. "_volume") or 1.0
+    
+    self.source:setVolume(self.volume * layer_volume)
 	self.source:setPitch(self.pitch)
     if self.source:getChannelCount() == 1 then
         self.source:setPosition(self.x, self.y, self.z)
@@ -56,6 +59,11 @@ function Sound:set_position(x, y, z)
     self.y = y
     self.z = z
     self:update_source()
+end
+
+function Sound:set_layer(layer)
+    self.layer = layer
+    assert(Options:get(layer.."_volume"), "no audio layer "..tostring(layer).." defined")
 end
 
 function Sound:play()
