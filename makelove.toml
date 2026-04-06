@@ -1,8 +1,10 @@
 name = "bugscraper"
-# default_targets = ["lovejs", "win32", "win64", "macos", "appimage"]
 default_targets = ["win64", "macos", "appimage"]
 build_directory = "_export"
 icon_file = "icon.png"
+
+# LÖVE version - makelove will auto-download and cache binaries for this version
+love_version = "11.5"
 
 love_files = [
     "+*",
@@ -19,75 +21,51 @@ love_files = [
     "-./steam_api64.dll",
 ]
 
-love_version = "11.5" 
-
 [archive_files]
 "changes.md" = "changes.md"
 
-[win64]
-love_binaries = "$[LOVE_BINARIES_win64]"
-
-[windows]
-# The files specified here will be added in addition to the ones specified on top level.
-# All specified files will simply be added to the .zip archive.
+# Windows configuration - no manual love_binaries needed!
 [windows.archive_files]
 "steam_appid.txt" = "steam_appid.txt"
 "luasteam.dll" = "luasteam.dll"
 "steam_api64.dll" = "steam_api64.dll"
 "steam_api64.lib" = "steam_api64.lib"
 
-# Exe metadata is specified as a version string (key) and it's value
-# The values shown here are the ones set by makelove by default (you can overwrite them here)
-# and the values in the comments are the original values in love.exe
-# If you are not doing a versioned build, 0.4 is empty.
 [windows.exe_metadata]
-FileDescription = "Bugscraper: Rise to the top of a bug-filled skyscraper" # "LÖVE {löve version}"
-FileVersion = "$[BUGSCRAPER_VERSION]" # "{löve version}"
-CompanyName = "Léo Bernard" # "LÖVE World Domination Inc."
-LegalCopyright = "Copyright © 2026 Léo Bernard" # "Copyright © 2006-2020 LÖVE Development Team" or ""
-ProductName = "Bugscraper" # "LÖVE"
-# ProductVersion = "<same as FileVersion>"
-OriginalFilename = "bugscraper.exe" # "love.exe"
+FileDescription = "Bugscraper: Rise to the top of a bug-filled skyscraper"
+FileVersion = "0.4.2"
+CompanyName = "Léo Bernard"
+LegalCopyright = "Copyright © 2026 Léo Bernard"
+ProductName = "Bugscraper"
+OriginalFilename = "bugscraper.exe"
 
-
+# macOS configuration - no manual love_binaries needed!
 [macos]
-# optionally, you can include a mac-specific icon, if not mac will use the same icon as other targets
-icon_file = "icon.png"  # or macIcon.icns
-love_binaries = "$[LOVE_BINARIES_macos]"
+icon_file = "icon.png"
 
-# The files specified here will be added in addition to the ones specified on top level.
-# All specified files will be copied to the <name>/Contents/Resources/ directory of the .app file.
 [macos.archive_files]
-"steam_appid.txt" = "steam_appid.txt"
-"luasteam.so" = "luasteam.so"
-"libsteam_api.dylib" = "libsteam_api.dylib"
-
+"steam_appid.txt" = "@content/steam_appid.txt"
+"luasteam.so" = "@content/luasteam.so"
+"libsteam_api.dylib" = "@content/libsteam_api.dylib"
 
 [macos.app_metadata]
-# CFBundleName = "<same as the name from the main config>"
 CFBundleIdentifier = "com.yolwoocle.bugscraper"
 NSHumanReadableCopyright = "Copyright © 2026 Léo Bernard"
 
+# Linux/AppImage configuration - no manual source_appimage needed!
 [appimage]
-source_appimage = "$[LOVE_BINARIES_appimage]"
+shared_libraries = [
+    "libsteam_api.so",
+    "luasteam.so",
+]
 
-# shared_libraries = [
-# 	"libsteam_api.so",
-# 	"linux64_luasteam.so",
-#     "steam_appid.txt",
-# ]
+[linux.archive_files]
+"steam_appid.txt" = "@content/steam_appid.txt"
 
-[linux]
-# [linux.archive_files]
-# "steam_appid.txt" = "steam_appid.txt"
-# "luasteam.so" = "luasteam_linux64.so"
-# "libsteam_api.so" = "libsteam_api_linux64.so"
-
-# These values are included in the .desktop file
 [linux.desktop_file_metadata]
 Comment="Bugscraper: Rise to the top of a bug-filled skyscraper"
-Categories="Game;" # Default is "Game;" (semicolon is separator and terminator)
+Categories="Game;"
 
 [lovejs]
-title = "Bugscraper"  # used on the resulting web page
-memory = "40000000"  # starting memory of the webpage (default is 20 MB)
+title = "Bugscraper"
+memory = "40000000"
