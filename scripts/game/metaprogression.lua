@@ -39,13 +39,16 @@ function MetaprogressionManager:init()
         has_seen_w5_transition_cutscene = false,
     }
 
-    self.levels = require "data.metaprogression_levels"
+    if BUILD_TYPE == "demo" then
+        self.levels = require "data.metaprogression_levels_demo"
+    else
+        self.levels = require "data.metaprogression_levels"
+    end
 
     self.data = {}
     self:read_progress()
-    self:remove_duplicates({"skins", "upgrades", "achievements"})
-
-    -- Count the number of skins / upgrades
+    
+    -- Count the number of max skins / upgrades
     self.max_upgrades = #self.default_data["upgrades"]
     self.max_skins = #self.default_data["skins"]
     for _, level in pairs(self.levels) do
@@ -58,9 +61,48 @@ function MetaprogressionManager:init()
         end
     end
 
+    self:load_xp()
+    self:remove_duplicates({"skins", "upgrades", "achievements"})
+
     self.old_xp = self:get_xp()
     self.old_total_xp = self:get_total_xp()
     self.old_xp_level = self:get_xp_level()
+
+    self.saving_disabled = false
+    self:save_progress()
+end
+
+function MetaprogressionManager:load_xp()
+    self.saving_disabled = true
+
+    local xp_to_parse = self:get_total_xp()
+
+    local xp = 0
+    local xp_level = 1
+
+    while xp_level <= #self.levels do
+        local level = self.levels[xp_level]
+        local threshold = level.threshold
+        local rewards = level.rewards
+
+        if xp_to_parse >= threshold then
+            for _, reward in pairs(rewards) do
+                self:grant_reward(reward)
+            end
+
+            xp_level = xp_level + 1
+            xp_to_parse = max(0, xp_to_parse - threshold)
+        else
+            break
+        end
+    end
+
+    xp = xp_to_parse
+
+    self:set("xp", xp)
+    self:set("xp_level", xp_level)
+
+    self.saving_disabled = false
 end
 
 function MetaprogressionManager:add_xp(value)
@@ -191,6 +233,9 @@ function MetaprogressionManager:remove_duplicates(fields)
 end
 
 function MetaprogressionManager:save_progress()
+    if self.saving_disabled then
+        return
+    end
     Files:write_config_file("progress.txt", self.data)
 end
 

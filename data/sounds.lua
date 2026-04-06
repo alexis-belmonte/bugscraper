@@ -104,6 +104,8 @@ local sfxnames = {
 	-- ["sfx_actor_jumping_prop_plant_small_{01-03}"] = {"sfx/actor/jumping_prop/plant_small/sfx_actor_jumping_prop_plant_small_{}.ogg", "static"},
 	["sfx_actor_jumping_prop_screen_{01-06}"] =      {"sfx/actor/jumping_prop/screen/sfx_actor_jumping_prop_screen_{}.ogg", "static"},
 	["sfx_actor_jumping_prop_boba_{01-06}"] =        {"sfx/actor/jumping_prop/boba/sfx_actor_jumping_prop_boba_{}.ogg", "static"},
+	["sfx_actor_jumping_prop_plant_big_{01-02}"] =   {"sfx/actor/jumping_prop/plant/sfx_actor_jumping_prop_plant_big_{}.ogg", "static"},
+	["sfx_actor_jumping_prop_sign_{01-04}"] =        {"sfx/actor/jumping_prop/sign/sfx_actor_jumping_prop_sign_{}.ogg", "static"},
 
 	-- Cocoon
 	["sfx_actor_cocoon_damage_{01-07}"] = {"sfx/actor/cocoon/sfx_actor_cocoon_damage_{}.ogg", "static"},
@@ -304,7 +306,7 @@ local sfxnames = {
 	-- Achievements
 	["sfx_ui_achievement"] = {"sfx/ui/sfx_ui_achievement.ogg", "static"},
 	["sfx_ui_unlock"] = {"sfx/ui/sfx_ui_unlock.ogg", "static"},
-	["sfx_ui_xpbar_tick"] = {"sfx/ui/sfx_ui_xpbar_tick.ogg", "static"},
+	["sfx_ui_xpbar_{01-03}"] = {"sfx/ui/sfx_ui_xpbar_tick_{}.ogg", "static"},
 
 	-- LEVEL
 	["sfx_door_open"] = {"sfx/level/door/sfx_door_open.ogg", "static"},

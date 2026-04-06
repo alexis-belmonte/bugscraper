@@ -444,6 +444,16 @@ function DebugCommandManager:init()
             return true
         end,
     }
+    self.commands["_set_camera_offset_x"] = DebugCommand:new {
+        name = "_set_camera_offset_x",
+        description = "Pans camera to the extreme left edge of the play space",
+        args = {
+        },
+        run = function(prob)
+    		game.camera:set_target_offset(-100000, 0)
+            return true
+        end,
+    }
     self.commands["_test_sub"] = DebugCommand:new {
         name = "_test_sub",
         description = "",
@@ -484,6 +494,29 @@ function DebugCommandManager:init()
             end
 
             self:add_message(npattern)
+            return true
+        end,
+    }
+    self.commands["_chaotic_inputs"] = DebugCommand:new {
+        name = "_chaotic_inputs",
+        description = "Enables chaotic inputs for player n",
+        args = {
+            { "action:string", default="enable", values={"e", "enable", "d", "disable"} },
+            { "player_n:number", default=1 },
+        },
+        run = function(action, player_n)
+            if not is_in_table({"e", "enable", "d", "disable"}, action) then
+                return false, "Invalid action " .. tostring(action)
+            end
+
+            local player = game.players[player_n]
+            if not player then
+                return false, "Player " .. tostring(player_n) .. " doesn't exist"
+            end
+
+            player.do_chaotic_inputs = (action == "e" or action == "enable")
+            self:add_message("Set " .. tostring(player_n) .. " chaotic input to "..tostring( (action == "e" or action == "enable")))
+
             return true
         end,
     }
