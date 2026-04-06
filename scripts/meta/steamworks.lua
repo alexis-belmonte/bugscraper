@@ -34,6 +34,9 @@ function Steamworks:init()
 end
 
 function Steamworks:enable()
+	if not self.is_enabled then
+		return
+	end
 	self.is_enabled = LuaSteam.Init()
 end
 

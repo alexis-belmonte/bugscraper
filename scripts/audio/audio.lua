@@ -30,7 +30,7 @@ end
 function AudioManager:play(snd, volume, pitch, params)
 	params = params or {}
 	local layer = params.layer or "sfx"
-	local layer_volume = Options:get(layer .. "_volume") or 1.0
+	
     -- Formalize inputs
     local sndname = snd
 	if type(snd) == "table" then
@@ -46,20 +46,14 @@ function AudioManager:play(snd, volume, pitch, params)
     if sound == nil then   return   end
 	
 	local new_sound = sound:clone()
-	new_sound:set_volume(volume * sound.volume * layer_volume)
+	new_sound:set_volume(volume * sound.volume)
 	new_sound:set_pitch(pitch * sound.pitch)
 
 	-- Sound position
 	if game and game.camera then
-		local cx, cy = game.camera:get_real_position()
-		local x = ((params.x or (cx + CANVAS_WIDTH/2) ) - cx) / CANVAS_WIDTH
-		local y = ((params.y or (cy + CANVAS_HEIGHT/2)) - cy) / CANVAS_WIDTH
-		local z = params.z or 1
-
-		-- Convert from [0, 1] range to [-1, 1] range 
-		x = (x*2 - 1) * AUDIO_3D_RANGE
-		y = (y*2 - 1) * AUDIO_3D_RANGE
-		z = 1
+		local x = params.x
+		local y = params.y
+		local z = params.z
 		new_sound:set_position(x, y, z)
 	end
 
@@ -67,7 +61,7 @@ function AudioManager:play(snd, volume, pitch, params)
 	
 	if self.current_effect == "echo" then
 		local echo_sound = sound:clone()
-		echo_sound:set_volume(volume * sound.volume * layer_volume * 0.3)
+		echo_sound:set_volume(volume * sound.volume * 0.3)
 		echo_sound:set_effect("echo")
 		echo_sound:play()
 	end

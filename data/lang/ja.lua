@@ -109,7 +109,7 @@ return {
         -- A very large green cabbage-like, boulder-like, rolling enemy from the Garden area.   
         -- You're free to be more creative with this one. 
         -- (example: in French, I chose "Grobroco", "gros" (large) + "broco" (diminutive of broccoli))
-        boss_4 = "キャベツ大石",
+        boss_4 = "ローリングキャベツ",
 
         -- The CEO of the company, and the final boss. Its name is somewhat ominous-sounding.
         -- Try to avoid ambiguity with the term "boss", which could be confused with the generic term for a video game boss.

@@ -8,4 +8,5 @@ return {
     { threshold = 5000, rewards = { { type = "skin", skin = t.rico } } },
     { threshold = 5000, rewards = { { type = "upgrade", upgrade = "UpgradeEnergyDrink" } } },
     { threshold = 5000, rewards = { { type = "skin", skin = t.amb } } },
+    { threshold = 5000, rewards = { { type = "skin", skin = t.dodu } } },
 }

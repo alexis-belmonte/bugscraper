@@ -77,6 +77,7 @@ function Player:reset(n, skin)
 	end
 	self.code_input_mode_target_x = nil
 	self.input_mode_code_target_x_margin = 8
+	self.do_chaotic_inputs = false
 	
 	-- Animation
 	self.color_palette = skin.color_palette
@@ -462,7 +463,32 @@ function Player:is_near_code_input_mode_target_x()
 	return math.abs(self.x - self.code_input_mode_target_x) <= self.input_mode_code_target_x_margin
 end
 
+function Player:update_chaotic_inputs(dt)
+	if not self.do_chaotic_inputs then
+		return
+	end
+
+	self.input_mode = PLAYER_INPUT_MODE_CODE
+	if random_range(0, 1) < 0.05 then
+		self.virtual_controller.actions["left"] = not self.virtual_controller.actions["left"]
+	end
+	if random_range(0, 1) < 0.05 then
+		self.virtual_controller.actions["right"] = not self.virtual_controller.actions["right"]
+	end
+	if random_range(0, 1) < 0.05 then
+		self.virtual_controller.actions["jump"] = not self.virtual_controller.actions["jump"]
+	end
+	if random_range(0, 1) < 0.05 then
+		self.virtual_controller.actions["shoot"] = not self.virtual_controller.actions["shoot"]
+	end
+	if self.gun.is_reloading then
+		self.virtual_controller.actions["shoot"] = false
+	end
+end
+
 function Player:update_virtual_inputs(dt)
+	self:update_chaotic_inputs(dt)
+
 	if self.code_input_mode_target_x then
 		self.virtual_controller.actions["left"] = false
 		self.virtual_controller.actions["right"] = false
