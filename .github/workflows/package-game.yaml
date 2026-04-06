@@ -11,7 +11,7 @@ env:
   TAGS: ${{ github.event.inputs.tags || '' }}
 
 jobs:
-  build-all-platforms:
+  build-packages:
     runs-on: ubuntu-24.04
 
     steps:
