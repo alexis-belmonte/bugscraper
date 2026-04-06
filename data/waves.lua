@@ -205,6 +205,17 @@ local thorns_arc_params = {
 }
 
 local waves_defs = {
+    {
+        min = 1,
+        max = 1,
+        enemies = {
+            { E.FinalBoss, 1, entrances = { "main" } },
+        },
+
+        elevator = ElevatorW1,
+    },
+
+    --- --- --- --- --- --- --- --- --- --- --- ---
 
     {
         min = 5,
@@ -1700,7 +1711,7 @@ local waves_defs = {
         min = 1,
         max = 1,
         enemies = {
-            { E.FinalBoss, 1, position = { 12.5 * 16, 10 * 16 + 8 } }
+            { E.FinalBoss, 1, position = { 12.5 * 16, 10 * 16 + 8 }, args = {{init_state = "introduction"}} }
         },
 
         cutscene = "final_boss_enter",
@@ -1715,7 +1726,7 @@ local waves_defs = {
         run = function(self, level)
             for _, actor in pairs(game.actors) do
                 if actor.name == "final_boss" then
-                    actor.state_machine:set_state("standby")
+                    actor.state_machine:set_state("start")
                 end
             end
 

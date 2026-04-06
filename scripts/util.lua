@@ -96,7 +96,7 @@ function normalize_vect(x, y)
 	return x / d, y / d
 end
 
-normalise_vect = normalize_vect
+normalise_vect = normalize_vect -- em brits
 
 function vector_dot(ax, ay, bx, by)
 	return ax * bx + ay * by
@@ -1110,7 +1110,10 @@ function dist(ax, ay, bx, by)
 	return sqrt(distsqr(ax, ay, bx, by))
 end
 
-function actor_distance(actor1, actor2)
+function actor_distance(actor1, actor2, use_mid)
+	if use_mid then
+		return dist(actor1.mid_x, actor1.mid_y, actor2.mid_x, actor2.mid_y)
+	end
 	return dist(actor1.x, actor1.y, actor2.x, actor2.y)
 end
 
@@ -1542,7 +1545,10 @@ function get_direction_vector(ax, ay, bx, by)
 	return normalize_vect(bx - ax, by - ay)
 end
 
-function get_direction_vector_between_actors(actor1, actor2)
+function get_direction_vector_between_actors(actor1, actor2, use_mid)
+	if use_mid then
+		return normalize_vect(actor2.mid_x - actor1.mid_x, actor2.mid_y - actor1.mid_y)
+	end
 	return normalize_vect(actor2.x - actor1.x, actor2.y - actor1.y)
 end
 

@@ -281,6 +281,7 @@ local img_names = {
 	exit_sign_front =          "actors/enemies/exit_sign_front",
 	punching_glove =           "actors/enemies/punching_glove",
 	spring =                   "actors/enemies/spring",
+	final_boss_minion_star =   "actors/enemies/final_boss_minion_star",
 
 	vending_machine =          "actors/enemies/vending_machine",
 	water_dispenser =          "actors/enemies/water_dispenser",
@@ -386,6 +387,7 @@ local img_names = {
 
 	star_big =                    "particles/star_big",
 	star_pento_1 =                "particles/star_pento_1",
+	star_big_5 =                  "particles/star_big_5",
 
 	jump_dust_kick_1 =            "particles/jump_dust_kick_1",
 	jump_dust_kick_2 =            "particles/jump_dust_kick_2",

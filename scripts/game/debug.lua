@@ -148,6 +148,10 @@ function Debug:init(game)
         end},
         
         ["v"] = { "__jackofalltrades", function()
+            local y = random_range(game.level.cabin_inner_rect.ay + 16, game.level.cabin_inner_rect.by - 16)
+            local e = enemies.FinalBossMinion:new(0, y, {dir_x = 1, dir_y = 0})
+            game:new_actor(e)
+
             if love.keyboard.isDown("1") then
                 game.menu_manager:set_menu("w1_boss_intro")
             elseif love.keyboard.isDown("2") then
@@ -160,7 +164,7 @@ function Debug:init(game)
                 game.menu_manager:set_menu("w5_boss_intro")
             end
 
-            game:play_cutscene("final_boss_enter")
+            -- game:play_cutscene("final_boss_enter")
 
             -- game:new_game({ 
             --     backroom = BackroomEnding:new(),
@@ -331,6 +335,11 @@ function Debug:init(game)
 
             if love.keyboard.isDown("lshift") or love.keyboard.isDown("rshift") then
                 game.level.new_wave_animation_speed_mutliplier = 20.0
+
+                for _, p in pairs(game.players) do
+                    p.vx = -10000 
+                    p:set_invincibility(1.0)
+                end
             end
         end },
 

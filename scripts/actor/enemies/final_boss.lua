@@ -10,6 +10,7 @@ local guns           = require "data.guns"
 local TimedSpikes    = require "scripts.actor.enemies.timed_spikes"
 local AnimatedSprite = require "scripts.graphics.animated_sprite"
 local CollisionInfo = require "scripts.physics.collision_info"
+local FinalBossMinion = require "scripts.actor.enemies.final_boss_minion"
 
 local Larva =              require "scripts.actor.enemies.larva"
 local Fly =                require "scripts.actor.enemies.fly"
@@ -32,7 +33,9 @@ local LAYER_DESK = 2
 local LAYER_GLASS = 3
 local LAYER_ROBOT_LEGS = 4
 
-function FinalBoss:init(x, y)
+function FinalBoss:init(x, y, params)
+    params = params or {}
+    
     self:init_enemy(x, y, images.ceo, 86, 68)
     self.name = "final_boss"
 
@@ -52,6 +55,8 @@ function FinalBoss:init(x, y)
     }, "introduction")
 
     self.score = 1000
+
+    self.phase = 1
 
     self.layers = {
         { 
@@ -84,7 +89,7 @@ function FinalBoss:init(x, y)
 
     -- Parameters
     self.def_friction_y = self.friction_y
-    self:set_max_life(170)
+    self:set_max_life(140)
     self.is_flying = true
     self.gravity = 0
     self.attack_radius = 64
@@ -92,6 +97,10 @@ function FinalBoss:init(x, y)
     self.is_stompable = false
     self.is_pushable = false
     self.is_killed_on_negative_life = false
+    
+    self.destroy_bullet_on_impact = false
+    self.is_bouncy_to_bullets = true
+    self.is_immune_to_bullets = true
     
     self.can_be_stomped_if_falling_down = false
     self.damage_on_stomp = 5
@@ -102,6 +111,7 @@ function FinalBoss:init(x, y)
     self.friction_x = 0.8
     self.friction_y = 0.8
     self.thwomp_follow_player_speed = 150
+    self.thwomp_follow_player_speed_def = 150
     self.thwomp_telegraph_speed = self.speed * 8
     self.thwomp_attack_speed = self.speed * 512
     self.thwomp_rise_speed = self.speed * 1024
@@ -123,7 +133,6 @@ function FinalBoss:init(x, y)
 
     self.speed = 100
     self.state_timer = Timer:new(6)
-    self.standby_timer = Timer:new(2)
     self.unstompable_timer = Timer:new(1)
 
     self.spikes = {}
@@ -131,6 +140,11 @@ function FinalBoss:init(x, y)
     self.flip_mode = ENEMY_FLIP_MODE_MANUAL
 
     self.glass_break_state = 0
+
+    -- Spawn minon timer
+    self.spawn_minion_timer = Timer:new({2.0, 4.0})
+    self.minions = {}
+    self.max_minions = 6
 
     -- State machine
     self.state_machine = StateMachine:new({
@@ -140,7 +154,7 @@ function FinalBoss:init(x, y)
             end,
         },
 
-        standby = {
+        start = {
             enter = function(state)
                 self.spr:set_animation("fight")
                 for _, l in pairs(self.layers) do
@@ -150,7 +164,8 @@ function FinalBoss:init(x, y)
             update = function(state, dt)
                 self:spawn_spikes(0, 0)
                 self:reset_spikes()
-                return "random"
+                self.spawn_minion_timer:start()
+                return "charge"
             end,
         },
 
@@ -178,13 +193,41 @@ function FinalBoss:init(x, y)
             end
         },
 
+        mid_phase = {
+            enter = function(state)
+                self.state_timer:start(3.0)
+                self.phase = 2
+
+                self.vx = 0
+                self.vy = 0
+                self.speed_x = 0
+
+                self.friction_x = 1
+                self.friction_y = self.def_friction_y
+
+                self.gravity = self.default_gravity
+                self.damage = 0
+
+                self.spr:set_color(COL_RED)
+            end,
+            update = function(state, dt)
+                if self.state_timer:update(dt) then
+                    return "random"
+                end
+            end, 
+            exit = function(state)
+                self.damage = 1
+            end,
+        },
+
         -----------------------------------------------------
         --- JUMPING ---
         -----------------------------------------------------
         bunny_hopping_telegraph = {
             enter = function(state)
                 self.speed_x = 0
-                self.state_timer:start(0.7)
+                local time = ternary(self.phase == 1, 1.3, 0.7)
+                self.state_timer:start(time)
 
                 self.friction_x = 1
                 self.friction_y = self.def_friction_y
@@ -255,7 +298,9 @@ function FinalBoss:init(x, y)
             enter = function(state)
                 self.vx = 0
                 self.vy = 0
-                self.state_timer:start(0.6)
+
+                local charge_time = ternary(self.phase == 1, 1.5, 0.7)
+                self.state_timer:start(charge_time)
 
                 self.telegraph_t = 0
             end,
@@ -326,6 +371,12 @@ function FinalBoss:init(x, y)
 
                 self.thwomp_target = self:get_random_player()
                 self.vy = 0
+
+                if self.phase == 1 then
+                    self.thwomp_follow_player_speed = self.thwomp_follow_player_speed_def
+                else
+                    self.thwomp_follow_player_speed = self.thwomp_follow_player_speed_def*1.5
+                end
             end,
             update = function(state, dt)
                 if self.thwomp_target then
@@ -447,6 +498,10 @@ function FinalBoss:init(x, y)
                 state.f = 2
 
                 game:play_cutscene("final_boss_death")
+
+                for _, m in pairs(self.minions) do
+                    m:remove()
+                end
             end,
 
             update = function(state, dt)
@@ -458,7 +513,7 @@ function FinalBoss:init(x, y)
             end
         },     
         
-    }, "spawn_minions")
+    }, param(params.init_state, "start"))
 end
 
 function FinalBoss:update(dt)
@@ -493,6 +548,44 @@ function FinalBoss:update(dt)
         game:screenshake(4)
         Input:vibrate_all(0.1, 0.3)
         self:play_sound_var("sfx_actor_upgrade_display_break_{01-04}", 0.1, 1.1)
+    end
+
+    -- minions
+    if self.spawn_minion_timer:update(dt) then
+        self.spawn_minion_timer:start()
+
+        if #self.minions < self.max_minions then
+            local dir = random_sample({false, true})
+            local x, dx
+            local y = random_range(game.level.cabin_inner_rect.ay + 32, game.level.cabin_inner_rect.by - 32)
+
+            if dir then
+                x = -24
+                dx = 1
+            else
+                x = CANVAS_WIDTH
+                dx = -1
+            end
+
+            local e = FinalBossMinion:new(x, y, {dir_x = dx, dir_y = 0, parent=self})
+            game:new_actor(e)
+
+            table.insert(self.minions, e)
+        end
+
+        for i=#self.minions, 1, -1 do
+            if self.minions[i].is_dead or self.minions[i].is_removed then
+                table.remove(self.minions, i)
+            end
+        end
+    end
+end
+
+function FinalBoss:on_damage()
+    FinalBoss.super.on_damage(self)
+
+    if self.phase == 1 and self.life < self.max_life/2 then
+        self.state_machine:set_state("mid_phase")
     end
 end
 
