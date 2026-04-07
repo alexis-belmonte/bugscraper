@@ -10,7 +10,7 @@ local pcall_res, err = pcall(function()
 end)
 
 if pcall_res then
-	print("Steamworks: successfully loaded")
+	print("Steamworks: loaded")
 else
 	print("Steamworks: error during import (require failed)")
 	print("Steamworks: error - ", err)
@@ -38,6 +38,12 @@ function Steamworks:enable()
 		return
 	end
 	self.is_enabled = LuaSteam.Init()
+
+	if self.is_enabled then
+		print("Steamworks: successfully loaded")
+	else
+		print("Steamworks: init failed")
+	end
 end
 
 function Steamworks:disable()
