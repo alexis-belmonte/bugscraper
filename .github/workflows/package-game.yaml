@@ -94,7 +94,7 @@ jobs:
           name: bugscraper-packages-pack
  
       - name: Upload ${{ matrix.platform }} as separate artifact
-        uses: actions/upload-artifact@v8
+        uses: actions/upload-artifact@v6
         with:
           name: bugscraper-export-${{ matrix.platform }}
           path: ${{ matrix.platform }}
