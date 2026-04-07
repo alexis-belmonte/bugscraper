@@ -10,9 +10,8 @@ on:
 env:
   TAGS: ${{ github.event.inputs.tags || '' }}
   VENV_PATH: /tmp/makelove/venv
-  DISPLAY_NUM: ':100'
   EXPORT_DIR: _export
-  STEAM_DIR: '${{ env.EXPORT_DIR }}/steam'
+  STEAM_DIR: _export/steam
 
 jobs:
   build-packages:
@@ -43,22 +42,14 @@ jobs:
           # Install the latest version with auto-download support
           pip install git+https://github.com/alexis-belmonte/makelove
 
-      - name: Setup tmate session (on failure)
-        uses: mxschmitt/action-tmate@v3
-        if: ${{ failure() }}
-
       - name: Build all platforms
         run: |
-          export DISPLAY=${{ env.DISPLAY_NUM }}
+          export DISPLAY=:87
           sudo X ${DISPLAY} &
           wineboot
           
           source '${{ env.VENV_PATH }}/bin/activate'
           makelove win64 macos appimage
-
-      - name: Setup tmate session (on failure)
-        uses: mxschmitt/action-tmate@v3
-        if: ${{ failure() }}
 
       - name: Create Steam packages
         run: |
