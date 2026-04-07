@@ -60,10 +60,14 @@ jobs:
 
           cat <<EOF >"${{ env.STEAM_DIR }}/linux/bugscraper.sh"
           #!/bin/bash
-          working_directory="$(dirname "$(realpath "$0")")"
+          # Bugscraper launcher script for Steam
+          # Also take a look at https://yolwoocle.com/soba
+
+          working_directory="\$(dirname "\$(realpath "$0")")"
+
           export APPIMAGE_EXTRACT_AND_RUN=1
-          export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${working_directory}/squashfs-root"
-          "${working_directory}/bugscraper.AppImage" $@
+          export LD_LIBRARY_PATH="$\{LD_LIBRARY_PATH}:${working_directory}/squashfs-root"
+          "\${working_directory}/bugscraper.AppImage" $@
           EOF
           chmod +x "${{ env.STEAM_DIR }}/linux/bugscraper.sh"
 
@@ -73,6 +77,10 @@ jobs:
           name: bugscraper-packages-pack
           path: ${{ env.EXPORT_DIR }}
           retention-days: 1
+ 
+      - name: Setup tmate session (on failure)
+        uses: mxschmitt/action-tmate@v3
+        if: ${{ failure() }}
 
   export-artifacts:
     runs-on: ubuntu-24.04
