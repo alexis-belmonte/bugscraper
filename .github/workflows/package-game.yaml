@@ -33,8 +33,8 @@ jobs:
 
       - name: Setup Python and install makelove
         run: |
-          python3 -m venv .venv
-          source .venv/bin/activate
+          python3 -m venv /tmp/makelove/venv
+          source /tmp/makelove/venv/bin/activate
           pip install --upgrade pip
           # Install the latest version with auto-download support
           pip install git+https://github.com/alexis-belmonte/makelove

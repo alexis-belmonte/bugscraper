@@ -10,26 +10,19 @@ love_files = [
     "+*",
     "-*/.*",
     "-./_*",
-    "-./_export",
+    "-./_export/*",
+    "-./lib/steam/*",
     "-*.aseprite",
     "-*.lnk",
-    "-*.dll",
-    "-*.so",
-    "-*.dylib",
-
-    "-./luasteam.dll",
-    "-./steam_api64.dll",
 ]
 
 [archive_files]
 "changes.md" = "changes.md"
 
-# Windows configuration - no manual love_binaries needed!
 [windows.archive_files]
 "steam_appid.txt" = "steam_appid.txt"
-"luasteam.dll" = "luasteam.dll"
-"steam_api64.dll" = "steam_api64.dll"
-"steam_api64.lib" = "steam_api64.lib"
+"lib/steam/win64/luasteam.dll" = "luasteam.dll"
+"lib/steam/win64/steam_api64.dll" = "steam_api64.dll"
 
 [windows.exe_metadata]
 FileDescription = "Bugscraper: Rise to the top of a bug-filled skyscraper"
@@ -39,24 +32,22 @@ LegalCopyright = "Copyright © 2026 Léo Bernard"
 ProductName = "Bugscraper"
 OriginalFilename = "bugscraper.exe"
 
-# macOS configuration - no manual love_binaries needed!
 [macos]
 icon_file = "icon.png"
 
 [macos.archive_files]
 "steam_appid.txt" = "@content/steam_appid.txt"
-"luasteam.so" = "@content/luasteam.so"
-"libsteam_api.dylib" = "@content/libsteam_api.dylib"
+"lib/steam/macos/luasteam.so" = "@content/luasteam.so"
+"lib/steam/macos/libsteam_api.dylib" = "@content/libsteam_api.dylib"
 
 [macos.app_metadata]
 CFBundleIdentifier = "com.yolwoocle.bugscraper"
 NSHumanReadableCopyright = "Copyright © 2026 Léo Bernard"
 
-# Linux/AppImage configuration - no manual source_appimage needed!
 [appimage]
 shared_libraries = [
-    "libsteam_api.so",
-    "luasteam.so",
+    "lib/steam/linux/libsteam_api.so",
+    "lib/steam/linux/luasteam.so",
 ]
 
 [linux.archive_files]
