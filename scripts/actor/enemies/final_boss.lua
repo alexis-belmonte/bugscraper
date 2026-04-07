@@ -110,11 +110,10 @@ function FinalBoss:init(x, y, params)
     self.speed_y = self.speed * 3
     self.friction_x = 0.8
     self.friction_y = 0.8
-    self.thwomp_follow_player_speed = 150
-    self.thwomp_follow_player_speed_def = 150
+    self.thwomp_follow_player_speed = 120
     self.thwomp_telegraph_speed = self.speed * 8
-    self.thwomp_attack_speed = self.speed * 512
-    self.thwomp_rise_speed = self.speed * 1024
+    self.thwomp_attack_speed = self.speed * 400
+    self.thwomp_rise_speed = self.speed * 800
 
     self.follow_player = false
     self.self_knockback_mult = 0
@@ -217,6 +216,7 @@ function FinalBoss:init(x, y, params)
             end, 
             exit = function(state)
                 self.damage = 1
+                self.spr:set_color(COL_WHITE)
             end,
         },
 
@@ -235,31 +235,60 @@ function FinalBoss:init(x, y, params)
                 self.gravity = self.default_gravity
 
                 self.bunny_hop_target = self:get_random_player()
+                
+                self.telegraph_t = 0
+                self.telegraph_vx = 0
+                self.telegraph_vy = 0
             end,
             update = function(state, dt)
                 local ox = 0
                 if self.bunny_hop_target then
                     ox = (self.bunny_hop_target.mid_x - self.mid_x) / 64
+
+                    self.telegraph_vx = (self.bunny_hop_target.mid_x - self.mid_x)
+                    self.telegraph_vy = -500
                 end
                 self.spr:update_offset(ox + random_neighbor_int(3), 5 + random_neighbor_int(3))
+                
 
                 if self.state_timer:update(dt) then
                     return "bunny_hopping"
                 end
+
+                self.telegraph_t = self.telegraph_t + dt*200
             end,
             exit = function(state)
                 self.spr:update_offset(0, 0)
             end,
+            draw_bg = function(state)
+                local tx = 0
+                local ty = 0
+                local tvx, tvy = self.telegraph_vx, self.telegraph_vy
+                
+                local gap = 24
+                local r = self.telegraph_t % gap
+                tvy = tvy + self.gravity * self.gravity_mult * 3 * r/gap
+                tx = tx + tvx * (1/20) * r/gap
+                ty = ty + tvy * (1/20) * r/gap
+                for i=1, 12 do
+                    local dx, dy = normalise_vect(tvx, tvy)
+                    circle_color({1,1,1, clamp((12-i)/6, 0, 0.7)}, "fill", self.mid_x + tx, self.mid_y + ty, 4.5)
+                    tvy = tvy + self.gravity * self.gravity_mult * 3
+                    
+                    tx = tx + tvx * (1/60) * 3
+                    ty = ty + tvy * (1/60) * 3
+                end
+            end
         },
         bunny_hopping = {
             enter = function(state)
-                self.vy = -500
+                self.vx = self.telegraph_vx
+                self.vy = self.telegraph_vy
 
                 if not self.bunny_hop_target then
                     return
                 end
 
-                self.vx = (self.bunny_hop_target.mid_x - self.mid_x) * random_range(0.8, 1.2)
             end,
             after_collision = function(state, col)
                 if col.normal.y == -1 then
@@ -371,16 +400,10 @@ function FinalBoss:init(x, y, params)
 
                 self.thwomp_target = self:get_random_player()
                 self.vy = 0
-
-                if self.phase == 1 then
-                    self.thwomp_follow_player_speed = self.thwomp_follow_player_speed_def
-                else
-                    self.thwomp_follow_player_speed = self.thwomp_follow_player_speed_def*1.5
-                end
             end,
             update = function(state, dt)
                 if self.thwomp_target then
-                    self.vx = self.thwomp_follow_player_speed * sign(self.thwomp_target.mid_x - self.mid_x)
+                    self.vx = self.thwomp_follow_player_speed * sign(self.thwomp_target.mid_x - self.mid_x) * ternary(self.phase == 1, 1, 1.5)
                 end
 
                 for _, player in pairs(game.players) do
@@ -404,7 +427,7 @@ function FinalBoss:init(x, y, params)
             end,
             update = function(state, dt)
                 self.speed_x = 0
-                self.speed_y = self.thwomp_telegraph_speed
+                self.speed_y = self.thwomp_telegraph_speed * ternary(self.phase == 1, 1, 1.5)
 
                 self.vy = -self.speed_y
                 if self.telegraph_timer:update(dt) then
@@ -424,7 +447,7 @@ function FinalBoss:init(x, y, params)
                 self.speed_y = self.thwomp_attack_speed
                 self.friction_y = 1
 
-                self.vy = self.vy + self.speed_y * dt
+                self.vy = self.vy + self.speed_y * dt * ternary(self.phase == 1, 1, 1.5)
             end,
             after_collision = function(state, col)
                 if col.type ~= "cross" and col.normal.x == 0 and col.normal.y == -1 then
