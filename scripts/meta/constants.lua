@@ -117,7 +117,7 @@ RECT_BASEMENT = {2, -4, 104, 16}
 -- RECT_GROUND_FLOOR_PARAMS = {2, 2, 100, 16}
 RECT_GROUND_FLOOR_PARAMS = {2, 3, 111, 16}
 RECT_TUTORIAL_PARAMS = {2, 0, 96, 16}
-RECT_CREDITS_PARAMS = {3, -2, 31, 16}
+RECT_CREDITS_PARAMS = {0, -2, 31, 16}
 
 ---------------------------------------------
 

@@ -148,9 +148,7 @@ function Debug:init(game)
         end},
         
         ["v"] = { "__jackofalltrades", function()
-            local y = random_range(game.level.cabin_inner_rect.ay + 16, game.level.cabin_inner_rect.by - 16)
-            local e = enemies.FinalBossMinion:new(0, y, {dir_x = 1, dir_y = 0})
-            game:new_actor(e)
+            game:play_cutscene("final_boss_death")
 
             if love.keyboard.isDown("1") then
                 game.menu_manager:set_menu("w1_boss_intro")

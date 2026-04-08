@@ -205,15 +205,15 @@ local thorns_arc_params = {
 }
 
 local waves_defs = {
-    {
-        min = 1,
-        max = 1,
-        enemies = {
-            { E.FinalBoss, 1, entrances = { "main" } },
-        },
+    -- {
+    --     min = 1,
+    --     max = 1,
+    --     enemies = {
+    --         { E.FinalBoss, 1, entrances = { "main" } },
+    --     },
 
-        elevator = ElevatorW1,
-    },
+    --     elevator = ElevatorW1,
+    -- },
 
     --- --- --- --- --- --- --- --- --- --- --- ---
 
