@@ -649,7 +649,7 @@ function FinalBoss:on_damage()
     game:screenshake(6)
     game:frameskip(8)
 
-    if self.phase == 1 and self.life < self.max_life/2 then
+    if self.phase == 1 and self.life <= self.max_life/2 + 0.01 then
         self.state_machine:set_state("mid_phase")
     end
 end
