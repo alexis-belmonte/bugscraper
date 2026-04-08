@@ -155,6 +155,7 @@ function ImageParticle:init_image_particle(spr, x,y,s,r, vx,vy,vs,vr, life, g, i
 
 	self.is_animated = (type(spr) == "table")
 	if self.is_animated then
+		-- TODO implement spritesheet system for particle animation
 		self.spr_table = spr
 		self.spr = spr[1]
 	end

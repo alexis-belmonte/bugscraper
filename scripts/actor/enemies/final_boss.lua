@@ -45,6 +45,9 @@ function FinalBoss:init(x, y, params)
         introduction = { images.ceo_npc_idle, 0.2, 4 },
         fight = { images.ceo_npc_idle, 0.2, 4 },
 
+        angry_idle = { images.ceo_npc_angry_idle, 0.1, 4 },
+        angry_airborne = { images.ceo_npc_angry_airborne, 0.2, 1 },
+
         fainted = { images.ceo_npc_fainted, 0.1, 4 },
         shocked = { images.ceo_npc_shocked, 0.2, 1 },
         airborne = { images.ceo_npc_airborne, 0.2, 1 },
@@ -87,9 +90,13 @@ function FinalBoss:init(x, y, params)
         },
     }
 
+    self.furious_smoke_spr = AnimatedSprite:new({
+        normal = { images.furious_smoke, 0.1, 3 },
+    }, "normal")
+
     -- Parameters
     self.def_friction_y = self.friction_y
-    self:set_max_life(140)
+    self:set_max_life(160)
     self.is_flying = true
     self.gravity = 0
     self.attack_radius = 64
@@ -141,6 +148,7 @@ function FinalBoss:init(x, y, params)
     self.glass_break_state = 0
 
     -- Spawn minon timer
+    self.do_minion_spawning = false
     self.spawn_minion_timer = Timer:new({2.0, 4.0})
     self.minions = {}
     self.max_minions = 6
@@ -159,6 +167,8 @@ function FinalBoss:init(x, y, params)
                 for _, l in pairs(self.layers) do
                     l.is_visible = true
                 end
+
+                self.do_minion_spawning = true
             end,
             update = function(state, dt)
                 self:spawn_spikes(0, 0)
@@ -194,9 +204,8 @@ function FinalBoss:init(x, y, params)
 
         mid_phase = {
             enter = function(state)
-                self.state_timer:start(3.0)
                 self.phase = 2
-
+                
                 self.vx = 0
                 self.vy = 0
                 self.speed_x = 0
@@ -206,18 +215,47 @@ function FinalBoss:init(x, y, params)
 
                 self.gravity = self.default_gravity
                 self.damage = 0
-
-                self.spr:set_color(COL_RED)
+                
+                state.jumps = 7
+                state.y = -16
+                state.vy = 0
             end,
             update = function(state, dt)
-                if self.state_timer:update(dt) then
-                    return "random"
+                self.furious_smoke_spr:update(dt)
+
+                state.vy = state.vy + self.gravity
+                state.y = state.y + state.vy * dt
+                state.y = min(-16, state.y)
+
+                self.spr:set_animation("angry_airborne")
+                if state.y >= -16 and state.vy > 300 then
+                    state.vy = -200
+                    state.jumps = state.jumps - 1
+
+                    if state.jumps <= 0 then
+                        return "waiting"
+                    end
                 end
+                
+                self.layers[1].offset.y = state.y
             end, 
             exit = function(state)
                 self.damage = 1
-                self.spr:set_color(COL_WHITE)
+                self.layers[1].offset.y = -16
+
+                self.spr:set_animation("angry_idle")
             end,
+            draw_bg = function(state)
+                local ox, oy = self.layers[1].offset.x, self.layers[1].offset.y
+
+                self.furious_smoke_spr:set_flip_x(true)
+                self.furious_smoke_spr:set_anchor(SPRITE_ANCHOR_LEFT_CENTER)
+                self.furious_smoke_spr:draw(self.mid_x - 34 + ox, self.y + 42 + oy)
+
+                self.furious_smoke_spr:set_flip_x(false)
+                self.furious_smoke_spr:set_anchor(SPRITE_ANCHOR_RIGHT_CENTER)
+                self.furious_smoke_spr:draw(self.mid_x + 34 + ox, self.y + 42 + oy)
+            end
         },
 
         -----------------------------------------------------
@@ -522,6 +560,7 @@ function FinalBoss:init(x, y, params)
 
                 game:play_cutscene("final_boss_death")
 
+                self.do_minion_spawning = false
                 for _, m in pairs(self.minions) do
                     m:remove()
                 end
@@ -606,6 +645,9 @@ end
 
 function FinalBoss:on_damage()
     FinalBoss.super.on_damage(self)
+
+    game:screenshake(6)
+    game:frameskip(8)
 
     if self.phase == 1 and self.life < self.max_life/2 then
         self.state_machine:set_state("mid_phase")

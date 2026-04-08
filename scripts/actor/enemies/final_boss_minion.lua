@@ -2,19 +2,21 @@ require "scripts.util"
 local Enemy = require "scripts.actor.enemy"
 local sounds = require "data.sounds"
 local images = require "data.images"
+local AnimatedSprite = require "scripts.graphics.animated_sprite"
 local StateMachine = require "scripts.state_machine"
 
 local FinalBossMinion = Enemy:inherit()
 	
 function FinalBossMinion:init(x, y, params)
     params = params or {}
-    FinalBossMinion.super.init(self, x,y, images.gun_display, 20, 20)
+    FinalBossMinion.super.init(self, x,y, images.final_boss_minion_body, 20, 20)
 
     self.name = "final_boss_minion"
     self.life = 10
 
-    self.spr:set_anchor(SPRITE_ANCHOR_CENTER_CENTER)
-    self.spr:set_scale(0.5, 0.5)
+    self.spr = AnimatedSprite:new({
+        normal = {images.final_boss_minion_body, 0.2, 2},
+    }, "normal", SPRITE_ANCHOR_CENTER_CENTER)
 
     self.damage = 1
 
@@ -116,8 +118,9 @@ function FinalBossMinion:on_stomped()
 end
 
 function FinalBossMinion:activate_aim()
-    if self.state_machine.current_state_name == "normal" then
+    if self.state_machine.current_state_name == "normal" then        
         if self.parent and self.parent.is_active and not self.parent.is_dead then
+            self:play_death_effects()
             self.state_machine:set_state("aim")
         else
             self:kill()    

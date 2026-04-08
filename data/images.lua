@@ -170,6 +170,8 @@ local img_names = {
 	ceo_npc_jetpack =          "actors/enemies/ceo_npc_jetpack",
 	ceo_npc_fainted =          "actors/enemies/ceo_npc_fainted",
 	ceo_npc_fainted_single =   "actors/enemies/ceo_npc_fainted_single",
+	ceo_npc_angry_idle =       "actors/enemies/ceo_npc_angry_idle",
+	ceo_npc_angry_airborne =   "actors/enemies/ceo_npc_angry_airborne",
 	ceo_tangled_wires =        "actors/enemies/ceo_tangled_wires",
 	ceo_tangled_wires_shocked = "actors/enemies/ceo_tangled_wires_shocked",
 	ceo_tangled_wires_fainted = "actors/enemies/ceo_tangled_wires_fainted",
@@ -282,6 +284,7 @@ local img_names = {
 	punching_glove =           "actors/enemies/punching_glove",
 	spring =                   "actors/enemies/spring",
 	final_boss_minion_star =   "actors/enemies/final_boss_minion_star",
+	final_boss_minion_body =   "actors/enemies/final_boss_minion_body",
 
 	vending_machine =          "actors/enemies/vending_machine",
 	water_dispenser =          "actors/enemies/water_dispenser",
@@ -356,6 +359,7 @@ local img_names = {
 	pomegranate_piece_2 =         "particles/pomegranate_piece_2",
 	pomegranate_piece_3 =         "particles/pomegranate_piece_3",
 	white_dust =                  "particles/white_dust",
+	furious_smoke =               "particles/furious_smoke", 
 
 	bubble_fizz_1 =               "particles/bubble_fizz_1",
 	bubble_fizz_2 =               "particles/bubble_fizz_2",
