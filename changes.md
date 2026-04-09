@@ -7,6 +7,7 @@
 - Added SFX to ground floor props: big plants and construction zone sign
 - Added XP tick SFX
 - XP rewards are now re-granted on launch (which might be useful, say, if the order of rewards is changed in the future)
+- Fixed issue where "all upgrades" and "all characters" achievements would not be re-granted on launch
 
 
 ## 0.10
