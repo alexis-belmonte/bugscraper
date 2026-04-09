@@ -169,11 +169,11 @@ function FinalBoss:init(x, y, params)
                 end
 
                 self.do_minion_spawning = true
+                self.spawn_minion_timer:start()
             end,
             update = function(state, dt)
                 self:spawn_spikes(0, 0)
                 self:reset_spikes()
-                self.spawn_minion_timer:start()
                 return "charge"
             end,
         },
