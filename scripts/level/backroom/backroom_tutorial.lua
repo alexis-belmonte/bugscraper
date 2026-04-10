@@ -55,6 +55,18 @@ function BackroomTutorial:generate(world_generator)
 	}), 440, 105)
 
 	-- TODO add wrning sign at 418 181
+	for _, prop_data in pairs({
+		{x = 418, y = 181, z = 0, img = images.ground_floor_caution_sign,          sound = "sfx_actor_jumping_prop_sign_{01-04}"},
+		{x = 943, y = 68,  z = 0, img = images.ground_floor_warning_sign,          sound = "sfx_actor_jumping_prop_sign_{01-04}"},
+	}) do
+		local prop = enemies.JumpingProp:new(prop_data.x, prop_data.y, prop_data.img, prop_data.sound)
+		if prop_data.z then
+			prop.z = prop_data.z
+		end
+		game:new_actor(prop)
+	end
+		
+
 
 	-- Camera, music, stuff
 	game.camera.max_x = 67*16
