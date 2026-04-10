@@ -728,7 +728,9 @@ function FinalBoss:set_spike_waves()
     for _, spike in pairs(self.spikes) do
         if spike.orientation == 0 then
             local t = (dist_func(self, spike))
-            spike:set_time_offset(t)
+            if t >= 0 then
+                spike:set_time_offset(t)
+            end
         end
     end
 end

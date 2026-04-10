@@ -86,7 +86,9 @@ return Cutscene:new("ceo_escape_w5", {
 
         duration = 0.5,
         enter = function(cutscene, data)
-            data.ceo.spr:set_animation("tangled_wires_shocked")
+            data.ceo.spr:set_animation("shocked")
+            data.ceo.draw_faint_halo = false
+            
             data.shake = 3.0
 
             Particles:static_image(images.surprise_effect, data.ceo.x - 16, data.ceo.y - 30, 0, 0.3)
@@ -110,7 +112,7 @@ return Cutscene:new("ceo_escape_w5", {
 
         duration = 1.0,
         enter = function(cutscene, data)
-            data.ceo.spr:set_animation("tangled_wires")
+            data.ceo.spr:set_animation("sitting")
             data.shake = 3.0
 			Particles:sweat(data.ceo.x - 15, data.ceo.y - 30, true)
         end,
@@ -128,7 +130,7 @@ return Cutscene:new("ceo_escape_w5", {
 
         duration = 0.5,
         enter = function(cutscene, data)
-            data.ceo.spr:set_animation("tangled_wires_shocked")
+            data.ceo.spr:set_animation("shocked")
             data.ceo.vy = -200
             dust_particles(data)
         end,
@@ -244,7 +246,7 @@ return Cutscene:new("ceo_escape_w5", {
 
             data.resigning_player:equip_gun(guns.unlootable.EmptyGun:new(data.resigning_player))
 
-            data.ceo.spr:set_animation("tangled_wires")
+            data.ceo.spr:set_animation("sitting")
         end,
         update = function(cutscene, data, dt)
             data.ceo.spr:update_offset(random_neighbor(3), random_neighbor(3))
@@ -283,7 +285,7 @@ return Cutscene:new("ceo_escape_w5", {
 
         duration = 0.05,
         enter = function(cutscene, data)
-            data.ceo.spr:set_animation("tangled_wires")
+            data.ceo.spr:set_animation("sitting")
         end,
     }),
     CutsceneScene:new({
@@ -291,7 +293,7 @@ return Cutscene:new("ceo_escape_w5", {
 
         duration = 0.2,
         enter = function(cutscene, data)
-            data.ceo.spr:set_animation("tangled_wires_shocked")
+            data.ceo.spr:set_animation("shocked")
         end,
     }),
     CutsceneScene:new({
@@ -299,7 +301,7 @@ return Cutscene:new("ceo_escape_w5", {
 
         duration = 0.05,
         enter = function(cutscene, data)
-            data.ceo.spr:set_animation("tangled_wires")
+            data.ceo.spr:set_animation("sitting")
         end,
     }),
     CutsceneScene:new({
@@ -307,7 +309,7 @@ return Cutscene:new("ceo_escape_w5", {
 
         duration = 0.2,
         enter = function(cutscene, data)
-            data.ceo.spr:set_animation("tangled_wires_shocked")
+            data.ceo.spr:set_animation("shocked")
         end,
     }),
     CutsceneScene:new({

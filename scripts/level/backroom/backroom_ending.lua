@@ -43,7 +43,10 @@ function BackroomEnding:generate(world_generator)
 			airborne = { images.ceo_npc_airborne, 0.2, 1 },
 			jetpack = { images.ceo_npc_jetpack, 0.2, 1 },
 			clap = { images.ceo_npc_clap_hand, 0.02, 3, nil, { looping = false } },
-			tangled_wires = {images.ceo_tangled_wires, 0.1, 1},
+			fainted = {images.ceo_npc_fainted, 0.1, 4},
+			sitting = {images.ceo_npc_sitting, 0.1, 1},
+			
+			tangled_wires = {images.ceo_tangled_wires, 0.1, 1}, 
 			tangled_wires_shocked = {images.ceo_tangled_wires_shocked, 0.1, 1},
 			tangled_wires_fainted = {images.ceo_tangled_wires_fainted, 0.1, 4},
 		},
@@ -64,12 +67,18 @@ function BackroomEnding:generate(world_generator)
 
 				Particles:sweat(_self.x - 15, _self.y - 30, true)
 			end
+		end,
+		extra_draw = function(_self)
+			if _self.draw_faint_halo then
+				draw_faint_halo(_self.mid_x, _self.y - 32, _self.t, images.star_small_2)
+			end
 		end
 	}))
+	ceo.draw_faint_halo = true
 	ceo.gravity = 0
 	ceo.is_affected_by_bounds = false
 
-	ceo.spr:set_animation("tangled_wires_fainted")
+	ceo.spr:set_animation("fainted")
 	ceo.gravity = ceo.default_gravity	 
 	ceo.is_affected_by_bounds = true
 

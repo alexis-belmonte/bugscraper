@@ -325,6 +325,27 @@ function rotated_color_ellipse(color, mode, x, y, rx, ry, rot)
 	end)
 end
 
+function draw_faint_halo(x, y, t, star_image)
+	local selfx, selfy = x, y
+	local a1 = pi/6 + math.cos(t*4 ) * pi/12
+	local a2 = -pi/6 + math.cos(t*6 ) * pi/15
+	local rx = 10
+	local ry = 4
+	rotated_color_ellipse(COL_WHITE, "line", selfx, selfy, rx, ry, a1)
+	rotated_color_ellipse(COL_WHITE, "line", selfx, selfy, rx*1.2, ry, a2)
+
+	local n = 5
+	for i = 0, n-1 do
+		local a3 = pi2 * (i/n) + t
+		local sx = math.cos(a3) * 13
+		local sy = math.sin(a3*2) * 7
+
+		if star_image then
+			draw_centered(star_image, selfx + sx, selfy + sy)
+		end
+	end
+end
+
 function draw_with_selected_outline(spr, x, y, r, sx, sy)
 	love.graphics.setShader(shaders.draw_in_highlight_color)
 	local offset = 1

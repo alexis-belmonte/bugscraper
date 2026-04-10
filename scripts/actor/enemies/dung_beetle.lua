@@ -161,23 +161,7 @@ function DungBeetle:init(x, y)
 
             draw = function(state)
                 self.dung_pile_sprite:draw(self.dung_pile_sprite_x, self.dung_pile_sprite_y)
-
-                local selfx, selfy = self.mid_x, self.y - 16
-                local a1 = pi/6 + math.cos(self.t*4 ) * pi/12
-                local a2 = -pi/6 + math.cos(self.t*6 ) * pi/15
-                local rx = 10
-                local ry = 4
-                rotated_color_ellipse(COL_WHITE, "line", selfx, selfy, rx, ry, a1)
-                rotated_color_ellipse(COL_WHITE, "line", selfx, selfy, rx*1.2, ry, a2)
-
-                local n = 5
-                for i = 0, n-1 do
-                    local a3 = pi2 * (i/n) + self.t
-                    local sx = math.cos(a3) * 13
-                    local sy = math.sin(a3*2) * 7
-
-                    draw_centered(images.star_small_2, selfx + sx, selfy + sy)
-                end
+                draw_faint_halo(self.mid_x, self.y - 16, self.t, images.star_small_2)                
             end
         },
     },"chase")

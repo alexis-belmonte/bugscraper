@@ -172,6 +172,7 @@ local img_names = {
 	ceo_npc_fainted_single =   "actors/enemies/ceo_npc_fainted_single",
 	ceo_npc_angry_idle =       "actors/enemies/ceo_npc_angry_idle",
 	ceo_npc_angry_airborne =   "actors/enemies/ceo_npc_angry_airborne",
+	ceo_npc_sitting =          "actors/enemies/ceo_npc_sitting",
 	ceo_tangled_wires =        "actors/enemies/ceo_tangled_wires",
 	ceo_tangled_wires_shocked = "actors/enemies/ceo_tangled_wires_shocked",
 	ceo_tangled_wires_fainted = "actors/enemies/ceo_tangled_wires_fainted",
