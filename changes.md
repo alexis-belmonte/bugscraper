@@ -1,5 +1,15 @@
 # Bugscraper changelog
 
+## 0.10.1
+
+- Fixed: constant sounds (e.g. fly's buzzing sound, player's wall sliding sound) were not affected by "SFX volume" option
+- Added spatial audio for constant sounds
+- Added SFX to ground floor props: big plants and construction zone sign
+- Added XP tick SFX
+- XP rewards are now re-granted on launch (which might be useful, say, if the order of rewards is changed in the future)
+- Fixed issue where "all upgrades" and "all characters" achievements would not be re-granted on launch
+
+
 ## 0.10
 
 Big but not very exciting update, sorry! The biggest additions are achievments and stats. But it's mostly just a ton of bug fixes, QOL additions and polishing.
