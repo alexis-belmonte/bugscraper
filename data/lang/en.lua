@@ -164,6 +164,10 @@ return {
             title = "Energy Drink",
             description = "Combo meter decreases more slowly",
         },
+        gazpacho = {
+            title = "Gazpacho",
+            description = "Defeat enemies after taking damage to regain 1 ❤",
+        },
     },
     input = {
         prompts = {
