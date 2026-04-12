@@ -37,8 +37,8 @@ icon_file = "icon.png"
 
 [macos.archive_files]
 "steam_appid.txt" = "@content/steam_appid.txt"
-"lib/steam/macos/luasteam.so" = "@content/luasteam.so"
-"lib/steam/macos/libsteam_api.dylib" = "@content/libsteam_api.dylib"
+"lib/steam/macos/luasteam.so" = "luasteam.so"
+"lib/steam/macos/libsteam_api.dylib" = "libsteam_api.dylib"
 
 [macos.app_metadata]
 CFBundleIdentifier = "com.yolwoocle.bugscraper"
