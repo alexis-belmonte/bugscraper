@@ -169,6 +169,9 @@ COL_PINK = color(0xf6757a)
 COL_YELLOW_ORANGE = color(0xfeae34)
 COL_ORANGE = color(0xf77622)
 
+COL_DARK_BRICK = color(0xbe4a2f)
+COL_LIGHT_BRICK = color(0xd87644)
+
 COL_LIGHT_BEIGE = color(0xead4aa)
 COL_MID_BEIGE = color(0xe4a672)
 COL_LIGHT_BROWN = color(0xb86f50)

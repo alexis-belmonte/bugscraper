@@ -166,7 +166,7 @@ return {
         },
         gazpacho = {
             title = "Gazpacho",
-            description = "Defeat enemies after taking damage to regain 1 ❤",
+            description = "After taking damage, quickly damage enemies to regain 1 ❤",
         },
     },
     input = {
@@ -286,10 +286,10 @@ return {
             },
             audio = {
                 title = "Audio",
-                sound = "SOUND",
-                volume = "VOLUME",
-                sfx_volume = "SOUND EFFECT VOLUME", -- Can also be translated as "effects volume" or "SFX volume"
-                music_volume = "MUSIC VOLUME",
+                sound = "SOUND", -- Toggle (on or off)
+                volume = "VOLUME", -- Slider (0% to 100%)
+                sfx_volume = "SOUND EFFECT VOLUME", -- Slider (0% to 100%)
+                music_volume = "MUSIC VOLUME", -- Slider (0% to 100%)
                 music_pause_menu = "MUSIC ON PAUSE MENU", -- Whether music should play on the pause menu
                 ambience = "AMBIENCE SOUNDS",
             },

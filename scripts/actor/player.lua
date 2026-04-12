@@ -1426,13 +1426,11 @@ function Player:draw_hud()
 end
 
 function Player:draw_life_bar(ui_x, ui_y)
-	local life = self.life
-	local max_life = self.max_life
-	if self.temporary_life > 0 then
-		life = life + self.temporary_life
-		max_life = max_life + self.temporary_life
-	end
-	ui:draw_icon_bar(ui_x, ui_y, self.life, self.max_life, self.temporary_life, images.heart, images.heart_empty, images.heart_temporary)
+	ui:draw_icon_bar_stacked(ui_x, ui_y, {
+		{value = self.life, img = images.heart},
+		{value = ternary(self.bloodthirst_active, 1, 0), img = ternary(self.t % 0.1 < 0.05, images.heart_white, images.heart_empty)},
+		{value = self.temporary_life, img = images.heart_temporary},
+	}, self.max_life, images.heart_empty, _margin)
 
 	if self.max_jumps > 1 then
 		local j = clamp(0, self.jumps, 1)
@@ -1781,18 +1779,22 @@ function Player:update_bloodthirst(dt)
 		end
 	end
 
+	if self.life >= self.max_life then
+		self:stop_bloodthirst()
+	end
+
 	if self.bloodthirst_active then
 		Particles:push_layer(PARTICLE_LAYER_BACK)
-		Particles:smoke(self.mid_x, self.mid_y, 2, random_sample{COL_DARK_RED, COL_LIGHT_RED, COL_MID_DARK_GREEN}, 16)
+		Particles:smoke(self.mid_x, self.mid_y, 2, random_sample{COL_DARK_BRICK, COL_LIGHT_BRICK, COL_MID_DARK_GREEN}, 16)
 		Particles:pop_layer()
 
 		if self.bloodthirst_blood > self.bloodthirst_blood_threshold then
 			self:stop_bloodthirst()
 
 			local success, overflow = self:heal(1)
-			Particles:smoke(self.mid_x, self.mid_y, nil, {COL_DARK_RED, COL_LIGHT_RED, COL_MID_DARK_GREEN})
+			Particles:smoke(self.mid_x, self.mid_y, nil, {COL_DARK_BRICK, COL_LIGHT_BRICK, COL_MID_DARK_GREEN})
 			self:play_sound("sfx_loot_health_collect")
-			Particles:word(self.mid_x, self.y, concat(1,"❤ (", Text:text("upgrade.gazpacho.title"), ")"), {COL_LIGHT_RED, COL_DARK_RED, COL_MID_DARK_GREEN, stacked=true}, 1.0)
+			Particles:word(self.mid_x, self.y, concat(1,"❤ (", Text:text("upgrade.gazpacho.title"), ")"), {COL_LIGHT_BRICK, COL_DARK_BRICK, COL_MID_DARK_GREEN, stacked=true}, 1.0)
 			
 		end
 	end

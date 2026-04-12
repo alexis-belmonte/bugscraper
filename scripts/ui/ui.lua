@@ -56,6 +56,44 @@ function UI:draw_icon_bar(x, y, val, max_val, val_extra, img_full, img_empty, im
 	end
 end
 
+
+function UI:draw_icon_bar_stacked(x, y, chunks, max_val, img_empty, margin)
+	-- Draw a bar in this style:
+	-- ♥️ ♥️ ♥️ ♥️ ♡ ♡ ♡ 
+	margin = margin or 0
+
+	local sum = 0
+	local width = 0
+	for i=1, #chunks do
+		sum = sum + math.max(0, chunks[i].value)
+		width = width + math.max(0, chunks[i].value) * (chunks[i].img:getWidth() + margin)
+	end
+	
+	local real_max = math.max(sum, max_val)
+	local overflow = math.max(0.0, real_max - sum)
+	width = width + overflow * (img_empty:getWidth() + margin)
+	
+	local iy = floor(y)
+	local x1 = x - width/2
+	
+	local ix = x1
+	for i_chunk = 1, #chunks + 1 do
+		local current_chunk = chunks[i_chunk] or {
+			value = math.max(0.0, max_val - sum),
+			img = img_empty
+		}
+
+		for i=1, current_chunk.value do
+			local img = current_chunk.img
+
+			local oy = math.max(0, img:getHeight() - img_empty:getHeight())
+			love.graphics.draw(img, math.floor(ix), math.floor(iy - oy))
+
+			ix = ix + img:getWidth() + margin
+		end
+	end
+end
+
 function UI:draw_progress_bar(x, y, w, h, val, max_val, col_fill, col_out, col_fill_shadow, text, text_col, font)
 	x = floor(x)
 	y = floor(y)

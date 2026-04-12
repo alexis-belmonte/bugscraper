@@ -573,6 +573,7 @@ local img_names = {
 
 	-- hud
 	heart =           "ui/hud/heart",
+	heart_white =     "ui/hud/heart_white",
 	heart_half =      "ui/hud/heart_half",
 	heart_empty =     "ui/hud/heart_empty",
 	heart_temporary = "ui/hud/heart_temporary",
@@ -691,6 +692,7 @@ local img_names = {
 	upgrade_coconut_water =     "upgrades/upgrade_coconut_water",
 	upgrade_hot_chocolate =     "upgrades/upgrade_hot_chocolate",
 	upgrade_pomegranate_juice = "upgrades/upgrade_pomegranate_juice",
+	upgrade_gazpacho =          "upgrades/upgrade_gazpacho",
 	upgrade_water =             "upgrades/upgrade_water",
 	
 	-----------------------------------------------------
