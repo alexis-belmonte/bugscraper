@@ -111,7 +111,9 @@ function Level:init(game, backroom)
 	-- Misc
 	self.upgrade_bag = {}
 	for _, upgrade_name in pairs(Metaprogression:get("upgrades")) do
-		table.insert(self.upgrade_bag, {upgrades[upgrade_name]:new(), 1})
+		if upgrades[upgrade_name] then
+			table.insert(self.upgrade_bag, {upgrades[upgrade_name]:new(), 1})
+		end
 	end
 	self.ending_timer = Timer:new(15)
 	self.has_run_ready = false
