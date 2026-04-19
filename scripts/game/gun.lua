@@ -7,7 +7,7 @@ local images = require "data.images"
 local Gun = Class:inherit()
 
 function Gun:init_gun(user)
-	self.display_name = Text:text_fallback("gun."..self.name, self.name)
+	self.display_name = Text:text_params("gun."..self.name, { fallback = self.name } )
 	self.color = COL_LIGHT_YELLOW
 
 	self.spr = images.gun_machinegun
