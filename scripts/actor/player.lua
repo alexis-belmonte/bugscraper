@@ -226,6 +226,7 @@ function Player:reset(n, skin)
 	self.fury_stomp_value = 0.8 -- How much is added to the fury bar when stomping an enemy
 	self.fury_bullet_damage_value_multiplier = 0.18  -- Percentage of the bullet damage that is added to the fury bar when hitting an enemy 
 	self.fury_gun_cooldown_multiplier = 0.8
+	self.fury_gun_cooldown_multiplier_extra = {}
 	self.fury_gun_damage_multiplier = 1.5
 	self.fury_speed_mult = 1.3
 
@@ -1206,6 +1207,9 @@ function Player:get_gun_cooldown_multiplier()
 	local value = self.gun_cooldown_multiplier
 	if game.level.fury_active then 
 		value = value * self.fury_gun_cooldown_multiplier
+		for _, m in pairs(self.fury_gun_cooldown_multiplier_extra) do
+			value = value * m
+		end 
 	end
 	return value
 end
@@ -1784,9 +1788,9 @@ function Player:update_bloodthirst(dt)
 	end
 
 	if self.bloodthirst_active then
-		Particles:push_layer(PARTICLE_LAYER_BACK)
-		Particles:smoke(self.mid_x, self.mid_y, 2, random_sample{COL_DARK_BRICK, COL_LIGHT_BRICK, COL_MID_DARK_GREEN}, 16)
-		Particles:pop_layer()
+		-- Particles:push_layer(PARTICLE_LAYER_BACK)
+		-- Particles:smoke(self.mid_x, self.mid_y, 2, random_sample{COL_DARK_BRICK, COL_LIGHT_BRICK, COL_MID_DARK_GREEN}, 16)
+		-- Particles:pop_layer()
 
 		if self.bloodthirst_blood > self.bloodthirst_blood_threshold then
 			self:stop_bloodthirst()

@@ -1,14 +1,5 @@
 require "scripts.util"
 local Shop = require "scripts.actor.enemies.shop"
-local StateMachine = require "scripts.state_machine"
-local Timer = require "scripts.timer"
-local images = require "data.images"
-
-local UpgradeEspresso = require "scripts.upgrade.upgrade_espresso"
-local UpgradeMoreLife = require "scripts.upgrade.upgrade_milk"
-local UpgradeTea = require "scripts.upgrade.upgrade_tea"
-
-local utf8 = require "utf8"
 
 local ShopCafeteria = Shop:inherit()
 

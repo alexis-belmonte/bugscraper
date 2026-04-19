@@ -454,6 +454,9 @@ function Debug:init(game)
         end },
 
         ["p"] = { "start/end profiler", function()
+            if not love.profiler then
+                return
+            end
             _G_profiler_on = not _G_profiler_on
             if _G_profiler_on then
                 love.profiler.reset()
