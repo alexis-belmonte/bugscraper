@@ -322,6 +322,8 @@ function Game:ready()
 		self.music_player:set_disk("off")
 		self.menu_manager:set_menu("options_language_basic")
 	end
+
+	self:check_achievements()
 end
 
 function Game:init_layers()

@@ -60,7 +60,7 @@ return {
         -- Look at google doc for image references
         machinegun = "ナッツガン",
         triple = "トリプルペッパー",
-        burst = "バグカフン",
+        burst = "ボムカフン",
         shotgun = "ラズベリーショット",
         minigun = "タネガン",
         ring = "ビッグベリー",
@@ -179,9 +179,9 @@ return {
             jump = "ジャンプ",
             shoot = "ショット",
             interact = "インタラクト",
-            leave_game = "ゲーム終了",
-            open = "メニュー",         -- As in, "open menu", and NOT for, say, opening chests.
-            collect = "図鑑",   -- As in, "collect item", "collect gun", etc
+            leave_game = "抜ける",
+            open = "メニューを開く",         -- As in, "open menu", and NOT for, say, opening chests.
+            collect = "拾う",   -- As in, "collect item", "collect gun", etc
 
             -- UI Actions
             ui_left = "左 (メニュー)",
@@ -292,10 +292,10 @@ return {
             visuals = {
                 title = "ビジュアル",
                 fullscreen = "フルスクリーン",
-                pixel_scale = "ピクセルサイズ", -- How big should every pixel be displayed on-screen (x1, x2, ...)
+                pixel_scale = "ピクセル倍率", -- How big should every pixel be displayed on-screen (x1, x2, ...)
                 pixel_scale_value = {
                     auto = "オート",
-                    max_whole = "最大整数", -- Biggest whole number possible
+                    max_whole = "最大倍率", -- Biggest whole number possible
                 },
                 vsync = "Vシンク",
                 menu_blur = "メニュー背景のぼかし", -- Whether to apply the blurring effect in menu backgrounds

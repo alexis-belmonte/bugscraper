@@ -298,7 +298,7 @@ return {
                 fullscreen = "FULLSCREEN",
                 pixel_scale = "PIXEL SCALE", -- How big should every pixel be displayed on-screen (x1, x2, ...)
                 pixel_scale_value = {
-                    auto = "auto",
+                    auto = "auto", -- Biggest number possible, whole or not
                     max_whole = "max whole", -- Biggest whole number possible
                 },
                 vsync = "VSYNC",

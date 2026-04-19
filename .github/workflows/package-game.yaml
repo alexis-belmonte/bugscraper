@@ -1,4 +1,4 @@
-name: Produce artifact_name-dependent packages for publishing
+name: Build Bugscraper
 on:
   workflow_dispatch:
     inputs:
@@ -8,21 +8,14 @@ on:
         default: ''
 
 env:
-  APPIMAGETOOL_DIR: /tmp/appimagetool
-  APPIMAGETOOL_PREFIX: /opt/appimagetool
-  APPIMAGETOOL_WRAPPER: /opt/appimagetool-wrapper
-
-  LOVE_BINARIES_DIR: /tmp/love-binaries
-  LOVE_ARTIFACT_NAMES: win64.zip x86_64.AppImage macos.zip
-
-  MAKELOVE_DIR: /tmp/makelove
+  TAGS: ${{ github.event.inputs.tags || '' }}
+  VENV_PATH: /tmp/makelove/venv
+  EXPORT_DIR: _export
+  STEAM_DIR: _export/steam
 
 jobs:
   build-packages:
     runs-on: ubuntu-24.04
-
-    env:
-      TAGS: ${{ github.event.inputs.tags || '' }}
 
     steps:
       - name: Checkout repository
@@ -33,166 +26,58 @@ jobs:
           chmod +x _tools/patch_tags.sh
           ./_tools/patch_tags.sh "$TAGS" || exit 1
 
-      - name: Update base system
+      - name: Install system dependencies
         run: |
           sudo apt update -y
-          sudo apt upgrade -y
-
-          sudo add-apt-repository -y universe
-
           sudo apt install -y \
-            git cmake ninja-build curl unzip python3 python3-pip wine squashfs-tools desktop-file-utils \
-            libglib2.0-dev libgpgme-dev libgcrypt20-dev libfuse2 libcurl4-openssl-dev xserver-xorg-video-dummy
+            git python3 python3-pip wine squashfs-tools desktop-file-utils \
+            libglib2.0-dev libgpgme-dev libgcrypt20-dev libfuse2 libcurl4-openssl-dev \
+            xserver-xorg-video-dummy
 
-      - name: Setup and install appimagetool
+      - name: Setup Python and install makelove
         run: |
-          git clone 'https://github.com/AppImage/appimagetool' "${APPIMAGETOOL_DIR}"
-
-          mkdir -p "${APPIMAGETOOL_DIR}-build"
-          cd "${APPIMAGETOOL_DIR}"
-
-          cmake \
-            -DCMAKE_INSTALL_PREFIX="${APPIMAGETOOL_PREFIX}" \
-            -DCMAKE_GENERATOR=Ninja \
-            -DCMAKE_BUILD_TYPE=Release "${APPIMAGETOOL_DIR}"
-          cmake --build .
-          cmake --install .
-
-      - name: Create appimagetool wrapper script
-        run: |
-          mkdir -p "${APPIMAGETOOL_WRAPPER}"
-
-          cat <<EOF >"${APPIMAGETOOL_WRAPPER}/appimagetool"
-          #!/bin/bash
-          
-          APPIMAGETOOL_EXTRA_ARGS="--comp gzip"
-
-          "${APPIMAGETOOL_PREFIX}/bin/appimagetool" \\
-            \$APPIMAGETOOL_EXTRA_ARGS \\
-            \$@
-          EOF
-
-          chmod +x "${APPIMAGETOOL_WRAPPER}/appimagetool"
-
-      - name: Gather official binaries from nightly
-        run: |
-          for artifact_name in ${LOVE_ARTIFACT_NAMES[@]}; do
-            if [[ "${artifact_name}" == "x86_64.AppImage" ]]; then
-              artifact_name_extless="appimage"
-            else
-              artifact_name_extless="${artifact_name%.*}"
-            fi
-
-            mkdir -p "${LOVE_BINARIES_DIR}/${artifact_name_extless}"
-
-            # curl -L \
-            #   -o "${LOVE_BINARIES_DIR}/love-${artifact_name}.zip" \
-            #   "https://nightly.link/love2d/love/workflows/main/main/love-${artifact_name}.zip"
-           
-            curl -L \
-              -o "${LOVE_BINARIES_DIR}/love-${artifact_name}" \
-              "https://github.com/love2d/love/releases/download/11.5/love-11.5-${artifact_name}"
-
-            if [[ "${artifact_name_extless}" == "macos" ]]; then
-              mv "${LOVE_BINARIES_DIR}/love-${artifact_name}" "${LOVE_BINARIES_DIR}/${artifact_name_extless}/love.zip"
-              target_path="${LOVE_BINARIES_DIR}/${artifact_name_extless}"
-            elif [[ "${artifact_name_extless}" == "appimage" ]]; then
-              mv "${LOVE_BINARIES_DIR}/love-${artifact_name}" "${LOVE_BINARIES_DIR}/${artifact_name_extless}/love-${artifact_name}"
-              target_path="${LOVE_BINARIES_DIR}/${artifact_name_extless}/love-${artifact_name}"
-            elif [[ "${artifact_name}" == *.zip ]]; then
-              unzip -o \
-                "${LOVE_BINARIES_DIR}/love-${artifact_name}" \
-                -d "${LOVE_BINARIES_DIR}/${artifact_name_extless}"
-              target_path="${LOVE_BINARIES_DIR}/${artifact_name_extless}"
-            else
-              target_path="$(ls -d "${LOVE_BINARIES_DIR}/${artifact_name_extless}"/*)"
-            fi
-
-            if [[ "${artifact_name_extless}" != "macos" ]] && [[ "${artifact_name_extless}" != "appimage" ]]; then
-              rm "${LOVE_BINARIES_DIR}/love-${artifact_name}"
-            fi
-
-            sed -i 's%\$\[LOVE_BINARIES_'"${artifact_name_extless}"'\]%'"${target_path}"'%' makelove.toml
-          done
-
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-        if: ${{ failure() }}
-
-      - name: Build and install makelove
-        run: |
-          mkdir -p "${MAKELOVE_DIR}"
-          cd "${MAKELOVE_DIR}"
-
-          python3 -m venv .env
-          source .env/bin/activate
+          python3 -m venv '${{ env.VENV_PATH }}'
+          source '${{ env.VENV_PATH }}/bin/activate'
           pip install --upgrade pip
-
-          # This has the necessary patches to support LÖVE 12
+          # Install the latest version with auto-download support
           pip install git+https://github.com/alexis-belmonte/makelove
 
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-        if: ${{ failure() }}
-      
-      - name: Prepare binary dirs for makelove
+      - name: Build all platforms
         run: |
-          win64_subfolder="$(ls -d "${LOVE_BINARIES_DIR}/win64/"*)"
-          mv "${win64_subfolder}/"* "${LOVE_BINARIES_DIR}/win64/"
-          rmdir "${win64_subfolder}"
-
-          appimage_file="$(ls -d "${LOVE_BINARIES_DIR}/appimage/"*)"
-          chmod +x "${appimage_file}"
-
-      - name: Build artifact_name-dependent packages
-        run: |
-          export DISPLAY=:100
+          export DISPLAY=:87
           sudo X ${DISPLAY} &
           wineboot
-
-          source "${MAKELOVE_DIR}/.env/bin/activate"
-
-          bugscraper_version="$(grep -Po 'BUGSCRAPER_VERSION\s*=\s*"\K[^"]+' bugscraper_config.lua)"
-          sed -i 's%\$\[BUGSCRAPER_VERSION\]%'${bugscraper_version}'%' makelove.toml
-
-          export PATH="${APPIMAGETOOL_WRAPPER}:${PATH}"
-          makelove win64 macos appimage || true
-
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-        if: ${{ failure() }}
-
-      - name: Add a Steam-centric version of the game
-        run: |
-          mkdir -p _export/steam/{win64,macos,linux}
-          unzip _export/win64/*.zip -d _export/steam/win64
-          unzip _export/macos/*.zip -d _export/steam/macos
-          cp _export/appimage/*.AppImage _export/steam/linux/bugscraper.AppImage
-
-          cat <<EOF >"_export/steam/linux/bugscraper.sh"
-          #!/bin/bash
-          # Please do not the bug. Please don't check https://yolwoocle.com/noba as well.
-
-          working_directory="\$(dirname "\$(realpath "\$0")")"
-
-          # Steamworks doesn't expose the system /usr/bin/fusermount.
-          # Since the game is small in size, we won't go in the trouble of shipping
-          # a full-blown FUSE binary package, and we just let it extract
-          # temporarily on the disk instead.
-          export APPIMAGE_EXTRACT_AND_RUN=1
-
-          "\${working_directory}/bugscraper.AppImage" \$@
           
+          source '${{ env.VENV_PATH }}/bin/activate'
+          makelove win64 macos appimage
+
+      - name: Create Steam packages
+        run: |
+          mkdir -p '${{ env.STEAM_DIR }}/'{win64,macos,linux}
+          unzip '${{ env.EXPORT_DIR }}/win64/'*.zip -d '${{ env.STEAM_DIR }}/win64'
+          unzip '${{ env.EXPORT_DIR }}/macos/'*.zip -d '${{ env.STEAM_DIR }}/macos'
+          cp '${{ env.EXPORT_DIR }}/appimage/'*.AppImage '${{ env.STEAM_DIR }}/linux/bugscraper.AppImage'
+
+          cat <<EOF >"${{ env.STEAM_DIR }}/linux/bugscraper.sh"
+          #!/bin/bash
+          # Bugscraper launcher script for Steam
+          # Also take a look at https://yolwoocle.com/soba
+
+          working_directory="\$(dirname "\$(realpath "$0")")"
+
+          export APPIMAGE_EXTRACT_AND_RUN=1
+          export LD_LIBRARY_PATH="$\{LD_LIBRARY_PATH}:${working_directory}/squashfs-root"
+          "\${working_directory}/bugscraper.AppImage" $@
           EOF
-          chmod +x "_export/steam/linux/bugscraper.sh"
+          chmod +x "${{ env.STEAM_DIR }}/linux/bugscraper.sh"
 
       - name: Upload platform-specific package artefact bundle for the next job
         uses: actions/upload-artifact@v6
         with:
           name: bugscraper-packages-pack
-          path: _export
-          retention-days: 1 
-
+          path: ${{ env.EXPORT_DIR }}
+          retention-days: 1
+ 
   export-artifacts:
     runs-on: ubuntu-24.04
 
@@ -204,10 +89,10 @@ jobs:
 
     steps:
       - name: Download intermediate artifact
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v8
         with:
           name: bugscraper-packages-pack
-
+ 
       - name: Upload ${{ matrix.platform }} as separate artifact
         uses: actions/upload-artifact@v6
         with:
