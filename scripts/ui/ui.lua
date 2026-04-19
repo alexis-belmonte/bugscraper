@@ -62,12 +62,23 @@ function UI:draw_icon_bar_stacked(x, y, chunks, max_val, img_empty, margin)
 	-- ♥️ ♥️ ♥️ ♥️ ♡ ♡ ♡ 
 	margin = margin or 0
 
+	local chunks = copy_table_shallow(chunks)
+
 	local sum = 0
 	local width = 0
+	local last_non_extra_index = 1
 	for i=1, #chunks do
-		sum = sum + math.max(0, chunks[i].value)
+		if not chunks[i].extra then
+			last_non_extra_index = i
+			sum = sum + math.max(0, chunks[i].value)
+		end
 		width = width + math.max(0, chunks[i].value) * (chunks[i].img:getWidth() + margin)
 	end
+
+	table.insert(chunks, last_non_extra_index+1, {
+		value = math.max(0.0, max_val - sum),
+		img = img_empty
+	})
 	
 	local real_max = math.max(sum, max_val)
 	local overflow = math.max(0.0, real_max - sum)
@@ -77,11 +88,8 @@ function UI:draw_icon_bar_stacked(x, y, chunks, max_val, img_empty, margin)
 	local x1 = x - width/2
 	
 	local ix = x1
-	for i_chunk = 1, #chunks + 1 do
-		local current_chunk = chunks[i_chunk] or {
-			value = math.max(0.0, max_val - sum),
-			img = img_empty
-		}
+	for i_chunk = 1, #chunks do
+		local current_chunk = chunks[i_chunk]
 
 		for i=1, current_chunk.value do
 			local img = current_chunk.img

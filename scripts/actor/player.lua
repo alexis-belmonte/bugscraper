@@ -1433,7 +1433,7 @@ function Player:draw_life_bar(ui_x, ui_y)
 	ui:draw_icon_bar_stacked(ui_x, ui_y, {
 		{value = self.life, img = images.heart},
 		{value = ternary(self.bloodthirst_active, 1, 0), img = ternary(self.t % 0.1 < 0.05, images.heart_white, images.heart_empty)},
-		{value = self.temporary_life, img = images.heart_temporary},
+		{value = self.temporary_life, img = images.heart_temporary, extra = true},
 	}, self.max_life, images.heart_empty, _margin)
 
 	if self.max_jumps > 1 then
