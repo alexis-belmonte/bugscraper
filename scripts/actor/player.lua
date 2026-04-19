@@ -239,6 +239,14 @@ function Player:reset(n, skin)
 	self.is_affected_by_walls = true
 	self.is_vulnerable_to_kill_zone = true
 
+	-- Bloodthirst
+	-- After taking damage, kill some enemies to regain HP
+	self.bloodthirst_enabled = false
+	self.bloodthirst_active = false
+	self.bloodthirst_timer = Timer:new(5.0)
+	self.bloodthirst_blood = 0.0
+	self.bloodthirst_blood_threshold = 5.0
+
 	-- Effects
 	self.effects = {}
 	self.poison_cloud = nil
@@ -426,6 +434,7 @@ function Player:update(dt)
 	self:do_particles(dt)
 	self:update_visuals()
 	self:update_achievements(dt)
+	self:update_bloodthirst(dt)
 
 	if self.life <= 0 and not (self.is_killed or self.is_ghost) then
 		self:start_ghost()
@@ -727,6 +736,10 @@ function Player:apply_effect_on_damage()
 			vy1 = 80,
 			vy2 = -200,
 		})
+	end
+
+	if self.bloodthirst_enabled then
+		self:start_bloodthirst()
 	end
 end
 
@@ -1231,7 +1244,7 @@ function Player:on_stomp(enemy)
 	self.float_timer = self.float_max_duration
 	self.gun:add_ammo(math.floor(self.ammo_percent_gain_on_stomp * self.gun:get_max_ammo()))
 
-	game.level:add_fury(self.fury_stomp_value * enemy.fury_stomp_multiplier)
+	self:add_fury(self.fury_stomp_value * enemy.fury_stomp_multiplier)
 end
 
 --- When an enemy bullet hits the player
@@ -1252,7 +1265,7 @@ function Player:on_my_bullet_hit(bullet, victim, col)
 	-- Why tf would this happen
 	if bullet.player ~= self then   return   end
 
-	game.level:add_fury(bullet.damage * victim.fury_bullet_damage_multiplier * self.fury_bullet_damage_value_multiplier)
+	self:add_fury(bullet.damage * victim.fury_bullet_damage_multiplier * self.fury_bullet_damage_value_multiplier)
 end
 
 --- When the player kills an enemy
@@ -1306,6 +1319,13 @@ end
 ------------------------------------------
 --- Misc ---
 ------------------------------------------
+
+function Player:add_fury(amount)
+	game.level:add_fury(amount)
+	if self.bloodthirst_enabled then
+		self:add_bloodthirst_blood(amount)
+	end
+end
 
 function Player:is_in_poison_cloud()
 	local is_touching, col = self:is_touching_collider(function(col) return col.other.is_poisonous end)
@@ -1406,13 +1426,11 @@ function Player:draw_hud()
 end
 
 function Player:draw_life_bar(ui_x, ui_y)
-	local life = self.life
-	local max_life = self.max_life
-	if self.temporary_life > 0 then
-		life = life + self.temporary_life
-		max_life = max_life + self.temporary_life
-	end
-	ui:draw_icon_bar(ui_x, ui_y, self.life, self.max_life, self.temporary_life, images.heart, images.heart_empty, images.heart_temporary)
+	ui:draw_icon_bar_stacked(ui_x, ui_y, {
+		{value = self.life, img = images.heart},
+		{value = ternary(self.bloodthirst_active, 1, 0), img = ternary(self.t % 0.1 < 0.05, images.heart_white, images.heart_empty)},
+		{value = self.temporary_life, img = images.heart_temporary},
+	}, self.max_life, images.heart_empty, _margin)
 
 	if self.max_jumps > 1 then
 		local j = clamp(0, self.jumps, 1)
@@ -1722,6 +1740,71 @@ function Player:update_achievements(dt)
 	if self:get_total_life() >= 7 then
 		Achievements:grant("ach_max_hearts")
 	end
+end
+
+-----------------------------
+--- Bloodthirst
+-----------------------------
+
+function Player:start_bloodthirst()
+	if not self.bloodthirst_enabled then
+		return
+	end
+	self.bloodthirst_timer:start()
+	self.bloodthirst_active = true
+	self.bloodthirst_blood = 0.0
+end
+
+function Player:stop_bloodthirst()
+	if not self.bloodthirst_enabled then
+		return
+	end
+
+	self.bloodthirst_active = false
+	self.bloodthirst_timer:stop()
+	self.bloodthirst_blood = 0.0
+end
+
+function Player:update_bloodthirst(dt)
+	if not self.bloodthirst_enabled then
+		return
+	end
+
+	-- self.debug_values[1] = round(self.bloodthirst_timer.time,2)
+	-- self.debug_values[2] = "b"..tostring(round(self.bloodthirst_blood, 2))
+
+	if game.level:is_fury_unfrozen() then
+		if self.bloodthirst_timer:update(dt) then
+			self:stop_bloodthirst()
+		end
+	end
+
+	if self.life >= self.max_life then
+		self:stop_bloodthirst()
+	end
+
+	if self.bloodthirst_active then
+		Particles:push_layer(PARTICLE_LAYER_BACK)
+		Particles:smoke(self.mid_x, self.mid_y, 2, random_sample{COL_DARK_BRICK, COL_LIGHT_BRICK, COL_MID_DARK_GREEN}, 16)
+		Particles:pop_layer()
+
+		if self.bloodthirst_blood > self.bloodthirst_blood_threshold then
+			self:stop_bloodthirst()
+
+			local success, overflow = self:heal(1)
+			Particles:smoke(self.mid_x, self.mid_y, nil, {COL_DARK_BRICK, COL_LIGHT_BRICK, COL_MID_DARK_GREEN})
+			self:play_sound("sfx_loot_health_collect")
+			Particles:word(self.mid_x, self.y, concat(1,"❤ (", Text:text("upgrade.gazpacho.title"), ")"), {COL_LIGHT_BRICK, COL_DARK_BRICK, COL_MID_DARK_GREEN, stacked=true}, 1.0)
+			
+		end
+	end
+end
+
+function Player:add_bloodthirst_blood(amount)
+	if not (self.bloodthirst_enabled and self.bloodthirst_active) then
+		return
+	end
+	self.bloodthirst_blood = self.bloodthirst_blood + amount
 end
 
 return Player

@@ -444,7 +444,7 @@ return {
         },
         ach_smash_easter_egg = {
             name = "GAME!", -- This is a reference to what the announcer says at the end of a match in Smash Bros.
-            description = "Obtenha a animação secreta.", 
+            description = "Obtenha a animação secreta", 
         },
     },
     discord = { -- Text used for Discord rich presence

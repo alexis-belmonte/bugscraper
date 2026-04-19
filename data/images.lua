@@ -170,6 +170,9 @@ local img_names = {
 	ceo_npc_jetpack =          "actors/enemies/ceo_npc_jetpack",
 	ceo_npc_fainted =          "actors/enemies/ceo_npc_fainted",
 	ceo_npc_fainted_single =   "actors/enemies/ceo_npc_fainted_single",
+	ceo_npc_angry_idle =       "actors/enemies/ceo_npc_angry_idle",
+	ceo_npc_angry_airborne =   "actors/enemies/ceo_npc_angry_airborne",
+	ceo_npc_sitting =          "actors/enemies/ceo_npc_sitting",
 	ceo_tangled_wires =        "actors/enemies/ceo_tangled_wires",
 	ceo_tangled_wires_shocked = "actors/enemies/ceo_tangled_wires_shocked",
 	ceo_tangled_wires_fainted = "actors/enemies/ceo_tangled_wires_fainted",
@@ -281,6 +284,8 @@ local img_names = {
 	exit_sign_front =          "actors/enemies/exit_sign_front",
 	punching_glove =           "actors/enemies/punching_glove",
 	spring =                   "actors/enemies/spring",
+	final_boss_minion_star =   "actors/enemies/final_boss_minion_star",
+	final_boss_minion_body =   "actors/enemies/final_boss_minion_body",
 
 	vending_machine =          "actors/enemies/vending_machine",
 	water_dispenser =          "actors/enemies/water_dispenser",
@@ -355,6 +360,7 @@ local img_names = {
 	pomegranate_piece_2 =         "particles/pomegranate_piece_2",
 	pomegranate_piece_3 =         "particles/pomegranate_piece_3",
 	white_dust =                  "particles/white_dust",
+	furious_smoke =               "particles/furious_smoke", 
 
 	bubble_fizz_1 =               "particles/bubble_fizz_1",
 	bubble_fizz_2 =               "particles/bubble_fizz_2",
@@ -386,6 +392,7 @@ local img_names = {
 
 	star_big =                    "particles/star_big",
 	star_pento_1 =                "particles/star_pento_1",
+	star_big_5 =                  "particles/star_big_5",
 
 	jump_dust_kick_1 =            "particles/jump_dust_kick_1",
 	jump_dust_kick_2 =            "particles/jump_dust_kick_2",
@@ -507,6 +514,7 @@ local img_names = {
 	ground_floor_front =                 "level/ground_floor_front",
 
 	ground_floor_caution_sign =          "level/props/ground_floor_caution_sign",
+	ground_floor_warning_sign =          "level/props/ground_floor_warning_sign",
 	ground_floor_bucket_1 =              "level/props/ground_floor_bucket_1",
 	ground_floor_bucket_2 =              "level/props/ground_floor_bucket_2",
 	ground_floor_lamp =                  "level/props/ground_floor_lamp",
@@ -565,6 +573,7 @@ local img_names = {
 
 	-- hud
 	heart =           "ui/hud/heart",
+	heart_white =     "ui/hud/heart_white",
 	heart_half =      "ui/hud/heart_half",
 	heart_empty =     "ui/hud/heart_empty",
 	heart_temporary = "ui/hud/heart_temporary",
@@ -683,6 +692,7 @@ local img_names = {
 	upgrade_coconut_water =     "upgrades/upgrade_coconut_water",
 	upgrade_hot_chocolate =     "upgrades/upgrade_hot_chocolate",
 	upgrade_pomegranate_juice = "upgrades/upgrade_pomegranate_juice",
+	upgrade_gazpacho =          "upgrades/upgrade_gazpacho",
 	upgrade_water =             "upgrades/upgrade_water",
 	
 	-----------------------------------------------------

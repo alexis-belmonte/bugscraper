@@ -96,7 +96,7 @@ function normalize_vect(x, y)
 	return x / d, y / d
 end
 
-normalise_vect = normalize_vect
+normalise_vect = normalize_vect -- em brits
 
 function vector_dot(ax, ay, bx, by)
 	return ax * bx + ay * by
@@ -323,6 +323,27 @@ function rotated_color_ellipse(color, mode, x, y, rx, ry, rot)
 	exec_with_color(color or COL_WHITE, function()
 		rotated_ellipse(mode, x, y, rx, ry, rot)
 	end)
+end
+
+function draw_faint_halo(x, y, t, star_image)
+	local selfx, selfy = x, y
+	local a1 = pi/6 + math.cos(t*4 ) * pi/12
+	local a2 = -pi/6 + math.cos(t*6 ) * pi/15
+	local rx = 10
+	local ry = 4
+	rotated_color_ellipse(COL_WHITE, "line", selfx, selfy, rx, ry, a1)
+	rotated_color_ellipse(COL_WHITE, "line", selfx, selfy, rx*1.2, ry, a2)
+
+	local n = 5
+	for i = 0, n-1 do
+		local a3 = pi2 * (i/n) + t
+		local sx = math.cos(a3) * 13
+		local sy = math.sin(a3*2) * 7
+
+		if star_image then
+			draw_centered(star_image, selfx + sx, selfy + sy)
+		end
+	end
 end
 
 function draw_with_selected_outline(spr, x, y, r, sx, sy)
@@ -1110,7 +1131,10 @@ function dist(ax, ay, bx, by)
 	return sqrt(distsqr(ax, ay, bx, by))
 end
 
-function actor_distance(actor1, actor2)
+function actor_distance(actor1, actor2, use_mid)
+	if use_mid then
+		return dist(actor1.mid_x, actor1.mid_y, actor2.mid_x, actor2.mid_y)
+	end
 	return dist(actor1.x, actor1.y, actor2.x, actor2.y)
 end
 
@@ -1542,7 +1566,10 @@ function get_direction_vector(ax, ay, bx, by)
 	return normalize_vect(bx - ax, by - ay)
 end
 
-function get_direction_vector_between_actors(actor1, actor2)
+function get_direction_vector_between_actors(actor1, actor2, use_mid)
+	if use_mid then
+		return normalize_vect(actor2.mid_x - actor1.mid_x, actor2.mid_y - actor1.mid_y)
+	end
 	return normalize_vect(actor2.x - actor1.x, actor2.y - actor1.y)
 end
 
