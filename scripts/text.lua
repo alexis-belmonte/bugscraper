@@ -22,7 +22,7 @@ function TextManager:init()
 
         ["fr"] = "fr",
 
-        -- ["zh"] = "zh_Hans",
+        -- ["zh"] = "zh_Hans", 
         -- ["zh_Hans"] = "zh_Hans",
         -- ["zh_CN"] = "zh_Hans",
 

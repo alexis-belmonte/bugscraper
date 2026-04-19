@@ -1,5 +1,9 @@
 # Bugscraper changelog
 
+## 0.11
+
+WIP
+
 ## 0.10.1
 
 - Fixed Steam API integration on macOS and Linux, courtesy of Alexis
