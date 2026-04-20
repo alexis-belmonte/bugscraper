@@ -134,7 +134,7 @@ function Shop:init(x, y, w, h, params)
                     return
                 end
 
-                self.selected_player:set_input_mode(PLAYER_INPUT_MODE_USER)
+                self.selected_player:set_in_menu(false)
                 self.selected_player = nil
             end
         },
@@ -195,7 +195,7 @@ function Shop:increment_selection(diff)
 end
 
 function Shop:start_interaction(player)
-    player:set_input_mode(PLAYER_INPUT_MODE_CODE)
+    player:set_in_menu(true)
     self.selected_player = player
 
     self.state_machine:set_state("opening")
@@ -203,7 +203,8 @@ end
 
 function Shop:end_interaction(instantly_give_back_control)
     if instantly_give_back_control and self.selected_player then
-        self.selected_player:set_input_mode(PLAYER_INPUT_MODE_USER)
+        self.selected_player:set_in_menu(false)
+
         self.selected_player = nil
     end
     if self.state_machine.current_state_name ~= "normal" then

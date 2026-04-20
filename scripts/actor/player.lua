@@ -215,6 +215,8 @@ function Player:reset(n, skin)
 	self.ui_col_gradient = 0
 	self.controls_oy = 0
 
+	self.is_in_menu = false
+
 	-- SFX
 	self:stop_constant_sounds()
 
@@ -1344,7 +1346,7 @@ end
 function Player:update_poison(dt)
 	if self:is_in_poison_cloud() and not self.is_invincible then
 		self.poison_timer = self.poison_timer + dt
-
+		
 		if self.poison_timer >= self.poison_damage_time then
 			self:do_damage(1, self.poison_cloud)
 			self.poison_timer = 0.0	
@@ -1353,6 +1355,16 @@ function Player:update_poison(dt)
 	else
 		self.poison_timer = math.max(0.0, self.poison_timer - dt)	
 	end
+end
+
+function Player:set_in_menu(val)
+	self.is_in_menu = val
+	if val then
+		self:set_input_mode(PLAYER_INPUT_MODE_CODE)
+	else
+		self:set_input_mode(PLAYER_INPUT_MODE_USER)
+	end
+	self:reset_virtual_controller()
 end
 
 -----------------------------------------------------
