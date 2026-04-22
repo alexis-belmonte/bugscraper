@@ -87,7 +87,7 @@ return Cutscene:new("basement_zoom_into_rocket", {
                     type = "circle",
                     color = {
                         type = "gradient",
-                        COL_WHITE, COL_YELLOW, COL_ORANGE, COL_DARK_RED, COL_DARK_GRAY, COL_BLACK_BLUE
+                        COL_BLACK_BLUE, COL_DARK_GRAY, COL_DARK_RED, COL_ORANGE, COL_YELLOW, COL_WHITE  
                     }, 
                 })
             end

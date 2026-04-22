@@ -301,12 +301,21 @@ function MenuManager:back(params)
 
 end
 
-function MenuManager:keypressed(key, scancode, isrepeat)
+function MenuManager:keypressed(key, scancode)
 	if self.sel_item and self.sel_item.keypressed then
-		self.sel_item:keypressed(key, scancode, isrepeat)
+		self.sel_item:keypressed(key, scancode)
 	end
 	if self.cur_menu and self.cur_menu.keypressed then
-		self.cur_menu:keypressed(key, scancode, isrepeat)
+		self.cur_menu:keypressed(key, scancode)
+	end
+end
+
+function MenuManager:keypressedrepeat(key, scancode)
+	if self.sel_item and self.sel_item.keypressedrepeat then
+		self.sel_item:keypressedrepeat(key, scancode)
+	end
+	if self.cur_menu and self.cur_menu.keypressedrepeat then
+		self.cur_menu:keypressedrepeat(key, scancode)
 	end
 end
 

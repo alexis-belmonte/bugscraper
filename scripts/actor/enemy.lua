@@ -374,18 +374,7 @@ function Enemy:kill(damager, reason)
 	if damager and damager.is_bullet and damager.player.is_player then player = damager.player end
 
 	if self.do_death_effects then
-		game:screenshake(2)
-		Particles:smoke(self.mid_x, self.mid_y)
-		Particles:star_splash(self.mid_x, self.mid_y)
-
-		if player then
-			Input:vibrate(player.n, 0.05, 0.3)
-	
-			Particles:floating_image({
-				images.star_small_1,
-				images.star_small_2,
-			}, self.mid_x, self.mid_y, random_range_int(5, 7), 0, 0.25, 1, 120, 0.95)
-		end
+		self:play_death_effects(player)
 	end
 	if self.play_sfx then
 		if reason == "stomped" then
@@ -408,6 +397,21 @@ function Enemy:kill(damager, reason)
 		elseif damager.on_kill_other then
 			damager:on_kill_other(self, reason)
 		end
+	end
+end
+
+function Enemy:play_death_effects(player)
+	game:screenshake(2)
+	Particles:smoke(self.mid_x, self.mid_y)
+	Particles:star_splash(self.mid_x, self.mid_y)
+
+	if player then
+		Input:vibrate(player.n, 0.05, 0.3)
+
+		Particles:floating_image({
+			images.star_small_1,
+			images.star_small_2,
+		}, self.mid_x, self.mid_y, random_range_int(5, 7), 0, 0.25, 1, 120, 0.95)
 	end
 end
 

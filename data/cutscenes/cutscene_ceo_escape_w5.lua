@@ -86,7 +86,9 @@ return Cutscene:new("ceo_escape_w5", {
 
         duration = 0.5,
         enter = function(cutscene, data)
-            data.ceo.spr:set_animation("tangled_wires_shocked")
+            data.ceo.spr:set_animation("shocked")
+            data.ceo.draw_faint_halo = false
+            
             data.shake = 3.0
 
             Particles:static_image(images.surprise_effect, data.ceo.x - 16, data.ceo.y - 30, 0, 0.3)
@@ -110,7 +112,7 @@ return Cutscene:new("ceo_escape_w5", {
 
         duration = 1.0,
         enter = function(cutscene, data)
-            data.ceo.spr:set_animation("tangled_wires")
+            data.ceo.spr:set_animation("sitting")
             data.shake = 3.0
 			Particles:sweat(data.ceo.x - 15, data.ceo.y - 30, true)
         end,
@@ -128,7 +130,7 @@ return Cutscene:new("ceo_escape_w5", {
 
         duration = 0.5,
         enter = function(cutscene, data)
-            data.ceo.spr:set_animation("tangled_wires_shocked")
+            data.ceo.spr:set_animation("shocked")
             data.ceo.vy = -200
             dust_particles(data)
         end,
@@ -208,44 +210,6 @@ return Cutscene:new("ceo_escape_w5", {
             data.resigning_player:set_code_input_mode_target_x(data.init_ceo_x + 16)
         end,
     }),
-    CutsceneScene:new({
-        description = "CEO jumps away",
-
-        duration = 0.4,
-        enter = function(cutscene, data)
-            data.ceo.vx = 200
-            data.ceo.vy = -200
-            dust_particles(data)
-        end,
-    }),
-    CutsceneScene:new({
-        description = "CEO jumps away",
-
-        duration = 0.4,
-        enter = function(cutscene, data)
-            data.ceo.vx = 200
-            data.ceo.vy = -200
-            dust_particles(data)
-        end,
-    }),
-    CutsceneScene:new({
-        description = "CEO jumps away",
-
-        duration = 0.4,
-        enter = function(cutscene, data)
-            data.ceo.vx = 200
-            data.ceo.vy = -200
-            dust_particles(data)
-        end,
-    }),
-    CutsceneScene:new({
-        description = "Resigning player walks to boss",
-
-        duration = 1.0,
-        enter = function(cutscene, data)
-            data.resigning_player:set_code_input_mode_target_x(data.init_ceo_x + 16 * 3)
-        end,
-    }),
 
     CutsceneScene:new({
         description = "Big ass slap in the face (jump)",
@@ -282,7 +246,7 @@ return Cutscene:new("ceo_escape_w5", {
 
             data.resigning_player:equip_gun(guns.unlootable.EmptyGun:new(data.resigning_player))
 
-            data.ceo.spr:set_animation("tangled_wires")
+            data.ceo.spr:set_animation("sitting")
         end,
         update = function(cutscene, data, dt)
             data.ceo.spr:update_offset(random_neighbor(3), random_neighbor(3))
@@ -321,7 +285,7 @@ return Cutscene:new("ceo_escape_w5", {
 
         duration = 0.05,
         enter = function(cutscene, data)
-            data.ceo.spr:set_animation("tangled_wires")
+            data.ceo.spr:set_animation("sitting")
         end,
     }),
     CutsceneScene:new({
@@ -329,7 +293,7 @@ return Cutscene:new("ceo_escape_w5", {
 
         duration = 0.2,
         enter = function(cutscene, data)
-            data.ceo.spr:set_animation("tangled_wires_shocked")
+            data.ceo.spr:set_animation("shocked")
         end,
     }),
     CutsceneScene:new({
@@ -337,7 +301,7 @@ return Cutscene:new("ceo_escape_w5", {
 
         duration = 0.05,
         enter = function(cutscene, data)
-            data.ceo.spr:set_animation("tangled_wires")
+            data.ceo.spr:set_animation("sitting")
         end,
     }),
     CutsceneScene:new({
@@ -345,7 +309,7 @@ return Cutscene:new("ceo_escape_w5", {
 
         duration = 0.2,
         enter = function(cutscene, data)
-            data.ceo.spr:set_animation("tangled_wires_shocked")
+            data.ceo.spr:set_animation("shocked")
         end,
     }),
     CutsceneScene:new({
@@ -359,31 +323,46 @@ return Cutscene:new("ceo_escape_w5", {
     CutsceneScene:new({
         description = "Resigning player goes away",
 
-        duration = 1.0,
+        duration = 0.5,
         enter = function(cutscene, data)
-            game.level:set_bounds(Rect:new(unpack({-10, -2, 31, 16})))
+            -- Open hole in building
+        	game.level.world_generator:write_rect_fill(Rect:new(0, 11, 2, 12),  TILE_AIR)
+            -- game.level:set_bounds(Rect:new(unpack({-10, -2, 31, 16})))
 
-            data.resigning_player:equip_gun(guns.unlootable.Machinegun:new(data.resigning_player))
-            data.resigning_player:set_code_input_mode_target_x(-100) -- Nice.
+            data.resigning_player:set_input_mode(PLAYER_INPUT_MODE_CODE)
+            data.resigning_player:set_code_input_mode_target_x()
+            data.resigning_player:reset_virtual_controller()
+            data.resigning_player.virtual_controller.actions["left"] = true
         end,
     }),
     CutsceneScene:new({
         description = "Remaining players go away",
 
-        duration = 2.5,
+        duration = 3.0,
         enter = function(cutscene, data)
             for _, player in pairs(game.players) do            
                 if player ~= data.resigning_player then
-                    player:equip_gun(guns.unlootable.Machinegun:new(player))
-                    player:set_code_input_mode_target_x(-100)
+                    player:set_input_mode(PLAYER_INPUT_MODE_CODE)
+                    player:set_code_input_mode_target_x()
+                    player:reset_virtual_controller()
+                    
+                    player.virtual_controller.actions["left"] = true
                 end
             end
         end,
 
         update = function(cutscene, data, dt)
             for _, player in pairs(game.players) do
-                player.virtual_controller.actions["down"] = true
-                player.virtual_controller.actions["shoot"] = true
+                if 10*16 <= player.x and player.x <= 12*16 then
+                    player.virtual_controller.actions["jump"] = true
+                else
+                    player.virtual_controller.actions["jump"] = false
+                end
+
+                if player.x <= 4*16 and not data.__has_opened_door then
+                    data.__has_opened_door = true
+                    Particles:opened_door(3*16-1, 10*16, {linger_time = 1.0})
+                end
             end
         end,
     }),

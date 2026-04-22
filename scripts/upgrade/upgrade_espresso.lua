@@ -1,12 +1,11 @@
 require "scripts.util"
 local Upgrade = require "scripts.upgrade.upgrade"
 local images= require "data.images"
-local EffectEspresso = require "scripts.effect.effect_espresso"
 
-local UpgradeEspresso = Upgrade:inherit()
+local UpgradeShootFasterLimitedTime = Upgrade:inherit()
 
-function UpgradeEspresso:init()
-    UpgradeEspresso.super.init(self, "espresso")
+function UpgradeShootFasterLimitedTime:init()
+    UpgradeShootFasterLimitedTime.super.init(self, "espresso")
     self.sprite = images.upgrade_espresso
     self.strength = 2.0
     self.duration = 20 -- Lasts for X floors 
@@ -18,15 +17,22 @@ function UpgradeEspresso:init()
     self.activate_sound = "sfx_upgrades_espresso_pickedup"
 end
 
-function UpgradeEspresso:update(player, dt)
-    UpgradeEspresso.super:update(self, player, dt)
+function UpgradeShootFasterLimitedTime:update(player, dt)
+    UpgradeShootFasterLimitedTime.super:update(self, player, dt)
+
+    if game.level.fury_active then
+        player.spr:update_offset(random_neighbor(1), random_neighbor(1))
+        Particles:push_layer(PARTICLE_LAYER_BACK)
+        Particles:smoke(player.mid_x, player.mid_y, 1, random_sample{COL_MID_BROWN, COL_DARK_BROWN})
+        Particles:pop_layer()
+    end
 end
 
-function UpgradeEspresso:apply_instant(player)
-    player:apply_effect(EffectEspresso:new(self.strength), self.duration, {duration_unit = "floor"})
+function UpgradeShootFasterLimitedTime:apply_permanent(player)
+    table.insert(player.fury_gun_cooldown_multiplier_extra, 1/self.strength)
 end
 
-function UpgradeEspresso:on_finish(player)
+function UpgradeShootFasterLimitedTime:on_finish(player)
 end
 
-return UpgradeEspresso
+return UpgradeShootFasterLimitedTime

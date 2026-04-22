@@ -56,6 +56,52 @@ function UI:draw_icon_bar(x, y, val, max_val, val_extra, img_full, img_empty, im
 	end
 end
 
+
+function UI:draw_icon_bar_stacked(x, y, chunks, max_val, img_empty, margin)
+	-- Draw a bar in this style:
+	-- ♥️ ♥️ ♥️ ♥️ ♡ ♡ ♡ 
+	margin = margin or 0
+
+	local chunks = copy_table_shallow(chunks)
+
+	local sum = 0
+	local width = 0
+	local last_non_extra_index = 1
+	for i=1, #chunks do
+		if not chunks[i].extra then
+			last_non_extra_index = i
+			sum = sum + math.max(0, chunks[i].value)
+		end
+		width = width + math.max(0, chunks[i].value) * (chunks[i].img:getWidth() + margin)
+	end
+
+	table.insert(chunks, last_non_extra_index+1, {
+		value = math.max(0.0, max_val - sum),
+		img = img_empty
+	})
+	
+	local real_max = math.max(sum, max_val)
+	local overflow = math.max(0.0, real_max - sum)
+	width = width + overflow * (img_empty:getWidth() + margin)
+	
+	local iy = floor(y)
+	local x1 = x - width/2
+	
+	local ix = x1
+	for i_chunk = 1, #chunks do
+		local current_chunk = chunks[i_chunk]
+
+		for i=1, current_chunk.value do
+			local img = current_chunk.img
+
+			local oy = math.max(0, img:getHeight() - img_empty:getHeight())
+			love.graphics.draw(img, math.floor(ix), math.floor(iy - oy))
+
+			ix = ix + img:getWidth() + margin
+		end
+	end
+end
+
 function UI:draw_progress_bar(x, y, w, h, val, max_val, col_fill, col_out, col_fill_shadow, text, text_col, font)
 	x = floor(x)
 	y = floor(y)

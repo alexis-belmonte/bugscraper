@@ -126,7 +126,7 @@ function ControlsMenuItem:on_click()
 	self.waiting_timer = self.waiting_duration
 end
 
-function ControlsMenuItem:keypressed(key, scancode, isrepeat)
+function ControlsMenuItem:keypressed(key, scancode)
 	-- if scancode == "escape" then
 	-- 	self.is_waiting_for_input = false
 	-- 	Input:set_standby_mode(false)

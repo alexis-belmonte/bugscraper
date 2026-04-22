@@ -31,7 +31,7 @@ table.insert(pause_items, { "" })
 if BUILD_TYPE == "demo" then
     -- Disable wishlist if not demo
     table.insert(pause_items, { "❤ {menu.win.wishlist} 🔗", func_url("steam://advertise/2957130/") })
-    table.insert(pause_items, { "🌐 {menu.pause.website} 🔗", func_url("https://bugscraper.net/") })
+    -- table.insert(pause_items, { "🌐 {menu.pause.website} 🔗", func_url("https://bugscraper.net/") })
 end
 table.insert(pause_items, { "😈 {menu.pause.discord} 🔗", func_url("https://bugscraper.net/discord") })
 

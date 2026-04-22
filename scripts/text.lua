@@ -22,7 +22,7 @@ function TextManager:init()
 
         ["fr"] = "fr",
 
-        -- ["zh"] = "zh_Hans",
+        -- ["zh"] = "zh_Hans", 
         -- ["zh_Hans"] = "zh_Hans",
         -- ["zh_CN"] = "zh_Hans",
 
@@ -45,13 +45,14 @@ function TextManager:init()
         self.languages[lang_name] = self:unpack(lang_values)
     end
 
-    self.default_lang = "en"
+    self.default_lang = "en" -- also acts as fallback language
     if DEBUG_MODE then
         self:sanity_check_languages(self.default_lang)
     end
 
     self.language = self:find_default_locale()
     self.values = self:unpack(self.languages[self.language or self.default_lang] or self.languages[self.default_lang])
+    self.fallback_values = self:unpack(self.languages[self.default_lang])
 
     local words = 0
     for _, v in pairs(self.values) do
@@ -66,21 +67,22 @@ function TextManager:init()
     ------------------------
     
     -- Uncomment for utility tool to update translations 
-    -- if DEBUG_MODE then
-    --     local lang_to = "fr"
+    if DEBUG_MODE then
+        -- for _, lang_to in pairs({"ja", "pl", "pt_BR", "es"}) do
+        for _, lang_to in pairs({"es"}) do
+            local en_old = require("data.lang.old.en_old_"..lang_to)
+            local target = require("data.lang."..lang_to)
+            local en_new_tbl = require("data.lang.en")
 
-    --     local en_old = require("data.lang.en_old_"..lang_to)
-    --     local target = require("data.lang."..lang_to)
-    --     local en_new_tbl = require("data.lang.en")
+            local f = io.open("C:\\docs\\gamedev\\bugscraper\\bugscraper\\data\\lang\\en.lua", "r")
+            assert(f ~= nil, "ERROR WHILE SYNCING TRANSLATION FILE: file does not exist")
+            local en_new_str = f:read("*all")
+            f:close()
 
-    --     local f = io.open("C:\\docs\\gamedev\\bugscraper\\bugscraper\\data\\lang\\en.lua", "r")
-    --     assert(f ~= nil, "ERROR WHILE SYNCING TRANSLATION FILE: file does not exist")
-    --     local en_new_str = f:read("*all")
-    --     f:close()
-
-    --     local output_path = "C:\\docs\\gamedev\\bugscraper\\bugscraper\\data\\lang\\"..lang_to.."_updated.lua"
-    --     sync_translations(en_old, en_new_str, en_new_tbl, target, output_path)
-    -- end
+            local output_path = "C:\\docs\\gamedev\\bugscraper\\bugscraper\\data\\lang\\"..lang_to.."_updated.lua"
+            sync_translations(en_old, en_new_str, en_new_tbl, target, output_path)
+        end
+    end
 end
 
 function TextManager:find_default_locale()
@@ -155,34 +157,30 @@ function TextManager:value_exists(code)
     return self.values[code] ~= nil
 end
 
+function TextManager:is_nonempty_string(raw_value)
+    return not (
+        raw_value == nil or 
+        raw_value == "" or 
+        (utf8.len(raw_value) >= 2 and utf8.sub(raw_value, 1, 2) == "[[")
+    )
+end
+
 function TextManager:text(code, ...)
-    local key_code
-    local params = {}
-    if type(code) == "table" then
-        key_code = code[1]
-        params = code
-    elseif type(code) == "string" then
-        key_code = code
-    else 
-        error("Invalid type for 'code': "..tostring(type(code)))
-        return
-    end
+    local key_code = code
 
     local raw_value = self.values[key_code]
     local output = raw_value
-    if raw_value == nil then
-        output = key_code
+    if not self:is_nonempty_string(raw_value) then 
+        if self.fallback_values[key_code] then
+            output = self.fallback_values[key_code]
+        else 
+            output = key_code
+        end
 
     elseif #({...}) > 0 then
         output = string.format(raw_value, ...)
     end
 
-    if params.uppercase then
-        output = utf8.upper(output)
-    end
-    if params.lowercase then
-        output = utf8.lower(output)
-    end
     return output
 
     -- assert(v ~= nil, "Text value for key '"..tostring(code).."' doesn't exist") 
@@ -192,7 +190,15 @@ end
 function TextManager:text_params(code, params, ...)
     params = params or {}
 
-    local t = self:text(code, ...)
+    local t = ""
+    
+    if self:value_exists(code) then
+        t = self:text(code, ...)
+    elseif params.fallback then
+        t = params.fallback 
+    else
+        t = code
+    end
     
     if params.uppercase then
         t = utf8.upper(t)
@@ -205,13 +211,6 @@ function TextManager:text_params(code, params, ...)
     end
 
     return t
-end
-
-function TextManager:text_fallback(code, fallback, ...)
-    if not self:value_exists(code) then
-        return fallback or code
-    end
-    return self:text(code, ...)
 end
 
 
@@ -231,7 +230,7 @@ function TextManager:sanity_check_languages(reference_language)
     for lang_name, lang_values in pairs(self.languages) do
         local n = 0
         for ref_key, ref_value in pairs(self.languages[reference_language]) do
-            if lang_name ~= reference_language and not lang_values[ref_key] then
+            if lang_name ~= reference_language and not self:is_nonempty_string(lang_values[ref_key]) then
                 print("- [Text] /!\\ missing key '"..ref_key.."' for language '"..lang_name.."'")
                 n = 1
             end

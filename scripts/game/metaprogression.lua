@@ -48,10 +48,11 @@ function MetaprogressionManager:init()
     self.data = {}
     self:read_progress()
     
-    -- Count the number of max skins / upgrades
+    -- Count the number of max skins / upgrades (does not take demo version into account)
+    local fullgame_levels = require "data.metaprogression_levels"
     self.max_upgrades = #self.default_data["upgrades"]
     self.max_skins = #self.default_data["skins"]
-    for _, level in pairs(self.levels) do
+    for _, level in pairs(fullgame_levels) do
         for __, reward in pairs(level.rewards) do
             if reward.type == "skin" then
                 self.max_skins = self.max_skins + 1

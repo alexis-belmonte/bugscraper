@@ -134,7 +134,7 @@ function Shop:init(x, y, w, h, params)
                     return
                 end
 
-                self.selected_player:set_input_mode(PLAYER_INPUT_MODE_USER)
+                self.selected_player:set_in_menu(false)
                 self.selected_player = nil
             end
         },
@@ -143,10 +143,14 @@ end
 
 function Shop:assign_random_upgrades()
     local bag = copy_table_shallow(game.level.upgrade_bag)
+    local bag_overrides = copy_table_shallow(game.level.upgrade_bag_overrides or {})
 
-	local number_of_upgrades = 3
+	local number_of_upgrades = game.level.number_of_upgrades_per_roll
 	local roll = {}
-	for i=1, number_of_upgrades do
+    if #bag_overrides > 0 then
+        roll = bag_overrides
+    end
+	for i_roll=1, number_of_upgrades - #roll do
 		local upgrade, _, i = random_weighted(bag)
 		if upgrade then
 			table.remove(bag, i)
@@ -155,6 +159,8 @@ function Shop:assign_random_upgrades()
 	end
 	
     self:assign_products(roll)
+
+    game.level:reset_upgrade_bag_overrides()
 end
 
 function Shop:update(dt)
@@ -195,7 +201,7 @@ function Shop:increment_selection(diff)
 end
 
 function Shop:start_interaction(player)
-    player:set_input_mode(PLAYER_INPUT_MODE_CODE)
+    player:set_in_menu(true)
     self.selected_player = player
 
     self.state_machine:set_state("opening")
@@ -203,7 +209,8 @@ end
 
 function Shop:end_interaction(instantly_give_back_control)
     if instantly_give_back_control and self.selected_player then
-        self.selected_player:set_input_mode(PLAYER_INPUT_MODE_USER)
+        self.selected_player:set_in_menu(false)
+
         self.selected_player = nil
     end
     if self.state_machine.current_state_name ~= "normal" then
@@ -212,6 +219,10 @@ function Shop:end_interaction(instantly_give_back_control)
 end
 
 function Shop:apply_current_product()
+    if self.selected_player then
+        self.selected_player:set_in_menu(false)
+    end
+
     game:apply_upgrade(self.selected_product)
     self.is_interactible = false
 end
@@ -220,7 +231,7 @@ function Shop:draw_products()
     local sep = 32
     local x = self.mid_x - ((#self.products - 1)*sep)/2
     local sel_x = x + (self.selected_product_index-1)*sep
-    local y = self.mid_y - self.ui_oy
+    local y = self.mid_y - self.ui_oy + 16
     local s = ease_out_elastic(clamp(self.animation_t, 0, 1))
 
     if self.selected_product then
@@ -235,8 +246,8 @@ function Shop:draw_products()
 
         love.graphics.setColor(COL_WHITE)
         
-        self:draw_text(self.mid_x + self.star_pattern_ox * 5, y - 55, self.selected_product:get_title(), self.selected_product.color, 2)
-        self:draw_text(self.mid_x + self.star_pattern_ox * 2.5, y - 30, self.selected_product:get_description())
+        self:draw_text(self.mid_x + self.star_pattern_ox * 5, y - 71, self.selected_product:get_title(), self.selected_product.color, 2)
+        self:draw_text(self.mid_x + self.star_pattern_ox * 2.5, y - 46, self.selected_product:get_description())
     end
 
     for i=1, #self.products do
@@ -260,21 +271,37 @@ function Shop:draw_products()
 end
 
 
-function Shop:draw_text(x, y, text, col, s)
+function Shop:draw_text(x, y, text, col, s, params)
+    params = params or {}
     col = param(col, COL_WHITE)
     s = param(s, 1)
+    local wrap = param(params.wrap, true)
+    local wrap_limit = param(params.wrap_limit, 16*16)
 
-    local total_w = get_text_width(text) * s
-    local text_x = x - total_w/2
-    for i=1, #text do
-        local t = (#text - i)/#text + self.animation_t*2 - 1
-        local c = utf8.sub(text, i, i)
-        local w = get_text_width(c) * s
-        if t > 0 then
-            local oy = ease_out_cubic(clamp(t, 0, 1)) * (-4) 
-            print_outline(col, COL_BLACK_BLUE, c, text_x, y + oy, nil, nil, s)
+    local width
+    local wrapped_text = {}
+    if wrap then
+        local font = love.graphics.getFont()
+        width, wrapped_text = font:getWrap(text, wrap_limit)
+    else
+        width, wrapped_text = get_text_width(text), {text}
+    end
+
+    local iy = y
+    for _, line in pairs(wrapped_text) do
+        local total_w = get_text_width(line) * s
+        local text_x = x - total_w/2
+        for i=1, #line do
+            local t = (#line - i)/#line + self.animation_t*2 - 1
+            local c = utf8.sub(line, i, i)
+            local w = get_text_width(c) * s
+            if t > 0 then
+                local oy = ease_out_cubic(clamp(t, 0, 1)) * (-4) 
+                print_outline(col, COL_BLACK_BLUE, c, text_x, iy + oy, nil, nil, s)
+            end
+            text_x = text_x + w
         end
-        text_x = text_x + w
+        iy = iy + get_text_height()
     end
 end
 

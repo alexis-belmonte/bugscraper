@@ -122,7 +122,7 @@ return {
         },
         espresso = {
             title = "Espresso",
-            description = "x%d shooting speed while in a combo",
+            description = "x%d shooting speed for %d floors",
         },
         milk = {
             title = "Milk",
@@ -163,10 +163,6 @@ return {
         energy_drink = {
             title = "Energy Drink",
             description = "Combo meter decreases more slowly",
-        },
-        gazpacho = {
-            title = "Gazpacho",
-            description = "After taking damage, quickly fight back to regain 1 ❤",
         },
     },
     input = {
@@ -286,10 +282,10 @@ return {
             },
             audio = {
                 title = "Audio",
-                sound = "SOUND", -- Toggle (on or off)
-                volume = "VOLUME", -- Slider (0% to 100%)
-                sfx_volume = "SOUND EFFECT VOLUME", -- Slider (0% to 100%)
-                music_volume = "MUSIC VOLUME", -- Slider (0% to 100%)
+                sound = "SOUND",
+                volume = "VOLUME",
+                sfx_volume = "SOUND EFFECT VOLUME", -- Can also be translated as "effects volume" or "SFX volume"
+                music_volume = "MUSIC VOLUME",
                 music_pause_menu = "MUSIC ON PAUSE MENU", -- Whether music should play on the pause menu
                 ambience = "AMBIENCE SOUNDS",
             },
@@ -298,7 +294,7 @@ return {
                 fullscreen = "FULLSCREEN",
                 pixel_scale = "PIXEL SCALE", -- How big should every pixel be displayed on-screen (x1, x2, ...)
                 pixel_scale_value = {
-                    auto = "auto", -- Biggest number possible, whole or not
+                    auto = "auto",
                     max_whole = "max whole", -- Biggest whole number possible
                 },
                 vsync = "VSYNC",

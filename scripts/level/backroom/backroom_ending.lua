@@ -1,31 +1,26 @@
 require "scripts.util"
 local images = require "data.images"
 local enemies = require "data.enemies"
-local BackroomWithDoor = require "scripts.level.backroom.backroom_with_door"
+local BackroomCityOutside = require "scripts.level.backroom.backroom_city_outside"
 local BackgroundCity = require "scripts.level.background.background_city"
 local Rect = require "scripts.math.rect"
 local Loot = require "scripts.actor.loot"
 
 local guns = require "data.guns"
 
-local BackroomEnding = BackroomWithDoor:inherit() 
+local BackroomEnding = BackroomCityOutside:inherit() 
 
 function BackroomEnding:init(params)
 	params = params or {}
     BackroomEnding.super.init(self, params)
 	self.name = "credits"
-
-	self.cafeteria_background = BackgroundCity:new(self)
-	self.cafeteria_background.offset_y = 100
 end
 
 function BackroomEnding:generate(world_generator)
+	BackroomEnding.super.generate(self, world_generator)
+
 	game.level:set_bounds(Rect:new(unpack(RECT_CREDITS_PARAMS)))
 
-	-- Collision 
-	world_generator:reset()
-	world_generator:write_rect(Rect:new(4, 15, 32, 16), TILE_STONE) -- Walls
-	
 	game.music_player:set_disk("off")
 	game.ambience_player:set_disk("tutorial")
 
@@ -33,6 +28,8 @@ function BackroomEnding:generate(world_generator)
 	game.game_ui.logo_y_target = -70
 
 	game.camera.max_x = 0
+	game.camera.min_y = 16
+	game.camera.max_y = 16
 
 	local ceo_x = 20*16
 	local ceo_y = 240
@@ -46,7 +43,10 @@ function BackroomEnding:generate(world_generator)
 			airborne = { images.ceo_npc_airborne, 0.2, 1 },
 			jetpack = { images.ceo_npc_jetpack, 0.2, 1 },
 			clap = { images.ceo_npc_clap_hand, 0.02, 3, nil, { looping = false } },
-			tangled_wires = {images.ceo_tangled_wires, 0.1, 1},
+			fainted = {images.ceo_npc_fainted, 0.1, 4},
+			sitting = {images.ceo_npc_sitting, 0.1, 1},
+			
+			tangled_wires = {images.ceo_tangled_wires, 0.1, 1}, 
 			tangled_wires_shocked = {images.ceo_tangled_wires_shocked, 0.1, 1},
 			tangled_wires_fainted = {images.ceo_tangled_wires_fainted, 0.1, 4},
 		},
@@ -67,12 +67,18 @@ function BackroomEnding:generate(world_generator)
 
 				Particles:sweat(_self.x - 15, _self.y - 30, true)
 			end
+		end,
+		extra_draw = function(_self)
+			if _self.draw_faint_halo then
+				draw_faint_halo(_self.mid_x, _self.y - 32, _self.t, images.star_small_2)
+			end
 		end
 	}))
+	ceo.draw_faint_halo = true
 	ceo.gravity = 0
 	ceo.is_affected_by_bounds = false
 
-	ceo.spr:set_animation("tangled_wires_fainted")
+	ceo.spr:set_animation("fainted")
 	ceo.gravity = ceo.default_gravity	 
 	ceo.is_affected_by_bounds = true
 
@@ -97,11 +103,7 @@ function BackroomEnding:get_default_player_gun()
 end
 
 function BackroomEnding:get_default_camera_position()
-	return 0, 0
-end
-
-function BackroomEnding:get_x_target_after_join_game()
-	return 95
+	return 0, -16
 end
 
 function BackroomEnding:can_exit()
@@ -115,19 +117,14 @@ function BackroomEnding:update(dt)
 	BackroomEnding.super.update(self, dt)
 end
 
-function BackroomEnding:on_fully_entered()
-end
+-- function BackroomEnding:on_fully_entered()
+-- end
 
 function BackroomEnding:draw_background()
-	self.cafeteria_background:draw()
+	BackroomEnding.super.draw_background(self)
 end
 
-function BackroomEnding:draw_items()
-	-- love.graphics.draw(images.credits_removeme_characters, 320, 144)
-end
-
-function BackroomEnding:draw_front_walls()
-	love.graphics.draw(images.ending_building, 48, 208)
-end
+-- function BackroomEnding:draw_front_walls()
+-- end
 
 return BackroomEnding

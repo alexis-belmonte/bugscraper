@@ -122,11 +122,11 @@ return {
         },
         espresso = {
             title = "Espresso",
-            description = "x%d vitesse de tir pendant %d étages",
+            description = "x%d vitesse de tir lors d'un combo",
         },
         milk = {
             title = "Lait",
-            description = "+%d maximum ❤",
+            description = "+%d ❤ maximum",
         },
         boba = {
             title = "Bubble tea",
@@ -163,6 +163,10 @@ return {
         energy_drink = {
             title = "Boisson énergisante",
             description = "La barre de combo décroit plus lentement",
+        },
+        gazpacho = {
+            title = "Gaspacho", 
+            description = "Après avoir subi des dégâts, infligez rapidement des dégâts pour regagner 1 ❤",
         },
     },
     input = {

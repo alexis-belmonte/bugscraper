@@ -66,6 +66,10 @@ local enemies = {
 	MoleBoss =           require "scripts.actor.enemies.mole_boss", 
 	MoleMinion =         require "scripts.actor.enemies.mole_minion", 
 	FlyingDungMole =     require "scripts.actor.enemies.flying_dung_mole", 
+
+	-- W5 	
+	FinalBoss =          require "scripts.actor.enemies.final_boss",
+	FinalBossMinion =    require "scripts.actor.enemies.final_boss_minion",
 	
 	-- Unused
 	ProgressingArc =     require "scripts.actor.enemies.progressing_arc", 
@@ -85,10 +89,7 @@ local enemies = {
 	JumpingProp =        require "scripts.actor.enemies.jumping_prop",
 	Dummy =              require "scripts.actor.enemies.dummy",
 	InvisibleDummy =     require "scripts.actor.enemies.invisible_dummy",
-
 	NPC =                require "scripts.actor.enemies.npc",
-
-	FinalBoss =          require "scripts.actor.enemies.final_boss",
 
 	BossDoor =           require "scripts.actor.enemies.boss_door",
 	BreakableWall =      require "scripts.actor.enemies.breakable_wall",

@@ -68,6 +68,10 @@ function WorldGenerator:generate_end_rubble()
 	end
 end
 
+function WorldGenerator:write_tile(x, y, tile)
+	self.map:set_tile(x, y, tile)
+end
+
 function WorldGenerator:write_rect(rect, tile)
 	-- Floor/Ceiling
 	for ix=rect.ax, rect.bx do

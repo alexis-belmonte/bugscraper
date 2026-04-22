@@ -29,6 +29,7 @@ function NPC:init(x, y, params)
     self.interaction_delay = 4.0
 
     self.extra_update = param(params.extra_update, nil)
+    self.extra_draw = param(params.extra_draw, nil)
     
     self.flip_mode = ENEMY_FLIP_MODE_MANUAL
     self.spr:set_flip_x(param(params.flip_x, false))
@@ -48,6 +49,10 @@ end
 
 function NPC:draw()
 	NPC.super.draw(self)
+
+    if self.extra_draw then
+        self.extra_draw(self)
+    end
 end
 
 function NPC:on_collision(col, other)

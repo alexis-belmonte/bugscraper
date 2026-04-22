@@ -1,6 +1,9 @@
 /fonts/res/*
 /.vscode/*
 .vscode/*
+# Ignore ale's IDE
+/.zed/*
+.zed/*
 /export/*
 /_export/*
 *.aseprite
@@ -11,3 +14,4 @@ libsteam_api_linux64.so
 _tools/language_validation/lang.csv
 *.csv#
 /_private/*
+/data/lang/old/

@@ -117,7 +117,7 @@ RECT_BASEMENT = {2, -4, 104, 16}
 -- RECT_GROUND_FLOOR_PARAMS = {2, 2, 100, 16}
 RECT_GROUND_FLOOR_PARAMS = {2, 3, 111, 16}
 RECT_TUTORIAL_PARAMS = {2, 0, 96, 16}
-RECT_CREDITS_PARAMS = {3, -2, 31, 16}
+RECT_CREDITS_PARAMS = {0, -2, 31, 16}
 
 ---------------------------------------------
 
@@ -168,6 +168,9 @@ COL_PINK = color(0xf6757a)
 
 COL_YELLOW_ORANGE = color(0xfeae34)
 COL_ORANGE = color(0xf77622)
+
+COL_DARK_BRICK = color(0xbe4a2f)
+COL_LIGHT_BRICK = color(0xd87644)
 
 COL_LIGHT_BEIGE = color(0xead4aa)
 COL_MID_BEIGE = color(0xe4a672)

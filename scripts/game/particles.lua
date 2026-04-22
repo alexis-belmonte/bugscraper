@@ -155,6 +155,7 @@ function ImageParticle:init_image_particle(spr, x,y,s,r, vx,vy,vs,vr, life, g, i
 
 	self.is_animated = (type(spr) == "table")
 	if self.is_animated then
+		-- TODO implement spritesheet system for particle animation
 		self.spr_table = spr
 		self.spr = spr[1]
 	end
@@ -636,7 +637,8 @@ end
 
 local OpenedDoorParticle = Particle:inherit()
 
-function OpenedDoorParticle:init(img, x,y)
+function OpenedDoorParticle:init(img, x,y, params)
+	params = params or {}
 	self:init_particle(x,y,s,r, vx,vy,0,vr, 5.0, g, false)
 	self.img = img
 	
@@ -645,7 +647,7 @@ function OpenedDoorParticle:init(img, x,y)
 	self.rot_3d_vel = 0 
 	self.rot_3d_acc = -40
 
-	self.linger_time = 1.0
+	self.linger_time = param(params.linger_time, 1.0)
 	self.phase = "open"
 end
 
@@ -1223,10 +1225,9 @@ function ParticleSystem:word(x, y, str, col, stay_time, text_scale, outline_colo
 	self:pop_layer()
 end
 
-function ParticleSystem:opened_door(x, y)
-	-- self:push_layer(PARTICLE_LAYER_SHADOWLESS)
-	self:add_particle(OpenedDoorParticle:new(images.wooden_door, x, y))
-	-- self:pop_layer()
+function ParticleSystem:opened_door(x, y, params)
+	params = params or {}
+	self:add_particle(OpenedDoorParticle:new(images.wooden_door, x, y, params))
 end
 
 function ParticleSystem:falling_cabin_back(x, y)

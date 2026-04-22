@@ -148,6 +148,8 @@ function Debug:init(game)
         end},
         
         ["v"] = { "__jackofalltrades", function()
+            game:play_cutscene("final_boss_death")
+
             if love.keyboard.isDown("1") then
                 game.menu_manager:set_menu("w1_boss_intro")
             elseif love.keyboard.isDown("2") then
@@ -160,7 +162,7 @@ function Debug:init(game)
                 game.menu_manager:set_menu("w5_boss_intro")
             end
 
-            game:play_cutscene("final_boss_enter")
+            -- game:play_cutscene("final_boss_enter")
 
             -- game:new_game({ 
             --     backroom = BackroomEnding:new(),
@@ -331,6 +333,11 @@ function Debug:init(game)
 
             if love.keyboard.isDown("lshift") or love.keyboard.isDown("rshift") then
                 game.level.new_wave_animation_speed_mutliplier = 20.0
+
+                for _, p in pairs(game.players) do
+                    p.vx = -10000 
+                    p:set_invincibility(1.0)
+                end
             end
         end },
 
@@ -447,6 +454,9 @@ function Debug:init(game)
         end },
 
         ["p"] = { "start/end profiler", function()
+            if not love.profiler then
+                return
+            end
             _G_profiler_on = not _G_profiler_on
             if _G_profiler_on then
                 love.profiler.reset()
@@ -501,7 +511,7 @@ function Debug:update(dt)
     end
 end
 
-function Debug:debug_action(key, scancode, isrepeat)
+function Debug:debug_action(key, scancode)
     local action = self.actions[scancode]
     if action then
         if not action.do_not_require_ctrl and not (love.keyboard.isScancodeDown("lctrl") or  love.keyboard.isScancodeDown("rctrl")) then
@@ -520,21 +530,23 @@ function Debug:new_notification(msg)
     game.notif_timer = 2.0
 end
 
-function Debug:keypressed(key, scancode, isrepeat)
-    if isrepeat then return end
+function Debug:keypressed(key, scancode)
     if not game.debug_mode then return end
-
+    
     if scancode == "f1" then
         game.menu_manager:set_menu("debug_command")
     elseif scancode == "lctrl" then
         self.is_reading_for_f1_action = true
     else
-        self:debug_action(key, scancode, isrepeat)
+        self:debug_action(key, scancode)
         self.is_reading_for_f1_action = false
     end
 end
 
-function Debug:keyreleased(key, scancode, isrepeat)
+function Debug:keypressedrepeat(key, scancode)
+end
+
+function Debug:keyreleased(key, scancode)
     if scancode == "lctrl" and self.is_reading_for_f1_action then
         self.is_reading_for_f1_action = false
     end

@@ -1,20 +1,22 @@
+-- !! DEPRECATED !!
+
 require "scripts.util"
 local Effect = require "scripts.effect.effect"
 local images = require "data.images"
 
-local EffectEspresso = Effect:inherit()
+local EffectShootFaster = Effect:inherit()
 
-function EffectEspresso:init(strength)
+function EffectShootFaster:init(strength)
     self:init_effect()
     self.name = "effect_coffee"
     self.strength = strength or 2.0
 end
 
-function EffectEspresso:on_apply(player, duration)
+function EffectShootFaster:on_apply(player, duration)
     player:multiply_gun_cooldown_multiplier(1/self.strength)
 end
 
-function EffectEspresso:update(dt, player)
+function EffectShootFaster:update(dt, player)
     self:update_effect(dt)
     
     -- number, col, spw_rad, size, sizevar, layer
@@ -24,9 +26,9 @@ function EffectEspresso:update(dt, player)
     Particles:pop_layer()
 end
 
-function EffectEspresso:on_finish(player)
+function EffectShootFaster:on_finish(player)
     player.spr:update_offset(0, 0)
     player:multiply_gun_cooldown_multiplier(self.strength)
 end
 
-return EffectEspresso
+return EffectShootFaster

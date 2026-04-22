@@ -19,10 +19,6 @@ function Upgrade:init(name)
 end
 
 function Upgrade:update(player, dt)
-    self:update_upgrade(player, dt)
-end
-
-function Upgrade:update_upgrade(player, dt)
 end
 
 function Upgrade:apply(player, is_revive)
@@ -35,11 +31,11 @@ end
 
 ------------------------------------------
 
---- [ABSTRACT]
+--- [ABSTRACT] Effects that are supposed to be permanent, like more max health or more max ammo
 function Upgrade:apply_permanent(player, is_revive)
 end
 
---- [ABSTRACT]
+--- [ABSTRACT] Effects that are supposed to be momentary, like giving a time-limited effect or extra hearts
 function Upgrade:apply_instant(player)
 end
 

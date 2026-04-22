@@ -109,12 +109,14 @@ function Level:init(game, backroom)
 	self.hole_stencil_radius_progress_speed = 0.5
 
 	-- Misc
+	self.number_of_upgrades_per_roll = 3
 	self.upgrade_bag = {}
 	for _, upgrade_name in pairs(Metaprogression:get("upgrades")) do
 		if upgrades[upgrade_name] then
 			table.insert(self.upgrade_bag, {upgrades[upgrade_name]:new(), 1})
 		end
 	end
+	self.upgrade_bag_overrides = {}
 	self.ending_timer = Timer:new(15)
 	self.has_run_ready = false
 
@@ -631,6 +633,10 @@ function Level:on_upgrade_applied(upgrade)
 	end
 end
 
+function Level:reset_upgrade_bag_overrides()
+	self.upgrade_bag_overrides = {}
+end
+
 function Level:on_shop_killed(display) -- alsp works for shops
 	local current_disk = game.music_player.current_disk
 	local time = 0.0
@@ -850,14 +856,22 @@ function Level:on_enemy_damage(enemy, amount, source)
 	-- end
 end
 
-function Level:update_fury(dt)
-	local final_fury_speed = self.fury_speed
-
+function Level:is_fury_unfrozen(dt)
 	local c = true
 	if game.level.backroom then
 		c = game.level.backroom.freeze_fury
 	end
-	if (game:get_enemy_count() > 0) and not (game.level:is_on_cafeteria() and c) and (not self.freeze_fury_override) then
+
+	return 
+		(game:get_enemy_count() > 0) and 
+		not (game.level:is_on_cafeteria() and c) and 
+		(not self.freeze_fury_override)
+end
+
+function Level:update_fury(dt)
+	local final_fury_speed = self.fury_speed
+
+	if self:is_fury_unfrozen() then
 		self.fury_bar = math.max(0.0, self.fury_bar - dt*final_fury_speed)
 	end
 	self.fury_bar = clamp(self.fury_bar, 0.0, self.fury_max)
