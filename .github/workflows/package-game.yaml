@@ -85,7 +85,7 @@ jobs:
 
     strategy:
       matrix:
-        platform: [appimage, love, macos, steam, win64]
+        platform: [appimage, macos, steam, win64]
 
     steps:
       - name: Download intermediate artifact
