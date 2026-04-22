@@ -1,6 +1,9 @@
 /fonts/res/*
 /.vscode/*
 .vscode/*
+# Ignore ale's IDE
+/.zed/*
+.zed/*
 /export/*
 /_export/*
 *.aseprite
