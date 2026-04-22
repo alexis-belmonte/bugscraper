@@ -122,7 +122,7 @@ return {
         },
         espresso = {
             title = "Espresso",
-            description = "Multiplica x%d la velocidad de disparo durante un minuto",
+            description = "Multiplica x%d la velocidad de disparo durante un minuto[[CHANGED / old:'x%d shooting speed for %d floors' / new:'x%d shooting speed while in a combo']]",
         },
         milk = {
             title = "Leche",
@@ -163,6 +163,10 @@ return {
         energy_drink = {
             title = "Bebida Energizante",
             description = "El medidor del combo baja mas lento",
+        },
+        gazpacho = {
+            title = "[[ADDED / 'Gazpacho']]",
+            description = "[[ADDED / 'After taking damage, quickly damage enemies to regain 1 ❤']]",
         },
     },
     input = {
@@ -282,10 +286,10 @@ return {
             },
             audio = {
                 title = "Audio",
-                sound = "SONIDO",
-                volume = "VOLUMEN",
-                sfx_volume = "VOLUMEN DE LOS EFECTOS DE SONIDO", -- Can also be translated as "effects volume" or "SFX volume"
-                music_volume = "VOLUMEN DE LA MÚSICA",
+                sound = "SONIDO", -- Toggle (on or off)
+                volume = "VOLUMEN", -- Slider (0% to 100%)
+                sfx_volume = "VOLUMEN DE LOS EFECTOS DE SONIDO", -- Slider (0% to 100%)
+                music_volume = "VOLUMEN DE LA MÚSICA", -- Slider (0% to 100%)
                 music_pause_menu = "REPRODUCIR MÚSICA DURANTE EL MENU DE PAUSA", -- Whether music should play on the pause menu
                 ambience = "SONIDOS AMBIENTALES",
             },
@@ -294,7 +298,7 @@ return {
                 fullscreen = "PANTALLA COMPLETA",
                 pixel_scale = "ESCALA DE LOS PIXELES", -- How big should every pixel be displayed on-screen (x1, x2, ...)
                 pixel_scale_value = {
-                    auto = "automática",
+                    auto = "automática", -- Biggest number possible, whole or not
                     max_whole = "máximo entero", -- Biggest whole number possible
                 },
                 vsync = "VSYNC",

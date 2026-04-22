@@ -67,21 +67,22 @@ function TextManager:init()
     ------------------------
     
     -- Uncomment for utility tool to update translations 
-    -- if DEBUG_MODE then
-    --     local lang_to = "fr"
+    if DEBUG_MODE then
+        -- for _, lang_to in pairs({"ja", "pl", "pt_BR", "es"}) do
+        for _, lang_to in pairs({"es"}) do
+            local en_old = require("data.lang.old.en_old_"..lang_to)
+            local target = require("data.lang."..lang_to)
+            local en_new_tbl = require("data.lang.en")
 
-    --     local en_old = require("data.lang.en_old_"..lang_to)
-    --     local target = require("data.lang."..lang_to)
-    --     local en_new_tbl = require("data.lang.en")
+            local f = io.open("C:\\docs\\gamedev\\bugscraper\\bugscraper\\data\\lang\\en.lua", "r")
+            assert(f ~= nil, "ERROR WHILE SYNCING TRANSLATION FILE: file does not exist")
+            local en_new_str = f:read("*all")
+            f:close()
 
-    --     local f = io.open("C:\\docs\\gamedev\\bugscraper\\bugscraper\\data\\lang\\en.lua", "r")
-    --     assert(f ~= nil, "ERROR WHILE SYNCING TRANSLATION FILE: file does not exist")
-    --     local en_new_str = f:read("*all")
-    --     f:close()
-
-    --     local output_path = "C:\\docs\\gamedev\\bugscraper\\bugscraper\\data\\lang\\"..lang_to.."_updated.lua"
-    --     sync_translations(en_old, en_new_str, en_new_tbl, target, output_path)
-    -- end
+            local output_path = "C:\\docs\\gamedev\\bugscraper\\bugscraper\\data\\lang\\"..lang_to.."_updated.lua"
+            sync_translations(en_old, en_new_str, en_new_tbl, target, output_path)
+        end
+    end
 end
 
 function TextManager:find_default_locale()

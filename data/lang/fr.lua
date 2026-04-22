@@ -122,11 +122,11 @@ return {
         },
         espresso = {
             title = "Espresso",
-            description = "x%d vitesse de tir pendant %d étages",
+            description = "x%d vitesse de tir lors d'un combo",
         },
         milk = {
             title = "Lait",
-            description = "+%d maximum ❤",
+            description = "+%d ❤ maximum",
         },
         boba = {
             title = "Bubble tea",
