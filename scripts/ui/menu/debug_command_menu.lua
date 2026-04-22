@@ -36,10 +36,10 @@ function DebugCommandMenu:init_menu()
 	self.args = {}
 end
 
-function DebugCommandMenu:keypressed(key, scancode, isrepeat)
+function DebugCommandMenu:keypressed(key, scancode)
 	if key == 'escape' then
 		Input:set_standby_mode(false)
-
+		
 		game.menu_manager:set_can_pause(false)
 		game.menu_manager:unpause()
 		game.menu_manager:set_menu()
@@ -84,6 +84,10 @@ function DebugCommandMenu:keypressed(key, scancode, isrepeat)
 		local clipboard = love.system.getClipboardText() or ""
 		self:textinput(clipboard)
 	end
+end
+
+function DebugCommandMenu:keypressedrepeat(key, scancode)
+	self:keypressed(key, scancode)
 end
 
 function DebugCommandMenu:send_input()

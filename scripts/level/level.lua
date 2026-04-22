@@ -109,12 +109,14 @@ function Level:init(game, backroom)
 	self.hole_stencil_radius_progress_speed = 0.5
 
 	-- Misc
+	self.number_of_upgrades_per_roll = 3
 	self.upgrade_bag = {}
 	for _, upgrade_name in pairs(Metaprogression:get("upgrades")) do
 		if upgrades[upgrade_name] then
 			table.insert(self.upgrade_bag, {upgrades[upgrade_name]:new(), 1})
 		end
 	end
+	self.upgrade_bag_overrides = {}
 	self.ending_timer = Timer:new(15)
 	self.has_run_ready = false
 
@@ -629,6 +631,10 @@ function Level:on_upgrade_applied(upgrade)
 			table.remove(self.upgrade_bag, i)
 		end
 	end
+end
+
+function Level:reset_upgrade_bag_overrides()
+	self.upgrade_bag_overrides = {}
 end
 
 function Level:on_shop_killed(display) -- alsp works for shops

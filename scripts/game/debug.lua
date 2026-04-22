@@ -511,7 +511,7 @@ function Debug:update(dt)
     end
 end
 
-function Debug:debug_action(key, scancode, isrepeat)
+function Debug:debug_action(key, scancode)
     local action = self.actions[scancode]
     if action then
         if not action.do_not_require_ctrl and not (love.keyboard.isScancodeDown("lctrl") or  love.keyboard.isScancodeDown("rctrl")) then
@@ -530,21 +530,23 @@ function Debug:new_notification(msg)
     game.notif_timer = 2.0
 end
 
-function Debug:keypressed(key, scancode, isrepeat)
-    if isrepeat then return end
+function Debug:keypressed(key, scancode)
     if not game.debug_mode then return end
-
+    
     if scancode == "f1" then
         game.menu_manager:set_menu("debug_command")
     elseif scancode == "lctrl" then
         self.is_reading_for_f1_action = true
     else
-        self:debug_action(key, scancode, isrepeat)
+        self:debug_action(key, scancode)
         self.is_reading_for_f1_action = false
     end
 end
 
-function Debug:keyreleased(key, scancode, isrepeat)
+function Debug:keypressedrepeat(key, scancode)
+end
+
+function Debug:keyreleased(key, scancode)
     if scancode == "lctrl" and self.is_reading_for_f1_action then
         self.is_reading_for_f1_action = false
     end

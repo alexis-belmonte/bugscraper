@@ -73,6 +73,8 @@ local function init()
     
         love.profiler.stop()
     end
+
+    love.keyboard.setKeyRepeat(true)
 end
 
 return init

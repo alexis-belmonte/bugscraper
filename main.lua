@@ -83,6 +83,11 @@ function love.draw()
 end
 
 function love.keypressed(key, scancode, isrepeat)
+	if isrepeat then
+		love.keypressedrepeat(key, scancode)
+		return
+	end
+
 	if key == "f5" then
 		if love.keyboard.isDown("lshift") or love.keyboard.isDown("rshift") then
 			love.event.quit("restart")
@@ -106,7 +111,11 @@ function love.keypressed(key, scancode, isrepeat)
 
 	end
 
-	if game.keypressed then  game:keypressed(key, scancode, isrepeat)  end
+	if game.keypressed then  game:keypressed(key, scancode)  end
+end
+
+function love.keypressedrepeat(key, scancode)
+	if game.keypressed then  game:keypressedrepeat(key, scancode)  end
 end
 
 function love.keyreleased(key, scancode)

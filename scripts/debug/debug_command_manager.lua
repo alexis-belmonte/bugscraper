@@ -520,6 +520,25 @@ function DebugCommandManager:init()
             return true
         end,
     }
+    self.commands["_force_bag_upgrade"] = DebugCommand:new {
+        name = "_force_bag_upgrade",
+        description = "Forces an upgrade to be added to the bag",
+        args = {
+            { "name:string", values=upgrades_keys },
+        },
+        run = function(name)
+            local upgrade_class = upgrades["Upgrade" .. tostring(name)]
+            if not upgrade_class then
+                return false, "Upgrade '" .. name .. "' not found"
+            end
+
+            local upgrade = upgrade_class:new()
+            table.insert(game.level.upgrade_bag_overrides, upgrade)
+            self:add_message("Added upgrade '" .. name .. "' to the bag")
+
+            return true
+        end,
+    }
 
     self.messages = {}
     self.max_messages = 28

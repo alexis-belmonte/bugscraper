@@ -1228,7 +1228,7 @@ end
 -----------------------------------------------------
 -----------------------------------------------------
 
-function Game:keypressed(key, scancode, isrepeat)
+function Game:keypressed(key, scancode)
 	if scancode == "f12" and (love.keyboard.isDown("lshift") or love.keyboard.isDown("rshift")) and (love.keyboard.isDown("lctrl") or love.keyboard.isDown("rshift")) then
 		self.debug_mode = true
 		self.debug.notif = "debug mode enabled"
@@ -1238,10 +1238,20 @@ function Game:keypressed(key, scancode, isrepeat)
 	end
 
 	if self.menu_manager then
-		self.menu_manager:keypressed(key, scancode, isrepeat)
+		self.menu_manager:keypressed(key, scancode)
 	end
 	if self.debug then
-		self.debug:keypressed(key, scancode, isrepeat)
+		self.debug:keypressed(key, scancode)
+	end
+end
+
+function Game:keypressedrepeat(key, scancode)
+	
+	if self.menu_manager then
+		self.menu_manager:keypressedrepeat(key, scancode)
+	end
+	if self.debug then
+		self.debug:keypressedrepeat(key, scancode)
 	end
 end
 
