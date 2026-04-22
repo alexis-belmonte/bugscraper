@@ -83,7 +83,7 @@ return {
 
             -- These are guest characters from other games so please stay close to the original.
             rico = "Rico", -- From 'The Bullet Hopper'
-            yv = "Y.V.", -- From 'Nuclear Throne' / See localized names here: https://docs.google.com/spreadsheets/d/18N1CNxIzSUm4CkIWUw0nbRnlxzAgoRbHpGyX8649Gjw/edit?usp=sharing
+            yv = "Y.V.",   -- From 'Nuclear Throne' / See localized names here: https://docs.google.com/spreadsheets/d/18N1CNxIzSUm4CkIWUw0nbRnlxzAgoRbHpGyX8649Gjw/edit?usp=sharing
             leo = "Leo",
             dodu = "Dodu",
         },
@@ -123,7 +123,7 @@ return {
         espresso = {
             title = "Espresso",
             description =
-            "Multiplica x%d la velocidad de disparo durante un minuto[[CHANGED / old:'x%d shooting speed for %d floors' / new:'x%d shooting speed while in a combo']]",
+            "x%d de Velocidad de disparo mientras estás en un combo",
         },
         milk = {
             title = "Leche",
@@ -185,7 +185,7 @@ return {
             shoot = "Disparar",
             interact = "Interactuar",
             leave_game = "Salir",
-            open = "Abrir", -- As in, "open menu", and NOT for, say, opening chests.
+            open = "Abrir",         -- As in, "open menu", and NOT for, say, opening chests.
             collect = "Recolectar", -- As in, "collect item", "collect gun", etc
 
             -- UI Actions
@@ -287,10 +287,10 @@ return {
             },
             audio = {
                 title = "Audio",
-                sound = "SONIDO",                                    -- Toggle (on or off)
-                volume = "VOLUMEN",                                  -- Slider (0% to 100%)
-                sfx_volume = "VOLUMEN DE LOS EFECTOS DE SONIDO",     -- Slider (0% to 100%)
-                music_volume = "VOLUMEN DE LA MÚSICA",               -- Slider (0% to 100%)
+                sound = "SONIDO",                                                -- Toggle (on or off)
+                volume = "VOLUMEN",                                              -- Slider (0% to 100%)
+                sfx_volume = "VOLUMEN DE LOS EFECTOS DE SONIDO",                 -- Slider (0% to 100%)
+                music_volume = "VOLUMEN DE LA MÚSICA",                           -- Slider (0% to 100%)
                 music_pause_menu = "REPRODUCIR MÚSICA DURANTE EL MENU DE PAUSA", -- Whether music should play on the pause menu
                 ambience = "SONIDOS AMBIENTALES",
             },
@@ -299,13 +299,13 @@ return {
                 fullscreen = "PANTALLA COMPLETA",
                 pixel_scale = "ESCALA DE LOS PIXELES", -- How big should every pixel be displayed on-screen (x1, x2, ...)
                 pixel_scale_value = {
-                    auto = "automática",   -- Biggest number possible, whole or not
-                    max_whole = "máximo entero", -- Biggest whole number possible
+                    auto = "automática",               -- Biggest number possible, whole or not
+                    max_whole = "máximo entero",       -- Biggest whole number possible
                 },
                 vsync = "VSYNC",
-                menu_blur = "DIFUMINAR FONDO DEL MENU", -- Whether to apply the blurring effect in menu backgrounds
+                menu_blur = "DIFUMINAR FONDO DEL MENU",   -- Whether to apply the blurring effect in menu backgrounds
                 background_speed = "VELOCIDAD DEL FONDO", -- How quickly the background scrolls
-                bullet_lightness = "BRILLO DE BALAS", -- How brightly bullets are rendered
+                bullet_lightness = "BRILLO DE BALAS",     -- How brightly bullets are rendered
             },
             game = {
                 title = "Juego",
@@ -313,10 +313,10 @@ return {
                 language = "IDIOMA...",
                 timer = "TEMPORIZADOR DE PARTIDA",
                 mouse_visible = "MOSTRAR PUNTERO DEL RATÓN",
-                pause_on_unfocus = "PAUSAR AL PERDER EL FOCO", -- whether the game should pause when the window loses focus
+                pause_on_unfocus = "PAUSAR AL PERDER EL FOCO",     -- whether the game should pause when the window loses focus
                 screenshake = "SACUDIDO DE PATALLA",
                 skip_boss_intros = "OMITIR INTRODUCCIÓN DE JEFES", -- Whether the game should skip the boss intro animations
-                show_fps_warning = "AVISAR DE BAJO RENDIMIENTO", -- Whether the game should show a warning when its framerate is low
+                show_fps_warning = "AVISAR DE BAJO RENDIMIENTO",   -- Whether the game should show a warning when its framerate is low
 
             },
             language = {
@@ -336,10 +336,10 @@ return {
         },
         game_over = {
             title = "JUEGO TERMINADO!",
-            kills = "Enemigos matados", -- The amount of enemies the player has killed
+            kills = "Enemigos matados",   -- The amount of enemies the player has killed
             deaths = "Muertes",
             time = "Tiempo transcurrido", -- The time that the player took to complete the level
-            floor = "Piso",      -- Which storey the player was on when they died
+            floor = "Piso",               -- Which storey the player was on when they died
             score = "Puntaje",
             max_combo = "Combo Máximo",
 
@@ -384,11 +384,11 @@ return {
             asset_creators = "Creadores de recursos",
             tv_slideshow = "Contribuciones de la presentación en la TV", -- Refers to the powerpoint TV slideshow on the title screen, which was contributed by a variety of people
             licenses = "Recursos y Lisencias de librerías",
-            more = "Y muchos mas...",                           -- For the people that I might have forgotten in the special thanks section
-            thank_you_for_playing = "¡Gracias por jugar!",      -- Shown at the end of the credits
+            more = "Y muchos mas...",                                    -- For the people that I might have forgotten in the special thanks section
+            thank_you_for_playing = "¡Gracias por jugar!",               -- Shown at the end of the credits
 
-            x_by_y = "%s por %s",                               -- "ASSET_NAME by CREATOR". Used to credit assets such as sound effects
-            asset_item = "%s por %s / %s",                      -- "ASSET_NAME by CREATOR / LICENCE"
+            x_by_y = "%s por %s",                                        -- "ASSET_NAME by CREATOR". Used to credit assets such as sound effects
+            asset_item = "%s por %s / %s",                               -- "ASSET_NAME by CREATOR / LICENCE"
         },
         open_source = {
             title = "Licencias de código abierto",
