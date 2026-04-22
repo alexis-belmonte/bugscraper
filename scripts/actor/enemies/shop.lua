@@ -213,6 +213,10 @@ function Shop:end_interaction(instantly_give_back_control)
 end
 
 function Shop:apply_current_product()
+    if self.selected_player then
+        self.selected_player:set_in_menu(false)
+    end
+
     game:apply_upgrade(self.selected_product)
     self.is_interactible = false
 end
