@@ -166,7 +166,7 @@ return {
         },
         gazpacho = {
             title = "[[ADDED / 'Gazpacho']]",
-            description = "[[ADDED / 'After taking damage, quickly damage enemies to regain 1 ❤']]",
+            description = "[[ADDED / 'After taking damage, quickly fight back to regain 1 ❤']]",
         },
     },
     input = {

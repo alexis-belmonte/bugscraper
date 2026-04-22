@@ -164,6 +164,10 @@ return {
             title = "Boisson énergisante",
             description = "La barre de combo décroit plus lentement",
         },
+        gazpacho = {
+            title = "Gaspacho",
+            description = "After taking damage, quickly damage enemies to regain 1 ❤",
+        },
     },
     input = {
         prompts = {
