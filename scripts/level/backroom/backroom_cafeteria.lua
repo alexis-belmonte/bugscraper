@@ -226,21 +226,9 @@ function BackroomCafeteria:on_fully_entered()
 end
 
 function BackroomCafeteria:assign_cafeteria_upgrades()
-	local bag = copy_table_shallow(game.level.upgrade_bag)
-
-	local number_of_upgrades = 3
-	local roll = {}
-	for i=1, number_of_upgrades do
-		local upgrade, _, i = random_weighted(bag)
-		if upgrade then
-			table.remove(bag, i)
-			table.insert(roll, upgrade)
-		end
-	end
-	
 	for _, actor in pairs(game.actors) do
 		if actor.is_shop then
-			actor:assign_products(roll)
+			actor:assign_random_upgrades()
 		end
 	end
 end

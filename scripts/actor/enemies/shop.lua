@@ -150,7 +150,7 @@ function Shop:assign_random_upgrades()
     if #bag_overrides > 0 then
         roll = bag_overrides
     end
-	for i=1, number_of_upgrades - #roll do
+	for i_roll=1, number_of_upgrades - #roll do
 		local upgrade, _, i = random_weighted(bag)
 		if upgrade then
 			table.remove(bag, i)
@@ -231,7 +231,7 @@ function Shop:draw_products()
     local sep = 32
     local x = self.mid_x - ((#self.products - 1)*sep)/2
     local sel_x = x + (self.selected_product_index-1)*sep
-    local y = self.mid_y - self.ui_oy
+    local y = self.mid_y - self.ui_oy + 16
     local s = ease_out_elastic(clamp(self.animation_t, 0, 1))
 
     if self.selected_product then
@@ -246,8 +246,8 @@ function Shop:draw_products()
 
         love.graphics.setColor(COL_WHITE)
         
-        self:draw_text(self.mid_x + self.star_pattern_ox * 5, y - 55 - 16, self.selected_product:get_title(), self.selected_product.color, 2)
-        self:draw_text(self.mid_x + self.star_pattern_ox * 2.5, y - 30 - 16, self.selected_product:get_description())
+        self:draw_text(self.mid_x + self.star_pattern_ox * 5, y - 71, self.selected_product:get_title(), self.selected_product.color, 2)
+        self:draw_text(self.mid_x + self.star_pattern_ox * 2.5, y - 46, self.selected_product:get_description())
     end
 
     for i=1, #self.products do

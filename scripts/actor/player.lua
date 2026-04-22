@@ -1359,9 +1359,14 @@ end
 
 function Player:set_in_menu(val)
 	self.is_in_menu = val
+	
 	if val then
+		self.is_in_menu_old_show_hud = self.show_hud
+		self.show_hud = false
 		self:set_input_mode(PLAYER_INPUT_MODE_CODE)
 	else
+		self.show_hud = param(self.is_in_menu_old_show_hud, true)
+		self.is_in_menu_old_show_hud = nil
 		self:set_input_mode(PLAYER_INPUT_MODE_USER)
 	end
 	self:reset_virtual_controller()

@@ -535,6 +535,37 @@ function DebugCommandManager:init()
             local upgrade = upgrade_class:new()
             table.insert(game.level.upgrade_bag_overrides, upgrade)
             self:add_message("Added upgrade '" .. name .. "' to the bag")
+            
+            for _, a in pairs(game.actors) do
+                if a.is_shop then
+                    a:assign_random_upgrades()
+                    self:add_message("Found shop, rerolled it")
+                end
+            end
+
+            return true
+        end,
+    }
+    self.commands["_number_of_upgrades_per_roll"] = DebugCommand:new {
+        name = "_number_of_upgrades_per_roll",
+        description = "Sets _number_of_upgrades_per_roll",
+        args = {
+            { "n:number" },
+        },
+        run = function(n)
+            if n <= 0 then
+                return false, "n must be > 0"
+            end
+
+            game.level.number_of_upgrades_per_roll = n
+            self:add_message("Set number_of_upgrades_per_roll to "..tostring(n))
+            
+            for _, a in pairs(game.actors) do
+                if a.is_shop then
+                    a:assign_random_upgrades()
+                    self:add_message("Found shop, rerolled it")
+                end
+            end
 
             return true
         end,
