@@ -454,8 +454,6 @@ function Player:update(dt)
 
 	-- MISC
 	self.flag_has_jumped_on_current_frame = false
-
-	self.debug_values[1] = self.is_in_menu
 end
 
 ------------------------------------------
